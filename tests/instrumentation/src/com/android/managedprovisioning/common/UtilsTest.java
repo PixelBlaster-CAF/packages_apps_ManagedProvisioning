@@ -184,7 +184,7 @@ public class UtilsTest extends AndroidTestCase {
         assertFalse(mUtils.isConnectedToNetwork(mockContext));
     }
 
-    public void testIsNetworkTypeWifiConnected() throws Exception {
+    public void testIsConnectedToWifi() throws Exception {
         // GIVEN the device is currently connected to mobile network
         setCurrentNetworkMock(ConnectivityManager.TYPE_MOBILE, true);
         // WHEN checking whether connected to wifi
@@ -204,7 +204,7 @@ public class UtilsTest extends AndroidTestCase {
         assertFalse(mUtils.isNetworkTypeConnected(mockContext, ConnectivityManager.TYPE_WIFI));
     }
 
-    public void testIsNetworkTypeEthernetConnected() throws Exception {
+    public void testIsConnectedToEthernet() throws Exception {
         // GIVEN the device is currently connected to mobile network
         setCurrentNetworkMock(ConnectivityManager.TYPE_MOBILE, true);
         // WHEN checking whether connected to wifi
