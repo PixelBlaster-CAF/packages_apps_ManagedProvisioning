@@ -162,9 +162,6 @@
     <string name="device_owner_description" msgid="168013145812679664">"यो यन्त्रलाई तपाईंको संगठनले सुरक्षित र व्यवस्थित राख्ने छ"</string>
     <string name="setup_provisioning_header" msgid="4282483198266806271">"कार्यस्थलको यन्त्र सेटअप गर्ने तयारी गर्दै…"</string>
     <string name="setup_provisioning_header_description" msgid="2567041263563823566">"प्रशासक एप सेटअप गर्दै"</string>
-    <string name="set_up_everything_else" msgid="4407706086957916501">"अन्य सबै कुराहरू सेटअप गर्नुहोस्"</string>
-    <string name="now_lets_set_up_everything_else" msgid="5829716209795747105">"आफ्नो यन्त्रबाट अझ बढी लाभ लिन कुनै व्यक्तिगत खाता थप्नुहोस्"</string>
-    <string name="now_lets_set_up_everything_else_explanation" msgid="2730458857511288697">"तपाईंको कार्यालयको प्रोफाइल तयार छ र अब तपाईं आफ्ना एप र सामग्री प्रयोग गर्न आफ्नो प्रोफाइलमा कुनै व्यक्तिगत Google खाता पनि थप्न सक्नुहुन्छ।"</string>
     <string name="brand_screen_header" msgid="8865808542690116648">"यो यन्त्र तपाईंको सङ्गठनको स्वामित्वमा छ"</string>
     <string name="brand_screen_subheader" msgid="7664792208784456436">"यो फोनको व्यवस्थापन तथा अनुगमन गर्न निम्न एपको उपयोग गरिने छ"</string>
     <string name="downloading_administrator_header" msgid="8660294318893902915">"कार्यस्थल सेटअप गर्न तयारी गर्दै…"</string>
@@ -179,7 +176,7 @@
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"यो यन्त्र निजी होइन"</string>
     <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"तपाईंका IT व्यवस्थापकले तपाईंको यस यन्त्रका डेटा र गतिविधि हेर्न सक्ने सम्भावना हुन्छ।"</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"तपाईंको यन्त्र सेटअप गर्दै…"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"तपाईंका कार्यस्थलका अनुप्रयोगहरूमाथि सजिलै पहुँच गर्न यो यन्त्र प्रयोग गर्नुहोस्। यो यन्त्र निजी होइन त्यसैले तपाईंका IT व्यवस्थापक तपाईंको डेटा र क्रियाकलाप हेर्न सक्छन्। थप जानकारी प्राप्त गर्न आफ्ना IT व्यवस्थापकसँग सम्पर्क गर्नुहोस्।"</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"तपाईंका कार्यस्थलका एपमाथि सजिलै पहुँच गर्न यो यन्त्र प्रयोग गर्नुहोस्। यो यन्त्र निजी होइन त्यसैले तपाईंका IT व्यवस्थापक तपाईंको डेटा र क्रियाकलाप हेर्न सक्छन्। थप जानकारी प्राप्त गर्न आफ्ना IT व्यवस्थापकसँग सम्पर्क गर्नुहोस्।"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"IT एडमिन कार्य प्रोफाइलमा राखिने कार्य एप व्यवस्थित गर्छन्"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"छुट्टै राखिने व्यक्तिगत एप कामसम्बन्धी एपसँगै देखिँदैनन्"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"IT एडमिन यो यन्त्र र यसका केही एपहरू नियन्त्रण गर्न सक्छन्"</string>
