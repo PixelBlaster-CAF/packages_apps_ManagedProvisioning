@@ -36,7 +36,7 @@ import static android.nfc.NfcAdapter.ACTION_NDEF_DISCOVERED;
 import static com.android.managedprovisioning.common.Globals.ACTION_PROVISION_MANAGED_DEVICE_SILENTLY;
 import static com.android.managedprovisioning.model.ProvisioningParams.PROVISIONING_MODE_FULLY_MANAGED_DEVICE;
 import static com.android.managedprovisioning.model.ProvisioningParams.PROVISIONING_MODE_MANAGED_PROFILE;
-import static com.android.managedprovisioning.model.ProvisioningParams.PROVISIONING_MODE_MANAGED_PROFILE_ON_FULLY_NAMAGED_DEVICE;
+import static com.android.managedprovisioning.model.ProvisioningParams.PROVISIONING_MODE_MANAGED_PROFILE_ON_FULLY_MANAGED_DEVICE;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -566,7 +566,7 @@ public class Utils {
         return params.provisioningMode == PROVISIONING_MODE_FULLY_MANAGED_DEVICE
                 || params.provisioningMode == PROVISIONING_MODE_MANAGED_PROFILE
                 || params.provisioningMode
-                    == PROVISIONING_MODE_MANAGED_PROFILE_ON_FULLY_NAMAGED_DEVICE;
+                    == PROVISIONING_MODE_MANAGED_PROFILE_ON_FULLY_MANAGED_DEVICE;
     }
 
     /**
@@ -574,6 +574,8 @@ public class Utils {
      */
     // TODO: Move the FR intent into a Globals class.
     public void sendFactoryResetBroadcast(Context context, String reason) {
+        // TODO (b/171603586): skip factory reset for Auto before driving restrictions implemented
+        PackageManager pm = context.getPackageManager();
         Intent intent = new Intent(Intent.ACTION_FACTORY_RESET);
         // Send explicit broadcast due to Broadcast Limitations
         intent.setPackage("android");
@@ -693,6 +695,7 @@ public class Utils {
         return wifiIntent;
     }
 
+    // TODO (b/137101239): clean up split system user codes
     /**
      * Returns whether the device has a split system user.
      *
@@ -701,6 +704,13 @@ public class Utils {
      */
     public boolean isSplitSystemUser() {
         return UserManager.isSplitSystemUser();
+    }
+
+    /**
+     * Returns whether the device is in headless system user mode.
+     */
+    public boolean isHeadlessSystemUserMode() {
+        return UserManager.isHeadlessSystemUserMode();
     }
 
     /**
@@ -909,10 +919,6 @@ public class Utils {
 
     public static FooterButton addNextButton(GlifLayout layout, @NonNull OnClickListener listener) {
         return setPrimaryButton(layout, listener, ButtonType.NEXT, R.string.next);
-    }
-
-    public static FooterButton addDoneButton(GlifLayout layout, @NonNull OnClickListener listener) {
-        return setPrimaryButton(layout, listener, ButtonType.DONE, R.string.done);
     }
 
     public static FooterButton addAcceptAndContinueButton(GlifLayout layout,

@@ -341,14 +341,6 @@
   <string name="setup_provisioning_header">Preparing to set up work device\u2026</string>
   <string name="setup_provisioning_header_description">Setting up admin app</string>
 
-  <!-- Transition screen strings -->
-  <!-- Screen title. This is letting the user know that they're finished setting up their work profile, and they can finish setting up the rest of their phone. [CHAR LIMIT=NONE]-->
-  <string name="set_up_everything_else">Set up everything else</string>
-  <!-- Screen title. This is letting the user know that they're finished setting up their work profile, and they can add a personal account to get their personal apps and content on the phone. [CHAR LIMIT=NONE]-->
-  <string name="now_lets_set_up_everything_else">Add a personal account to get more from your device</string>
-  <!-- Subtext on a screen. This is letting the user know that adding a personal account is an optional step. [CHAR LIMIT=NONE]-->
-  <string name="now_lets_set_up_everything_else_explanation">Now that your work profile is ready, you can also add a personal Google Account to access your apps and content.</string>
-
   <!-- Organization brand screen -->
   <!-- Screen title. This is letting the user know that their organization (e.g. company) owns the device. [CHAR LIMIT=NONE]-->
   <string name="brand_screen_header">This device belongs to your organization</string>
@@ -406,11 +398,6 @@
   <string name="fully_managed_device_provisioning_privacy_title">Privacy reminder</string>
   <!-- Notification message. This text is letting the user know about a privacy reminder before they start using their new work device, and that their IT admin may be able to see their data and activity on this device. [CHAR LIMIT=NONE]-->
   <string name="fully_managed_device_provisioning_privacy_body">Your IT admin may be able to see your data and activity on this device</string>
-
-  <!-- Common to both work profile and fully managed device setup screens -->
-  <!-- Screen title. This text is letting the user know that their device is ready. "Ready to go" is equivalent to "ready to use." [CHAR LIMIT=NONE]-->
-  <string name="device_provisioning_finished">Your device is ready to go!</string>
-  <string name="done">Done</string>
 
   <!-- Financed device provisioning landing screen -->
   <!-- Screen title in the device setup process. This is reminding the user that this device is provided by a creditor. This means the creditor can control the device, such as locking it if the user doesn't make payments. [CHAR LIMIT=NONE]-->

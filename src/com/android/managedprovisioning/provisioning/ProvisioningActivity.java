@@ -18,6 +18,7 @@ package com.android.managedprovisioning.provisioning;
 
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_FINANCED_DEVICE;
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent.PROVISIONING_PROVISIONING_ACTIVITY_TIME_MS;
+import static com.android.managedprovisioning.model.ProvisioningParams.PROVISIONING_MODE_MANAGED_PROFILE;
 
 import android.Manifest.permission;
 import android.annotation.IntDef;
@@ -29,6 +30,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.ResolveInfo;
 import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Bundle;
+import android.os.UserHandle;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.ImageView.ScaleType;
@@ -43,7 +45,6 @@ import com.android.managedprovisioning.common.ManagedProvisioningSharedPreferenc
 import com.android.managedprovisioning.common.ProvisionLogger;
 import com.android.managedprovisioning.common.RepeatingVectorAnimation;
 import com.android.managedprovisioning.common.SettingsFacade;
-import com.android.managedprovisioning.common.StartDpcInsideSuwServiceConnection;
 import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.common.PolicyComplianceUtils;
 import com.android.managedprovisioning.finalization.PreFinalizationController;
@@ -52,7 +53,6 @@ import com.android.managedprovisioning.model.CustomizationParams;
 import com.android.managedprovisioning.model.ProvisioningParams;
 import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.AnimationComponents;
 import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.TransitionAnimationCallback;
-import com.android.managedprovisioning.transition.TransitionActivity;
 import com.google.android.setupdesign.GlifLayout;
 import com.google.android.setupcompat.template.FooterButton;
 import com.google.android.setupcompat.util.WizardManagerHelper;
@@ -72,11 +72,17 @@ import java.util.Map;
  */
 public class ProvisioningActivity extends AbstractProvisioningActivity
         implements TransitionAnimationCallback {
-    private static final int POLICY_COMPLIANCE_REQUEST_CODE = 1;
-    private static final int TRANSITION_ACTIVITY_REQUEST_CODE = 2;
-    private static final int CROSS_PROFILE_PACKAGES_CONSENT_REQUEST_CODE = 3;
-    private static final int RESULT_CODE_ADD_PERSONAL_ACCOUNT = 120;
     private static final int RESULT_CODE_COMPLETE_DEVICE_FINANCE = 121;
+    /*
+     * Returned after the work profile has been completed. Note this is before launching the DPC.
+     */
+    @VisibleForTesting
+    static final int RESULT_CODE_WORK_PROFILE_CREATED = 122;
+    /*
+     * Returned after the device owner has been set. Note this is before launching the DPC.
+     */
+    @VisibleForTesting
+    static final int RESULT_CODE_DEVICE_OWNER_SET = 123;
 
     static final int PROVISIONING_MODE_WORK_PROFILE = 1;
     static final int PROVISIONING_MODE_FULLY_MANAGED_DEVICE = 2;
@@ -107,14 +113,11 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
                         R.string.work_profile_provisioning_progress_label);
             }});
 
-    private static final String START_DPC_SERVICE_STATE_KEY = "start_dpc_service_state";
-
     private TransitionAnimationHelper mTransitionAnimationHelper;
     private RepeatingVectorAnimation mRepeatingVectorAnimation;
     private FooterButton mNextButton;
     private UserProvisioningStateHelper mUserProvisioningStateHelper;
     private PolicyComplianceUtils mPolicyComplianceUtils;
-    private StartDpcInsideSuwServiceConnection mStartDpcInsideSuwServiceConnection;
 
     public ProvisioningActivity() {
         super(new Utils());
@@ -135,40 +138,17 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            final Bundle startDpcServiceState =
-                    savedInstanceState.getBundle(START_DPC_SERVICE_STATE_KEY);
-
-            if (startDpcServiceState != null) {
-                mStartDpcInsideSuwServiceConnection = new StartDpcInsideSuwServiceConnection(
-                        this, startDpcServiceState, getDpcIntentSender());
+        if (mUserProvisioningStateHelper == null) {
+            // In headless system user mode, DO will always be set on system user
+            // regardless of the calling user.
+            if (mUtils.isHeadlessSystemUserMode()
+                    && mUtils.isDeviceOwnerAction(mParams.provisioningAction)) {
+                mUserProvisioningStateHelper =
+                        new UserProvisioningStateHelper(this, UserHandle.USER_SYSTEM);
+            } else {
+                mUserProvisioningStateHelper = new UserProvisioningStateHelper(this);
             }
         }
-
-        if (mUserProvisioningStateHelper == null) {
-            mUserProvisioningStateHelper = new UserProvisioningStateHelper(this);
-        }
-    }
-
-    @Override
-    protected void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-
-        if (mStartDpcInsideSuwServiceConnection != null) {
-            final Bundle startDpcServiceState = new Bundle();
-            mStartDpcInsideSuwServiceConnection.saveInstanceState(startDpcServiceState);
-            outState.putBundle(START_DPC_SERVICE_STATE_KEY, startDpcServiceState);
-        }
-    }
-
-    @Override
-    public final void onDestroy() {
-        if (mStartDpcInsideSuwServiceConnection != null) {
-            mStartDpcInsideSuwServiceConnection.unbind(this);
-            mStartDpcInsideSuwServiceConnection = null;
-        }
-
-        super.onDestroy();
     }
 
     @Override
@@ -208,14 +188,9 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
         }
     }
 
-    private void onNextButtonClicked() {
-        markDeviceManagementEstablishedAndGoToNextStep();
-    }
-
-    private Runnable getDpcIntentSender() {
-        return () -> mPolicyComplianceUtils.startPolicyComplianceActivityForResultIfResolved(
-                this, mParams, null, POLICY_COMPLIANCE_REQUEST_CODE, mUtils,
-                getProvisioningAnalyticsTracker());
+    @VisibleForTesting
+    protected void onNextButtonClicked() {
+        markDeviceManagementEstablishedAndFinish();
     }
 
     private void finishActivity() {
@@ -228,68 +203,18 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
         finish();
     }
 
-    boolean shouldShowTransitionScreen() {
-        return mParams.isOrganizationOwnedProvisioning
-                && mParams.provisioningMode == ProvisioningParams.PROVISIONING_MODE_MANAGED_PROFILE
-                && mUtils.isConnectedToNetwork(getApplicationContext());
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode) {
-            case POLICY_COMPLIANCE_REQUEST_CODE:
-                if (mStartDpcInsideSuwServiceConnection != null) {
-                    mStartDpcInsideSuwServiceConnection.dpcFinished();
-                    mStartDpcInsideSuwServiceConnection.unbind(this);
-                    mStartDpcInsideSuwServiceConnection = null;
-                }
-
-                getProvisioningAnalyticsTracker().logDpcSetupCompleted(this, resultCode);
-
-                if (resultCode == RESULT_OK) {
-                    if (shouldShowTransitionScreen()) {
-                        Intent intent = new Intent(this, TransitionActivity.class);
-                        WizardManagerHelper.copyWizardManagerExtras(getIntent(), intent);
-                        intent.putExtra(ProvisioningParams.EXTRA_PROVISIONING_PARAMS, mParams);
-                        startActivityForResult(intent, TRANSITION_ACTIVITY_REQUEST_CODE);
-                    } else {
-                        setResult(Activity.RESULT_OK);
-                        finish();
-                    }
-                } else {
-                    ProvisionLogger.loge("Invalid POLICY_COMPLIANCE result code. Expected "
-                            + RESULT_OK + " but got " + resultCode + ".");
-                    error(/* titleId */ R.string.cant_set_up_device,
-                            /* messageId */ R.string.contact_your_admin_for_help,
-                            /* resetRequired = */ true);
-                }
-                break;
-            case TRANSITION_ACTIVITY_REQUEST_CODE:
-                setResult(RESULT_CODE_ADD_PERSONAL_ACCOUNT);
-                finish();
-                break;
-            case CROSS_PROFILE_PACKAGES_CONSENT_REQUEST_CODE:
-                if (resultCode == RESULT_OK) {
-                    markDeviceManagementEstablishedAndGoToNextStep();
-                }
-                break;
-        }
-    }
-
-    private void markDeviceManagementEstablishedAndGoToNextStep() {
+    private void markDeviceManagementEstablishedAndFinish() {
         new PreFinalizationController(this, mUserProvisioningStateHelper)
                 .deviceManagementEstablished(mParams);
-
         if (mUtils.isAdminIntegratedFlow(mParams)) {
-            if (mStartDpcInsideSuwServiceConnection == null) {
-                // Connect to a SUW service to disable network intent interception before starting
-                // the DPC.
-                mStartDpcInsideSuwServiceConnection = new StartDpcInsideSuwServiceConnection();
+            if (mUtils.isProfileOwnerAction(mParams.provisioningAction)) {
+                setResult(RESULT_CODE_WORK_PROFILE_CREATED);
+            } else if (mUtils.isDeviceOwnerAction(mParams.provisioningAction)) {
+                setResult(RESULT_CODE_DEVICE_OWNER_SET);
+            } else if (mUtils.isFinancedDeviceAction(mParams.provisioningAction)) {
+                setResult(RESULT_CODE_COMPLETE_DEVICE_FINANCE);
             }
-            // Prevent the UI from flashing on the screen while the service connection starts the
-            // DPC (b/149463287).
-            findViewById(R.id.setup_wizard_layout).setVisibility(View.INVISIBLE);
-            mStartDpcInsideSuwServiceConnection.triggerDpcStart(this, getDpcIntentSender());
+            finish();
         } else {
             finishActivity();
         }

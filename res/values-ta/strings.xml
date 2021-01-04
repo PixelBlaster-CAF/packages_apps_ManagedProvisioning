@@ -162,9 +162,6 @@
     <string name="device_owner_description" msgid="168013145812679664">"இந்தச் சாதனம் பாதுகாப்பாக வைக்கப்பட்டு, உங்கள் நிறுவனத்தால் நிர்வகிக்கப்படும்"</string>
     <string name="setup_provisioning_header" msgid="4282483198266806271">"பணி மொபைலை அமைக்கத் தயார்படுத்துகிறது…"</string>
     <string name="setup_provisioning_header_description" msgid="2567041263563823566">"நிர்வாக ஆப்ஸை அமைக்கிறது"</string>
-    <string name="set_up_everything_else" msgid="4407706086957916501">"எல்லாவற்றையும் அமைக்கவும்"</string>
-    <string name="now_lets_set_up_everything_else" msgid="5829716209795747105">"உங்கள் சாதனத்தில் மேலும் பலவற்றைப் பெற தனிப்பட்ட கணக்கு ஒன்றைச் சேருங்கள்"</string>
-    <string name="now_lets_set_up_everything_else_explanation" msgid="2730458857511288697">"பணிக் கணக்கு தற்போது தயாராக உள்ளது, உங்கள் ஆப்ஸையும் உள்ளடக்கத்தையும் அணுக தனிப்பட்ட Google கணக்கு ஒன்றையும் நீங்கள் சேர்க்கலாம்."</string>
     <string name="brand_screen_header" msgid="8865808542690116648">"இந்தச் சாதனம் உங்கள் நிறுவனத்துக்குச் சொந்தமானது"</string>
     <string name="brand_screen_subheader" msgid="7664792208784456436">"இந்த மொபைலை நிர்வகிக்கவும் கண்காணிக்கவும் பின்வரும் ஆப்ஸ் பயன்படும்"</string>
     <string name="downloading_administrator_header" msgid="8660294318893902915">"பணி அமைவிற்குத் தயாராகிறது…"</string>
@@ -187,8 +184,6 @@
     <string name="just_a_sec" msgid="6244676028626237220">"காத்திருக்கவும்…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"தனியுரிமை நினைவூட்டல்"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"இந்தச் சாதனத்தில் உள்ள உங்கள் தரவையும் செயல்பாட்டையும் IT நிர்வாகி பார்க்கக்கூடும்"</string>
-    <string name="device_provisioning_finished" msgid="3981783240592092906">"உங்கள் சாதனம் பயன்படுத்தத் தயாராக உள்ளது!"</string>
-    <string name="done" msgid="7755227776955952318">"முடிந்தது"</string>
     <string name="financed_device_screen_header" msgid="7890706080917322376">"இந்தச் சாதனம் <xliff:g id="CREDITOR_NAME">%1$s</xliff:g> மூலம் கிரெடிட்டில் வாங்கப்பட்டது"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> இவற்றைச் செய்ய முடியும்:"</string>
     <string name="install_creditor_app_description" msgid="6159751782301108878">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> ஆப்ஸை நிறுவுவதன் மூலம் இந்தச் சாதனத்திற்கான பேமெண்ட்டைச் செலுத்த முடியும்"</string>

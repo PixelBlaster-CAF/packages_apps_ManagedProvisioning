@@ -19,6 +19,7 @@ package com.android.managedprovisioning.finalization;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE;
 import static android.app.admin.DevicePolicyManager.STATE_USER_PROFILE_COMPLETE;
+import static android.app.admin.DevicePolicyManager.STATE_USER_PROFILE_FINALIZED;
 import static android.app.admin.DevicePolicyManager.STATE_USER_SETUP_COMPLETE;
 import static android.app.admin.DevicePolicyManager.STATE_USER_SETUP_FINALIZED;
 import static android.app.admin.DevicePolicyManager.STATE_USER_SETUP_INCOMPLETE;
@@ -147,8 +148,8 @@ public class UserProvisioningStateHelperTest extends AndroidTestCase {
         // THEN the managed profile's state should be set to FINALIZED
         verify(mDevicePolicyManager).setUserProvisioningState(STATE_USER_SETUP_FINALIZED,
                 MANAGED_PROFILE_USER_ID);
-        // THEN the primary user's state should be set to UNMANAGED
-        verify(mDevicePolicyManager).setUserProvisioningState(STATE_USER_UNMANAGED,
+        // THEN the primary user's state should be set to STATE_USER_PROFILE_FINALIZED
+        verify(mDevicePolicyManager).setUserProvisioningState(STATE_USER_PROFILE_FINALIZED,
                 PRIMARY_USER_ID);
     }
 
@@ -172,7 +173,7 @@ public class UserProvisioningStateHelperTest extends AndroidTestCase {
         assertTrue(isStateUnmanagedOrFinalizedWithCurrentState(STATE_USER_SETUP_FINALIZED));
         assertFalse(isStateUnmanagedOrFinalizedWithCurrentState(STATE_USER_PROFILE_COMPLETE));
         assertFalse(isStateUnmanagedOrFinalizedWithCurrentState(STATE_USER_SETUP_INCOMPLETE));
-        assertFalse(isStateUnmanagedOrFinalizedWithCurrentState(STATE_USER_PROFILE_COMPLETE));
+        assertTrue(isStateUnmanagedOrFinalizedWithCurrentState(STATE_USER_PROFILE_FINALIZED));
     }
 
     private boolean isStateUnmanagedOrFinalizedWithCurrentState(int currentState) {

@@ -18,6 +18,7 @@ package com.android.managedprovisioning.finalization;
 
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE;
 import static android.app.admin.DevicePolicyManager.STATE_USER_PROFILE_COMPLETE;
+import static android.app.admin.DevicePolicyManager.STATE_USER_PROFILE_FINALIZED;
 import static android.app.admin.DevicePolicyManager.STATE_USER_SETUP_COMPLETE;
 import static android.app.admin.DevicePolicyManager.STATE_USER_SETUP_FINALIZED;
 import static android.app.admin.DevicePolicyManager.STATE_USER_SETUP_INCOMPLETE;
@@ -51,6 +52,10 @@ public class UserProvisioningStateHelper {
 
     public UserProvisioningStateHelper(Context context) {
         this(context, new Utils(), new SettingsFacade(), UserHandle.myUserId());
+    }
+
+    public UserProvisioningStateHelper(Context context, int userId) {
+        this(context, new Utils(), new SettingsFacade(), userId);
     }
 
     @VisibleForTesting
@@ -94,6 +99,9 @@ public class UserProvisioningStateHelper {
             if (userSetupCompleted) {
                 // SUW on current user is complete, so nothing much to do beyond indicating we're
                 // all done.
+                if (!isUserProvisioningStateProfileFinalized()) {
+                    newState = STATE_USER_PROFILE_FINALIZED;
+                }
                 newProfileState = STATE_USER_SETUP_FINALIZED;
             } else {
                 // We're still in SUW, so indicate that a managed-profile was setup on current user,
@@ -140,12 +148,11 @@ public class UserProvisioningStateHelper {
      */
     @VisibleForTesting
     public void markUserProvisioningStateFinalized(ProvisioningParams params) {
-
         if (params.provisioningAction.equals(ACTION_PROVISION_MANAGED_PROFILE)) {
             // Managed profiles are a special case as two users are involved.
             final int managedProfileUserId = mUtils.getManagedProfile(mContext).getIdentifier();
             setUserProvisioningState(STATE_USER_SETUP_FINALIZED, managedProfileUserId);
-            setUserProvisioningState(STATE_USER_UNMANAGED, mMyUserId);
+            setUserProvisioningState(STATE_USER_PROFILE_FINALIZED, mMyUserId);
         } else {
             setUserProvisioningState(STATE_USER_SETUP_FINALIZED, mMyUserId);
         }
@@ -154,7 +161,14 @@ public class UserProvisioningStateHelper {
     @VisibleForTesting
     public boolean isStateUnmanagedOrFinalized() {
         final int currentState = mDevicePolicyManager.getUserProvisioningState();
-        return currentState == STATE_USER_UNMANAGED || currentState == STATE_USER_SETUP_FINALIZED;
+        return currentState == STATE_USER_UNMANAGED
+                || currentState == STATE_USER_SETUP_FINALIZED
+                || currentState == STATE_USER_PROFILE_FINALIZED;
+    }
+
+    private boolean isUserProvisioningStateProfileFinalized() {
+        final int currentState = mDevicePolicyManager.getUserProvisioningState();
+        return currentState == STATE_USER_PROFILE_FINALIZED;
     }
 
     private void setUserProvisioningState(int state, int userId) {
