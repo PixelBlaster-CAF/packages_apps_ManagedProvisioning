@@ -18,11 +18,10 @@ package com.android.managedprovisioning.parser;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE_FROM_TRUSTED_SOURCE;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE;
-import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_SHAREABLE_DEVICE;
-import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_USER;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_COMPONENT_NAME;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_DEVICE_ADMIN_PACKAGE_NAME;
 import static android.app.admin.DevicePolicyManager.MIME_TYPE_PROVISIONING_NFC;
+
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.spy;
 
@@ -38,6 +37,7 @@ import android.os.UserHandle;
 import android.test.AndroidTestCase;
 import android.test.suitebuilder.annotation.SmallTest;
 
+import com.android.managedprovisioning.common.SettingsFacade;
 import com.android.managedprovisioning.common.Utils;
 
 import org.mockito.Mock;
@@ -76,7 +76,8 @@ public class MessageParserTest extends AndroidTestCase {
 
         MockitoAnnotations.initMocks(this);
         mUtils = spy(new Utils());
-        mMessageParser = new MessageParser(mContext, mUtils, new ParserUtils());
+        mMessageParser = new MessageParser(
+                mContext, mUtils, new ParserUtils(), new SettingsFacade());
     }
 
     public void test_correctParserUsedToParseNfcIntent() throws Exception {
@@ -113,9 +114,7 @@ public class MessageParserTest extends AndroidTestCase {
         String[] supportedProvisioningActions = new String[] {
                 ACTION_PROVISION_MANAGED_DEVICE,
                 ACTION_PROVISION_MANAGED_DEVICE_FROM_TRUSTED_SOURCE,
-                ACTION_PROVISION_MANAGED_USER,
-                ACTION_PROVISION_MANAGED_PROFILE,
-                ACTION_PROVISION_MANAGED_SHAREABLE_DEVICE
+                ACTION_PROVISION_MANAGED_PROFILE
         };
 
         for (String provisioningAction : supportedProvisioningActions) {

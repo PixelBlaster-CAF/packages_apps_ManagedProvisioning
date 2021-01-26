@@ -72,9 +72,6 @@
   <!-- Default profile name used for the creation of work profiles. [CHAR LIMIT=NONE] -->
   <string name="default_managed_profile_name">Work profile</string>
 
-  <!-- Default name used for the creation of the first meat user on a device with system-user split. [CHAR LIMIT=NONE] -->
-  <string name="default_first_meat_user_name">Primary user</string>
-
   <!-- Title on the dialog that prompts the user to confirm that they really want to delete their existing work profile-->
   <string name="delete_profile_title">Delete existing profile?</string>
 
@@ -346,6 +343,10 @@
   <string name="brand_screen_header">This device belongs to your organization</string>
   <!-- Subtext on a screen. This is letting the user know that their organization (e.g. company) will manage their device, and it's introducing the management app that their IT admin will use. [CHAR LIMIT=NONE]-->
   <string name="brand_screen_subheader">The following app will be used to manage and monitor this phone</string>
+  <!-- Screen title. This is letting the user know that the user's account will be managed on their new device. [CHAR LIMIT=NONE]-->
+  <string name="account_management_disclaimer_header">Your account is managed</string>
+  <!-- Subtext on a screen. This is letting the user know that their account will be managed on their new device. [CHAR LIMIT=NONE]-->
+  <string name="account_management_disclaimer_subheader">Your IT admin uses mobile device management to enforce security policies</string>
 
   <!-- Downloading screen -->
   <!-- Screen title. This is letting the user know that they're about to set up their device for work. [CHAR LIMIT=NONE]-->
