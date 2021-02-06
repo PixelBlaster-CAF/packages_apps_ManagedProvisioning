@@ -17,19 +17,25 @@
 package com.android.managedprovisioning.common;
 
 import static android.app.admin.DevicePolicyManager.ACTION_GET_PROVISIONING_MODE;
+import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_FINANCED_DEVICE;
+import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE_FROM_TRUSTED_SOURCE;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE;
+import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_DEVICE_OWNER;
+import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED;
+import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_OWNED;
+import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_PERSONALLY_OWNED;
 
 import static com.google.common.truth.Truth.assertThat;
 
 import static org.robolectric.Shadows.shadowOf;
 
-import android.app.ActivityManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageInfo;
 import android.content.pm.ResolveInfo;
 
 import androidx.test.core.app.ApplicationProvider;
@@ -46,28 +52,32 @@ public class UtilsRoboTest {
     private static final String TEST_MDM_ADMIN_RECEIVER = TEST_MDM_PACKAGE_NAME + ".AdminReceiver";
     private static final ComponentName TEST_MDM_ADMIN = new ComponentName(TEST_MDM_PACKAGE_NAME,
             TEST_MDM_ADMIN_RECEIVER);
-    private static final ProvisioningParams PARAMS_ORG_OWNED = ProvisioningParams.Builder.builder()
-            .setProvisioningAction(ACTION_PROVISION_MANAGED_PROFILE)
-            .setDeviceAdminComponentName(TEST_MDM_ADMIN)
+    private static final ProvisioningParams PARAMS_ORG_OWNED = createTrustedSourceParamsBuilder()
             .setIsOrganizationOwnedProvisioning(true)
             .build();
-    private static final ProvisioningParams PARAMS_NON_ORG_OWNED = ProvisioningParams.Builder.builder()
-            .setProvisioningAction(ACTION_PROVISION_MANAGED_PROFILE)
-            .setDeviceAdminComponentName(TEST_MDM_ADMIN)
-            .setIsOrganizationOwnedProvisioning(false)
-            .build();
-    private static final ProvisioningParams PARAMS_NFC = ProvisioningParams.Builder.builder()
-            .setProvisioningAction(ACTION_PROVISION_MANAGED_PROFILE)
-            .setDeviceAdminComponentName(TEST_MDM_ADMIN)
+    private static final ProvisioningParams PARAMS_NFC = createTrustedSourceParamsBuilder()
             .setIsOrganizationOwnedProvisioning(true)
             .setIsNfc(true)
             .build();
+    private static final ProvisioningParams PARAMS_PROVISION_MANAGED_PROFILE =
+            ProvisioningParams.Builder.builder()
+            .setProvisioningAction(ACTION_PROVISION_MANAGED_PROFILE)
+            .setDeviceAdminComponentName(TEST_MDM_ADMIN)
+            .setStartedByTrustedSource(false)
+            .build();
+    private static final ProvisioningParams PARAMS_PROVISION_FINANCED_DEVICE =
+            ProvisioningParams.Builder.builder()
+                    .setProvisioningAction(ACTION_PROVISION_FINANCED_DEVICE)
+                    .setDeviceAdminComponentName(TEST_MDM_ADMIN)
+                    .setStartedByTrustedSource(false)
+                    .build();
+    private static final ProvisioningParams PARAMS_NON_TRUSTED_SOURCE =
+            PARAMS_PROVISION_MANAGED_PROFILE;
 
     private final Context mContext = ApplicationProvider.getApplicationContext();
     private Utils mUtils = new Utils();
     private PolicyComplianceUtils mPolicyComplianceUtils = new PolicyComplianceUtils();
     private GetProvisioningModeUtils mGetProvisioningModeUtils = new GetProvisioningModeUtils();
-    private ActivityManager mActivityManager = mContext.getSystemService(ActivityManager.class);
 
     @Test
     public void shouldPerformAdminIntegratedFlow_allConditionsMet_returnsTrue() {
@@ -78,9 +88,8 @@ public class UtilsRoboTest {
                 .addResolveInfoForIntent(policyComplianceIntent, info);
         shadowOf(mContext.getPackageManager())
                 .addResolveInfoForIntent(getProvisioningModeIntent, info);
-        shadowOf(mActivityManager).setIsLowRamDevice(false);
 
-        assertThat(mUtils.shouldPerformAdminIntegratedFlow(mContext, PARAMS_ORG_OWNED,
+        assertThat(mUtils.canPerformAdminIntegratedFlow(mContext, PARAMS_ORG_OWNED,
                 mPolicyComplianceUtils, mGetProvisioningModeUtils)).isTrue();
     }
 
@@ -90,9 +99,8 @@ public class UtilsRoboTest {
         ResolveInfo info = createFakeResolveInfo();
         shadowOf(mContext.getPackageManager())
                 .addResolveInfoForIntent(getProvisioningModeIntent, info);
-        shadowOf(mActivityManager).setIsLowRamDevice(false);
 
-        assertThat(mUtils.shouldPerformAdminIntegratedFlow(mContext, PARAMS_ORG_OWNED,
+        assertThat(mUtils.canPerformAdminIntegratedFlow(mContext, PARAMS_ORG_OWNED,
                 mPolicyComplianceUtils, mGetProvisioningModeUtils)).isFalse();
     }
 
@@ -102,24 +110,8 @@ public class UtilsRoboTest {
         ResolveInfo info = createFakeResolveInfo();
         shadowOf(mContext.getPackageManager())
                 .addResolveInfoForIntent(policyComplianceIntent, info);
-        shadowOf(mActivityManager).setIsLowRamDevice(false);
 
-        assertThat(mUtils.shouldPerformAdminIntegratedFlow(mContext, PARAMS_ORG_OWNED,
-                mPolicyComplianceUtils, mGetProvisioningModeUtils)).isFalse();
-    }
-
-    @Test
-    public void shouldPerformAdminIntegratedFlow_notOrganizationOwned_returnsFalse() {
-        Intent policyComplianceIntent = getPolicyComplianceIntent();
-        Intent getProvisioningModeIntent = getGetProvisioningModeIntent();
-        ResolveInfo info = createFakeResolveInfo();
-        shadowOf(mContext.getPackageManager())
-                .addResolveInfoForIntent(policyComplianceIntent, info);
-        shadowOf(mContext.getPackageManager())
-                .addResolveInfoForIntent(getProvisioningModeIntent, info);
-        shadowOf(mActivityManager).setIsLowRamDevice(false);
-
-        assertThat(mUtils.shouldPerformAdminIntegratedFlow(mContext, PARAMS_NON_ORG_OWNED,
+        assertThat(mUtils.canPerformAdminIntegratedFlow(mContext, PARAMS_ORG_OWNED,
                 mPolicyComplianceUtils, mGetProvisioningModeUtils)).isFalse();
     }
 
@@ -132,25 +124,109 @@ public class UtilsRoboTest {
                 .addResolveInfoForIntent(policyComplianceIntent, info);
         shadowOf(mContext.getPackageManager())
                 .addResolveInfoForIntent(getProvisioningModeIntent, info);
-        shadowOf(mActivityManager).setIsLowRamDevice(false);
 
-        assertThat(mUtils.shouldPerformAdminIntegratedFlow(mContext, PARAMS_NFC,
+        assertThat(mUtils.canPerformAdminIntegratedFlow(mContext, PARAMS_NFC,
                 mPolicyComplianceUtils, mGetProvisioningModeUtils)).isFalse();
     }
 
     @Test
-    public void shouldPerformAdminIntegratedFlow_lowRamDevice_returnsFalse() {
-        Intent policyComplianceIntent = getPolicyComplianceIntent();
-        Intent getProvisioningModeIntent = getGetProvisioningModeIntent();
-        ResolveInfo info = createFakeResolveInfo();
-        shadowOf(mContext.getPackageManager())
-                .addResolveInfoForIntent(policyComplianceIntent, info);
-        shadowOf(mContext.getPackageManager())
-                .addResolveInfoForIntent(getProvisioningModeIntent, info);
-        shadowOf(mActivityManager).setIsLowRamDevice(true);
+    public void checkAdminIntegratedFlowPreconditions_nfcProvisioning_returnsFalse() {
+        assertThat(mUtils.checkAdminIntegratedFlowPreconditions(PARAMS_NFC)).isFalse();
+    }
 
-        assertThat(mUtils.shouldPerformAdminIntegratedFlow(mContext, PARAMS_ORG_OWNED,
-                mPolicyComplianceUtils, mGetProvisioningModeUtils)).isFalse();
+    @Test
+    public void checkAdminIntegratedFlowPreconditions_notStartedByTrustedSource_returnsFalse() {
+        assertThat(mUtils.checkAdminIntegratedFlowPreconditions(
+                PARAMS_NON_TRUSTED_SOURCE)).isFalse();
+    }
+
+    @Test
+    public void checkAdminIntegratedFlowPreconditions_financedDevice_returnsFalse() {
+        assertThat(mUtils.checkAdminIntegratedFlowPreconditions(
+                PARAMS_PROVISION_FINANCED_DEVICE)).isFalse();
+    }
+
+    @Test
+    public void isOrganizationOwnedAllowed_personallyOwnedProvisioning_returnsFalse() {
+        ProvisioningParams params = createTrustedSourceParamsBuilder()
+                .setInitiatorRequestedProvisioningModes(
+                        SUPPORTED_MODES_PERSONALLY_OWNED)
+                .build();
+
+        assertThat(mUtils.isOrganizationOwnedAllowed(params)).isFalse();
+    }
+
+    @Test
+    public void isOrganizationOwnedAllowed_organizationOwnedProvisioning_returnsTrue() {
+        ProvisioningParams params = createTrustedSourceParamsBuilder()
+                .setInitiatorRequestedProvisioningModes(
+                        SUPPORTED_MODES_ORGANIZATION_OWNED)
+                .build();
+
+        assertThat(mUtils.isOrganizationOwnedAllowed(params)).isTrue();
+    }
+
+    @Test
+    public void
+            isOrganizationOwnedAllowed_organizationAndPersonallyOwnedProvisioning_returnsTrue() {
+        ProvisioningParams params = createTrustedSourceParamsBuilder()
+                .setInitiatorRequestedProvisioningModes(
+                        SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED)
+                .build();
+
+        assertThat(mUtils.isOrganizationOwnedAllowed(params)).isTrue();
+    }
+
+    @Test
+    public void isOrganizationOwnedAllowed_deviceOwnerProvisioning_returnsTrue() {
+        ProvisioningParams params = createTrustedSourceParamsBuilder()
+                .setInitiatorRequestedProvisioningModes(
+                        SUPPORTED_MODES_DEVICE_OWNER)
+                .build();
+
+        assertThat(mUtils.isOrganizationOwnedAllowed(params)).isTrue();
+    }
+
+    @Test
+    public void shouldShowOwnershipDisclaimerScreen_skipOwnershipDisclaimerFalse_returnsTrue() {
+        ProvisioningParams params = createTrustedSourceParamsBuilder()
+                .setSkipOwnershipDisclaimer(false)
+                .build();
+
+        assertThat(mUtils.shouldShowOwnershipDisclaimerScreen(params)).isTrue();
+    }
+
+    @Test
+    public void shouldShowOwnershipDisclaimerScreen_showOwnershipDisclaimerTrue_returnsFalse() {
+        ProvisioningParams params = createTrustedSourceParamsBuilder()
+                .setSkipOwnershipDisclaimer(true)
+                .build();
+
+        assertThat(mUtils.shouldShowOwnershipDisclaimerScreen(params)).isFalse();
+    }
+
+    @Test
+    public void isPackageInstalled_packageExists_returnsTrue() {
+        PackageInfo packageInfo = new PackageInfo();
+        packageInfo.applicationInfo = new ApplicationInfo();
+        packageInfo.packageName = "com.example.package";
+        shadowOf(mContext.getPackageManager()).installPackage(packageInfo);
+
+        assertThat(mUtils
+                .isPackageInstalled("com.example.package", mContext.getPackageManager())).isTrue();
+    }
+
+    @Test
+    public void isPackageInstalled_packageDoesNotExist_returnsFalse() {
+        assertThat(mUtils
+                .isPackageInstalled("com.example.package", mContext.getPackageManager())).isFalse();
+    }
+
+    private static ProvisioningParams.Builder createTrustedSourceParamsBuilder() {
+        return ProvisioningParams.Builder.builder()
+                .setProvisioningAction(ACTION_PROVISION_MANAGED_DEVICE_FROM_TRUSTED_SOURCE)
+                .setDeviceAdminComponentName(TEST_MDM_ADMIN)
+                .setStartedByTrustedSource(true);
     }
 
     private Intent getGetProvisioningModeIntent() {
