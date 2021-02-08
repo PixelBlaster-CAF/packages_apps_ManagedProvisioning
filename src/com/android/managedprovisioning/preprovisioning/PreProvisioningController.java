@@ -25,6 +25,7 @@ import static android.app.admin.DevicePolicyManager.CODE_HAS_DEVICE_OWNER;
 import static android.app.admin.DevicePolicyManager.CODE_MANAGED_USERS_NOT_SUPPORTED;
 import static android.app.admin.DevicePolicyManager.CODE_NOT_SYSTEM_USER;
 import static android.app.admin.DevicePolicyManager.CODE_OK;
+import static android.app.admin.DevicePolicyManager.CODE_PROVISIONING_NOT_ALLOWED_FOR_NON_DEVELOPER_USERS;
 import static android.app.admin.DevicePolicyManager.CODE_USER_SETUP_COMPLETED;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_ACCOUNT_TO_MIGRATE;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_ADMIN_EXTRAS_BUNDLE;
@@ -68,7 +69,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.SystemClock;
-import android.os.SystemProperties;
 import android.os.UserManager;
 import android.service.persistentdata.PersistentDataBlockManager;
 import android.telephony.TelephonyManager;
@@ -99,6 +99,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class PreProvisioningController {
+    private static final String EXTRA_IS_SETUP_FLOW = "isSetupFlow";
+
     private final Context mContext;
     private final Ui mUi;
     private final MessageParser mMessageParser;
@@ -269,10 +271,6 @@ public class PreProvisioningController {
         mSharedPreferences.writeProvisioningStartedTimestamp(SystemClock.elapsedRealtime());
         mProvisioningAnalyticsTracker.logProvisioningSessionStarted(mContext);
 
-        if (!isProvisioningAllowed()) {
-            return;
-        }
-
         if (!tryParseParameters(intent, params)) {
             return;
         }
@@ -282,15 +280,6 @@ public class PreProvisioningController {
         }
 
         if (!verifyActionAndCaller(intent, callingPackage)) {
-            return;
-        }
-
-        // Profile Owner pre-provisioning check: Bail out if we are trying to provision a work
-        // profile but one already exists.
-        if (isProfileOwnerProvisioning() && mUtils.alreadyHasManagedProfile(mContext) != -1) {
-            mUi.showErrorAndClose(R.string.cant_add_work_profile,
-                    R.string.work_profile_cant_be_added_contact_admin,
-                    "A work profile already exists.");
             return;
         }
 
@@ -339,7 +328,7 @@ public class PreProvisioningController {
         } else if (mUtils.isFinancedDeviceAction(mParams.provisioningAction)) {
             mUi.prepareFinancedDeviceFlow(mParams);
         } else if (mParams.isNfc) {
-            startNfcFlow();
+            startNfcFlow(intent);
         } else if (isProfileOwnerProvisioning()) {
             startManagedProfileFlow();
         } else if (isDpcTriggeredManagedDeviceProvisioning(intent)) {
@@ -348,10 +337,16 @@ public class PreProvisioningController {
         }
     }
 
-    private void startNfcFlow() {
+    private void startNfcFlow(Intent intent) {
         ProvisionLogger.logi("Starting the NFC provisioning flow.");
+        addAdditionalNfcProvisioningExtras(intent);
         updateProvisioningFlowState(FLOW_TYPE_LEGACY);
         maybeShowUserConsentScreen();
+    }
+
+    // TODO(178822333): Remove NFC-specific logic after adding support for the admin-integrated flow
+    private void addAdditionalNfcProvisioningExtras(Intent intent) {
+        intent.putExtra(EXTRA_IS_SETUP_FLOW, true);
     }
 
     private void startManagedProfileFlow() {
@@ -924,16 +919,23 @@ public class PreProvisioningController {
                     mUi.showErrorAndClose(R.string.cant_add_work_profile,
                             R.string.work_profile_cant_be_added_contact_admin,
                             "Exiting managed profile provisioning, calling user cannot have managed profiles");
-                } else if (isRemovingManagedProfileDisallowed()){
-                    mUi.showErrorAndClose(R.string.cant_replace_or_remove_work_profile,
-                            R.string.for_help_contact_admin,
-                            "Exiting managed profile provisioning, removing managed profile is disallowed");
+                } else if (!canAddManagedProfile()) {
+                    mUi.showErrorAndClose(R.string.cant_add_work_profile,
+                            R.string.work_profile_cant_be_added_contact_admin,
+                            "Exiting managed profile provisioning, a managed profile "
+                                    + "already exists");
                 } else {
                     mUi.showErrorAndClose(R.string.cant_add_work_profile,
                             R.string.work_profile_cant_be_added_contact_admin,
                             "Exiting managed profile provisioning, cannot add more managed "
                                     + "profiles");
                 }
+                break;
+            case CODE_PROVISIONING_NOT_ALLOWED_FOR_NON_DEVELOPER_USERS:
+                mUi.showErrorAndClose(R.string.cant_add_work_profile,
+                        R.string.work_profile_cant_be_added_contact_admin,
+                        "Exiting managed profile provisioning, "
+                                + "provisioning not allowed by OEM");
                 break;
             default:
                 mUi.showErrorAndClose(R.string.cant_add_work_profile,
@@ -943,9 +945,9 @@ public class PreProvisioningController {
         }
     }
 
-    private boolean isRemovingManagedProfileDisallowed() {
-        return mUtils.alreadyHasManagedProfile(mContext) != -1
-                && mUserManager.hasUserRestriction(UserManager.DISALLOW_REMOVE_MANAGED_PROFILE);
+    private boolean canAddManagedProfile() {
+        return mUserManager.canAddMoreManagedProfiles(
+                mContext.getUserId(), /* allowedToRemoveOne= */ false);
     }
 
     private void showDeviceOwnerErrorAndClose(int provisioningPreCondition) {
@@ -960,23 +962,13 @@ public class PreProvisioningController {
                         R.string.contact_your_admin_for_help,
                         "Device owner can only be set up for USER_SYSTEM.");
                 return;
+            case CODE_PROVISIONING_NOT_ALLOWED_FOR_NON_DEVELOPER_USERS:
+                mUi.showErrorAndClose(R.string.cant_set_up_device,
+                        R.string.contact_your_admin_for_help,
+                        "Provisioning not allowed by OEM");
+                return;
         }
         mUi.showErrorAndClose(R.string.cant_set_up_device, R.string.contact_your_admin_for_help,
                 "Device Owner provisioning not allowed for an unknown reason.");
-    }
-
-    /**
-     *  Checks if provisioning is allowed while regular usage (non-developer/CTS) if device
-     *   has overlayed config value (default is true)
-     */
-    private boolean isProvisioningAllowed() {
-        boolean isDeveloperMode = mSettingsFacade.isDeveloperMode(mContext);
-        boolean isProvisioningAllowedForNormalUsers = SystemProperties.getBoolean("ro.config.allowuserprovisioning", true);
-
-        if (!isDeveloperMode && !isProvisioningAllowedForNormalUsers) {
-            mUi.abortProvisioning();
-            return false;
-        }
-        return true;
     }
 }
