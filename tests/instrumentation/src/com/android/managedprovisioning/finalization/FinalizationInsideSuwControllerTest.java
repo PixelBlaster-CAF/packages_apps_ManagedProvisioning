@@ -85,6 +85,7 @@ public class FinalizationInsideSuwControllerTest extends AndroidTestCase {
     @Mock private NotificationHelper mNotificationHelper;
     @Mock private DeferredMetricsReader mDeferredMetricsReader;
     @Mock private ProvisioningAnalyticsTracker mProvisioningAnalyticsTracker;
+    @Mock private UserManager mUserManager;
 
     private PreFinalizationController mPreFinalizationController;
     private FinalizationController mFinalizationController;
@@ -100,6 +101,11 @@ public class FinalizationInsideSuwControllerTest extends AndroidTestCase {
         when(mActivity.getIntent()).thenReturn(ACTIVITY_INTENT);
         when(mActivity.bindService(any(Intent.class), any(ServiceConnection.class), anyInt()))
                 .thenReturn(false);
+        when(mActivity.getSystemServiceName(UserManager.class))
+                .thenReturn(Context.USER_SERVICE);
+        when(mActivity.getSystemService(Context.USER_SERVICE)).thenReturn(mUserManager);
+        when(mUserManager.isUserUnlocked(anyInt())).thenReturn(true);
+        when(mUserManager.isUserUnlocked(any(UserHandle.class))).thenReturn(true);
 
         final ProvisioningParamsUtils provisioningParamsUtils = new ProvisioningParamsUtils();
         mPreFinalizationController = new PreFinalizationController(
@@ -234,9 +240,6 @@ public class FinalizationInsideSuwControllerTest extends AndroidTestCase {
 
         // THEN the service which starts the DPC, has never been started.
         verifySendDpcServiceNotStarted();
-
-        // THEN account migration is triggered exactly once
-        verify(mUtils).removeAccountAsync(eq(mActivity), eq(TEST_ACCOUNT), any());
     }
 
     @SmallTest
@@ -360,12 +363,6 @@ public class FinalizationInsideSuwControllerTest extends AndroidTestCase {
         final DevicePolicyManager mockProfileDpm = mock(DevicePolicyManager.class);
         when(profileContext.getSystemService(DevicePolicyManager.class)).thenReturn(mockProfileDpm);
 
-        // Mock UserManager for testing user restriction.
-        final UserManager mockUserManager = mock(UserManager.class);
-        when(mActivity.getSystemServiceName(UserManager.class))
-                .thenReturn(Context.USER_SERVICE);
-        when(mActivity.getSystemService(Context.USER_SERVICE)).thenReturn(mockUserManager);
-
         // WHEN calling deviceManagementEstablished
         mPreFinalizationController.deviceManagementEstablished(params);
 
@@ -410,9 +407,6 @@ public class FinalizationInsideSuwControllerTest extends AndroidTestCase {
 
         // THEN the user provisioning state is finalized
         verify(mHelper).markUserProvisioningStateFinalized(params);
-
-        // THEN account migration is triggered exactly once
-        verify(mUtils).removeAccountAsync(eq(mActivity), eq(TEST_ACCOUNT), any());
     }
 
     private void verifyDpcLaunchedForUser(UserHandle userHandle, int numTimes) {
