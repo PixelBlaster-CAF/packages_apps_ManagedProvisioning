@@ -33,6 +33,7 @@ import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_ALLOWED_P
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_IMEI;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_KEEP_ACCOUNT_ON_MIGRATION;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_LEAVE_ALL_SYSTEM_APPS_ENABLED;
+import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SERIAL_NUMBER;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SKIP_EDUCATION_SCREENS;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_TRIGGER;
@@ -228,14 +229,6 @@ public class PreProvisioningController {
      */
     public static class UiParams {
         /**
-         * Defined by the organization in the provisioning trigger (e.g. QR code).
-         */
-        public String deviceAdminIconFilePath;
-        /**
-         * Defined by the organization in the provisioning trigger (e.g. QR code).
-         */
-        public String deviceAdminLabel;
-        /**
          * Admin application package name.
          */
         public String packageName;
@@ -328,7 +321,12 @@ public class PreProvisioningController {
         } else if (mUtils.isFinancedDeviceAction(mParams.provisioningAction)) {
             mUi.prepareFinancedDeviceFlow(mParams);
         } else if (mParams.isNfc) {
-            startNfcFlow(intent);
+            // TODO(b/177849035): Remove NFC-specific logic
+            if (mUtils.shouldShowOwnershipDisclaimerScreen(mParams)) {
+                mUi.showOwnershipDisclaimerScreen(mParams);
+            } else {
+                startNfcFlow(intent);
+            }
         } else if (isProfileOwnerProvisioning()) {
             startManagedProfileFlow();
         } else if (isDpcTriggeredManagedDeviceProvisioning(intent)) {
@@ -337,7 +335,7 @@ public class PreProvisioningController {
         }
     }
 
-    private void startNfcFlow(Intent intent) {
+    void startNfcFlow(Intent intent) {
         ProvisionLogger.logi("Starting the NFC provisioning flow.");
         addAdditionalNfcProvisioningExtras(intent);
         updateProvisioningFlowState(FLOW_TYPE_LEGACY);
@@ -428,8 +426,6 @@ public class PreProvisioningController {
         final String packageName = mParams.inferDeviceAdminPackageName();
         final UiParams uiParams = new UiParams();
         uiParams.customization = customization;
-        uiParams.deviceAdminIconFilePath = mParams.deviceAdminIconFilePath;
-        uiParams.deviceAdminLabel = mParams.deviceAdminLabel;
         uiParams.disclaimerHeadings = getDisclaimerHeadings();
         uiParams.provisioningAction = mParams.provisioningAction;
         uiParams.packageName = packageName;
@@ -573,6 +569,12 @@ public class PreProvisioningController {
         bundle.putParcelable(EXTRA_PROVISIONING_ADMIN_EXTRAS_BUNDLE, mParams.adminExtrasBundle);
         bundle.putIntegerArrayList(EXTRA_PROVISIONING_ALLOWED_PROVISIONING_MODES,
                 mParams.allowedProvisioningModes);
+
+        if (mParams.allowedProvisioningModes.contains(
+                DevicePolicyManager.PROVISIONING_MODE_FULLY_MANAGED_DEVICE)) {
+            bundle.putBoolean(EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT,
+                    mParams.deviceOwnerPermissionGrantOptOut);
+        }
         return bundle;
     }
 
