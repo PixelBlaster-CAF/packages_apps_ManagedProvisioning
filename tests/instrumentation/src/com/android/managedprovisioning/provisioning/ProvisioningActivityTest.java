@@ -34,8 +34,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 import static com.google.common.truth.Truth.assertThat;
 
-import static org.hamcrest.core.AllOf.allOf;
 import static org.hamcrest.Matchers.not;
+import static org.hamcrest.core.AllOf.allOf;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.any;
@@ -44,7 +44,6 @@ import static org.mockito.Matchers.eq;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mockingDetails;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.reset;
 import static org.mockito.Mockito.spy;
 import static org.mockito.Mockito.timeout;
@@ -64,7 +63,6 @@ import android.provider.Settings;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.intent.rule.IntentsTestRule;
-import androidx.test.filters.FlakyTest;
 import androidx.test.filters.SmallTest;
 
 import com.android.managedprovisioning.R;
@@ -164,6 +162,9 @@ public class ProvisioningActivityTest {
     @Mock private ProvisioningManager mProvisioningManager;
     @Mock private PackageManager mPackageManager;
     @Mock private UserProvisioningStateHelper mUserProvisioningStateHelper;
+    @Mock
+    private PolicyComplianceUtils mPolicyComplianceUtils;
+
     private Utils mUtils;
     private static int mRotationLocked;
 
@@ -200,7 +201,7 @@ public class ProvisioningActivityTest {
                 (classLoader, className, intent) ->
                         new ProvisioningActivity(
                                 mProvisioningManager, mUtils, mUserProvisioningStateHelper,
-                                new PolicyComplianceUtils()) {
+                                mPolicyComplianceUtils) {
                             @Override
                             public PackageManager getPackageManager() {
                                 return mPackageManager;
@@ -279,56 +280,6 @@ public class ProvisioningActivityTest {
     }
 
     @Test
-    public void testCancelProfileOwner_CompProvisioningWithSkipConsent() throws Throwable {
-        // GIVEN launching profile intent with skipping user consent
-        ProvisioningParams params = new ProvisioningParams.Builder()
-                .setProvisioningAction(ACTION_PROVISION_MANAGED_PROFILE)
-                .setDeviceAdminComponentName(ADMIN)
-                .setSkipUserConsent(true)
-                .build();
-        Intent intent = new Intent()
-                .putExtra(ProvisioningParams.EXTRA_PROVISIONING_PARAMS, params);
-        launchActivityAndWait(new Intent(intent));
-
-        reset(mProvisioningManager);
-
-        // WHEN the user tries to cancel
-        mActivityRule.runOnUiThread(() -> mActivityRule.getActivity().onBackPressed());
-
-        // THEN never unregistering ProvisioningManager
-        // b/130350469 to figure out why onPause/onResume is called one additional time
-        verify(mProvisioningManager, never()).unregisterListener(
-                any(ProvisioningManagerCallback.class));
-    }
-
-    @FlakyTest
-    @Test
-    public void testCancelProfileOwner_CompProvisioningWithoutSkipConsent() throws Throwable {
-        // GIVEN launching profile intent without skipping user consent
-        ProvisioningParams params = new ProvisioningParams.Builder()
-                .setProvisioningAction(ACTION_PROVISION_MANAGED_PROFILE)
-                .setDeviceAdminComponentName(ADMIN)
-                .setSkipUserConsent(false)
-                .build();
-        Intent intent = new Intent()
-                .putExtra(ProvisioningParams.EXTRA_PROVISIONING_PARAMS, params);
-        launchActivityAndWait(new Intent(intent));
-
-        reset(mProvisioningManager);
-
-        // WHEN the user tries to cancel
-        mActivityRule.runOnUiThread(() -> mActivityRule.getActivity().onBackPressed());
-
-        // THEN unregistering ProvisioningManager
-        // b/130350469 to figure out why onPause/onResume is called one additional time
-        verify(mProvisioningManager)
-                .unregisterListener(any(ProvisioningManagerCallback.class));
-
-        // THEN the cancel dialog should be shown
-        onView(withText(R.string.profile_owner_cancel_message)).check(matches(isDisplayed()));
-    }
-
-    @Test
     public void testCancelDeviceOwner() throws Throwable {
         // GIVEN the activity was launched with a device owner intent
         launchActivityAndWait(DEVICE_OWNER_INTENT);
@@ -398,6 +349,8 @@ public class ProvisioningActivityTest {
                 eq(0))).thenReturn(resolveInfoList);
         when(mPackageManager.checkPermission(eq(permission.DISPATCH_PROVISIONING_MESSAGE),
                 eq(activityInfo.packageName))).thenReturn(PackageManager.PERMISSION_GRANTED);
+        when(mPolicyComplianceUtils.isPolicyComplianceActivityResolvableForUser(
+                any(), any(), any(), any())).thenReturn(true);
 
         // GIVEN the activity was launched with a nfc intent
         launchActivityAndWait(NFC_INTENT);

@@ -123,8 +123,7 @@ public final class FinalizationController {
             ProvisioningParams params) {
         return new PrimaryProfileFinalizationHelper(params.accountToMigrate,
                 params.keepAccountMigrated, mUtils.getManagedProfile(mActivity),
-                params.inferDeviceAdminPackageName(), mUtils,
-                params.flowType == ProvisioningParams.FLOW_TYPE_ADMIN_INTEGRATED);
+                params.inferDeviceAdminPackageName(), mUtils);
     }
 
     /**
@@ -155,10 +154,6 @@ public final class FinalizationController {
         final ProvisioningParams params = loadProvisioningParams();
         if (params == null) {
             ProvisionLogger.logw("FinalizationController invoked, but no stored params");
-            return;
-        }
-
-        if (!mFinalizationControllerLogic.isReadyForFinalization(params)) {
             return;
         }
 

@@ -19,8 +19,9 @@ package com.android.managedprovisioning.common;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_FINANCED_DEVICE;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE;
-import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_SHAREABLE_DEVICE;
-import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_USER;
+import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_DEVICE_OWNER;
+import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED;
+import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_OWNED;
 import static android.content.pm.PackageManager.MATCH_HIDDEN_UNTIL_INSTALLED_COMPONENTS;
 import static android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
@@ -36,7 +37,6 @@ import android.annotation.NonNull;
 import android.annotation.Nullable;
 import android.annotation.StringRes;
 import android.annotation.WorkerThread;
-import android.app.ActivityManager;
 import android.app.admin.DevicePolicyManager;
 import android.content.ComponentName;
 import android.content.Context;
@@ -79,7 +79,6 @@ import com.android.managedprovisioning.TrampolineActivity;
 import com.android.managedprovisioning.model.CustomizationParams;
 import com.android.managedprovisioning.model.PackageDownloadInfo;
 import com.android.managedprovisioning.model.ProvisioningParams;
-import com.android.managedprovisioning.parser.ParserUtils;
 import com.android.managedprovisioning.preprovisioning.WebActivity;
 
 import com.google.android.setupcompat.template.FooterBarMixin;
@@ -451,22 +450,27 @@ public class Utils {
 
     /**
      * Returns {@code true} if the admin-integrated flow should be performed.
+     *
+     * <p>This method must not be called before the admin app has been installed. If it has not
+     * yet been installed, consider using {@link
+     * #checkAdminIntegratedFlowPreconditions(ProvisioningParams)}.
+     *
      * <p>To perform the admin-integrated flow, all of the following criteria must be fulfilled:
      * <ul>
+     *     <li>All of the preconditions in {@link
+     *     #checkAdminIntegratedFlowPreconditions(ProvisioningParams)}</li>
      *     <li>The DPC has an activity with intent filter with action {@link
      *     DevicePolicyManager#ACTION_GET_PROVISIONING_MODE}</li>
      *     <li>The DPC has an activity with intent filter with action {@link
      *     DevicePolicyManager#ACTION_ADMIN_POLICY_COMPLIANCE}</li>
-     *     <li>Device is organization-owned (see {@link
-     *     ParserUtils#isOrganizationOwnedProvisioning(Context, Intent, SettingsFacade)}
-     *     for details)</li>
-     *     <li>The provisioning is not triggered by NFC</li>
-     *     <li>{@link ActivityManager#isLowRamDevice()} returns {@code false}</li>
      * </ul>
      */
-    public boolean shouldPerformAdminIntegratedFlow(Context context, ProvisioningParams params,
+    public boolean canPerformAdminIntegratedFlow(Context context, ProvisioningParams params,
             PolicyComplianceUtils policyComplianceUtils,
             GetProvisioningModeUtils provisioningModeUtils) {
+        if (!checkAdminIntegratedFlowPreconditions(params)) {
+            return false;
+        }
         boolean isPolicyComplianceScreenAvailable =
                 policyComplianceUtils.isPolicyComplianceActivityResolvableForUser(context, params,
                         this, UserHandle.SYSTEM);
@@ -480,18 +484,37 @@ public class Utils {
             ProvisionLogger.logi("Get provisioning mode DPC screen not available.");
             return false;
         }
-        if (!params.isOrganizationOwnedProvisioning) {
-            ProvisionLogger.logi("Device not organization-owned.");
-            return false;
-        }
+        return true;
+    }
+
+    /**
+     * Returns {@code true} if the admin-integrated flow preconditions are met.
+     *
+     * <p>This method can be called before the admin app has been installed. Returning {@code true}
+     * does not mean the admin-integrated flow should be performed (for that, use {@link
+     * #canPerformAdminIntegratedFlow(Context, ProvisioningParams, PolicyComplianceUtils,
+     * GetProvisioningModeUtils)}), but returning {@code false} can be used as an early indication
+     * that it should <i>not</i> be performed.
+     *
+     * <p>The preconditions are:
+     * <ul>
+     *     <li>Provisioning was started using {@link
+     *     DevicePolicyManager#ACTION_PROVISION_MANAGED_DEVICE_FROM_TRUSTED_SOURCE}</li>
+     *     <li>The provisioning is not triggered by NFC</li>
+     *     <li>This is not a financed device provisioning</li>
+     * </ul>
+     */
+    public boolean checkAdminIntegratedFlowPreconditions(ProvisioningParams params) {
         if (params.isNfc) {
             ProvisionLogger.logi("NFC provisioning");
             return false;
         }
-        final ActivityManager activityManager = context.getSystemService(ActivityManager.class);
-        boolean lowRamDevice = activityManager.isLowRamDevice();
-        if (lowRamDevice) {
-            ProvisionLogger.logi("This is a low RAM device.");
+        if (isFinancedDeviceAction(params.provisioningAction)) {
+            ProvisionLogger.logi("Financed device provisioning");
+            return false;
+        }
+        if (!params.startedByTrustedSource) {
+            ProvisionLogger.logi("Provisioning not started by a trusted source");
             return false;
         }
         return true;
@@ -509,8 +532,7 @@ public class Utils {
      */
     // TODO: Move the list of device owner actions into a Globals class.
     public final boolean isProfileOwnerAction(String action) {
-        return ACTION_PROVISION_MANAGED_PROFILE.equals(action)
-                || ACTION_PROVISION_MANAGED_USER.equals(action);
+        return ACTION_PROVISION_MANAGED_PROFILE.equals(action);
     }
 
     /**
@@ -518,8 +540,7 @@ public class Utils {
      */
     // TODO: Move the list of device owner actions into a Globals class.
     public final boolean isDeviceOwnerAction(String action) {
-        return ACTION_PROVISION_MANAGED_DEVICE.equals(action)
-                || ACTION_PROVISION_MANAGED_SHAREABLE_DEVICE.equals(action);
+        return ACTION_PROVISION_MANAGED_DEVICE.equals(action);
     }
 
     /**
@@ -613,17 +634,6 @@ public class Utils {
         wifiIntent.putExtra("extra_prefs_show_button_bar", true);
         wifiIntent.putExtra("wifi_enable_next_on_connect", true);
         return wifiIntent;
-    }
-
-    // TODO (b/137101239): clean up split system user codes
-    /**
-     * Returns whether the device has a split system user.
-     *
-     * <p>Split system user means that user 0 is system only and all meat users are separate from
-     * the system user.
-     */
-    public boolean isSplitSystemUser() {
-        return UserManager.isSplitSystemUser();
     }
 
     /**
@@ -805,8 +815,13 @@ public class Utils {
     public static boolean isSilentProvisioningForTestingDeviceOwner(
                 Context context, ProvisioningParams params) {
         final DevicePolicyManager dpm = context.getSystemService(DevicePolicyManager.class);
-        final ComponentName currentDeviceOwner =
-                dpm.getDeviceOwnerComponentOnCallingUser();
+
+        // TODO(b/177502490): need to instantiate a new Utils() because
+        // getCurrentDeviceOwnerComponentName() on SetDevicePolicyTaskTest. If this method doesn't
+        // go away, we should change the latter to use ExtendedMockito so it can mock static
+        // methods.
+        final ComponentName currentDeviceOwner = new Utils()
+                .getCurrentDeviceOwnerComponentName(dpm);
         final ComponentName targetDeviceAdmin = params.deviceAdminComponentName;
 
         switch (params.provisioningAction) {
@@ -818,6 +833,17 @@ public class Utils {
             default:
                 return false;
         }
+    }
+
+    /**
+     * Gets the device's current device owner admin component.
+     */
+    @Nullable
+    public ComponentName getCurrentDeviceOwnerComponentName(DevicePolicyManager dpm) {
+        // TODO(b/177502490): might go away once silent provisioning is refactored
+        return isHeadlessSystemUserMode()
+                ? dpm.getDeviceOwnerComponentOnAnyUser()
+                : dpm.getDeviceOwnerComponentOnCallingUser();
     }
 
     private static boolean isSilentProvisioningForTestingManagedProfile(
@@ -872,6 +898,44 @@ public class Utils {
         final int negativeResId = R.string.profile_owner_cancel_cancel;
         final int dialogMsgResId = R.string.profile_owner_cancel_message;
         return getBaseDialogBuilder(positiveResId, negativeResId, dialogMsgResId);
+    }
+
+    public boolean shouldShowOwnershipDisclaimerScreen(ProvisioningParams params) {
+        return !params.skipOwnershipDisclaimer;
+    }
+
+    public boolean isOrganizationOwnedAllowed(ProvisioningParams params) {
+        return params.initiatorRequestedProvisioningModes == SUPPORTED_MODES_ORGANIZATION_OWNED
+                || params.initiatorRequestedProvisioningModes
+                        == SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED
+                || params.initiatorRequestedProvisioningModes == SUPPORTED_MODES_DEVICE_OWNER;
+    }
+
+    public boolean isManagedProfileProvisioningStartedByDpc(
+            Context context,
+            ProvisioningParams params,
+            SettingsFacade settingsFacade) {
+        if (!ACTION_PROVISION_MANAGED_PROFILE.equals(params.provisioningAction)) {
+            return false;
+        }
+        if (params.startedByTrustedSource) {
+            return false;
+        }
+        return settingsFacade.isUserSetupCompleted(context);
+    }
+
+    /**
+     * Returns {@code true} if {@code packageName} is installed on the primary user.
+     */
+    public boolean isPackageInstalled(String packageName, PackageManager packageManager) {
+        try {
+            final ApplicationInfo ai = packageManager.getApplicationInfo(packageName,
+                    PackageManager.MATCH_DIRECT_BOOT_AWARE
+                            | PackageManager.MATCH_DIRECT_BOOT_UNAWARE);
+            return ai != null;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 
     private SimpleDialog.Builder getBaseDialogBuilder(
