@@ -24,6 +24,7 @@ import android.app.admin.ManagedProfileProvisioningParams;
 import android.content.ComponentName;
 import android.content.Context;
 import android.os.UserHandle;
+import android.stats.devicepolicy.DevicePolicyEnums;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.managedprovisioning.R;
@@ -116,9 +117,6 @@ public class CreateAndProvisionManagedProfileTask extends AbstractProvisioningTa
         // Take default cross profiles apps snapshot and system apps snapshot if required.
         takeAppsSnapshots(userId, mProvisioningParams.leaveAllSystemAppsEnabled);
 
-        // Set the main color of managed provisioning from the provisioning params.
-        maybeSetProvisioningMainColor();
-
         stopTaskTimer();
         success();
     }
@@ -148,20 +146,12 @@ public class CreateAndProvisionManagedProfileTask extends AbstractProvisioningTa
         mCrossProfileAppsSnapshot.takeNewSnapshot(parentUserId);
     }
 
-    private void maybeSetProvisioningMainColor() {
-        if (mProvisioningParams.mainColor != null) {
-            mDpm.setOrganizationColorForUser(
-                    mProvisioningParams.mainColor, mProfileUserId);
-        }
-    }
-
     public int getProfileUserId() {
         return mProfileUserId;
     }
 
     @Override
     protected int getMetricsCategory() {
-        // TODO(b/178458861): Add metric constant
-        return 0;
+        return DevicePolicyEnums.PROVISIONING_PROVISION_MANAGED_PROFILE_TASK_MS;
     }
 }

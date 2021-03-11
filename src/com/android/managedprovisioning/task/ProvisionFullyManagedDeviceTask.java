@@ -23,6 +23,7 @@ import android.app.admin.DevicePolicyManager;
 import android.app.admin.FullyManagedDeviceProvisioningParams;
 import android.content.ComponentName;
 import android.content.Context;
+import android.stats.devicepolicy.DevicePolicyEnums;
 
 import com.android.internal.annotations.VisibleForTesting;
 import com.android.managedprovisioning.R;
@@ -118,6 +119,10 @@ public class ProvisionFullyManagedDeviceTask extends AbstractProvisioningTask {
                 .setTimeZone(mProvisioningParams.timeZone)
                 .setLocalTime(mProvisioningParams.localTime)
                 .setLocale(mProvisioningParams.locale)
+                // The device owner can grant sensors permissions if it has not opted
+                // out of controlling them.
+                .setDeviceOwnerCanGrantSensorsPermissions(
+                        !mProvisioningParams.deviceOwnerPermissionGrantOptOut)
                 .build();
     }
 
@@ -130,7 +135,6 @@ public class ProvisionFullyManagedDeviceTask extends AbstractProvisioningTask {
 
     @Override
     protected int getMetricsCategory() {
-        // TODO(b/178458861): Add metric constant
-        return 0;
+        return DevicePolicyEnums.PROVISIONING_PROVISION_FULLY_MANAGED_DEVICE_TASK_MS;
     }
 }
