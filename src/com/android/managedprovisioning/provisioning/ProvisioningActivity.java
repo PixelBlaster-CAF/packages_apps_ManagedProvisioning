@@ -43,12 +43,14 @@ import com.android.managedprovisioning.R;
 import com.android.managedprovisioning.analytics.MetricsWriterFactory;
 import com.android.managedprovisioning.analytics.ProvisioningAnalyticsTracker;
 import com.android.managedprovisioning.common.AccessibilityContextMenuMaker;
-import com.android.managedprovisioning.common.ClickableSpanFactory;
 import com.android.managedprovisioning.common.ManagedProvisioningSharedPreferences;
 import com.android.managedprovisioning.common.PolicyComplianceUtils;
 import com.android.managedprovisioning.common.ProvisionLogger;
 import com.android.managedprovisioning.common.RepeatingVectorAnimation;
 import com.android.managedprovisioning.common.SettingsFacade;
+import com.android.managedprovisioning.common.ThemeHelper;
+import com.android.managedprovisioning.common.ThemeHelper.DefaultNightModeChecker;
+import com.android.managedprovisioning.common.ThemeHelper.DefaultSetupWizardBridge;
 import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.finalization.PreFinalizationController;
 import com.android.managedprovisioning.finalization.UserProvisioningStateHelper;
@@ -57,7 +59,7 @@ import com.android.managedprovisioning.model.ProvisioningParams;
 import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.AnimationComponents;
 import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.TransitionAnimationCallback;
 
-import com.google.android.setupcompat.template.FooterButton;
+import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.GlifLayout;
 
 import java.lang.annotation.Retention;
@@ -119,7 +121,6 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
 
     private TransitionAnimationHelper mTransitionAnimationHelper;
     private RepeatingVectorAnimation mRepeatingVectorAnimation;
-    private FooterButton mNextButton;
     private UserProvisioningStateHelper mUserProvisioningStateHelper;
     private PolicyComplianceUtils mPolicyComplianceUtils;
 
@@ -128,14 +129,19 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
                 /* provisioningManager */ null, // defined in getProvisioningManager()
                 new Utils(),
                 /* userProvisioningStateHelper */ null, // defined in onCreate()
-                new PolicyComplianceUtils());
+                new PolicyComplianceUtils(),
+                new SettingsFacade(),
+                new ThemeHelper(new DefaultNightModeChecker(), new DefaultSetupWizardBridge()));
     }
 
     @VisibleForTesting
-    public ProvisioningActivity(ProvisioningManager provisioningManager, Utils utils,
+    public ProvisioningActivity(ProvisioningManager provisioningManager,
+            Utils utils,
             UserProvisioningStateHelper userProvisioningStateHelper,
-            PolicyComplianceUtils policyComplianceUtils) {
-        super(utils);
+            PolicyComplianceUtils policyComplianceUtils,
+            SettingsFacade settingsFacade,
+            ThemeHelper themeHelper) {
+        super(utils, settingsFacade, themeHelper);
         mProvisioningManager = provisioningManager;
         mUserProvisioningStateHelper = userProvisioningStateHelper;
         mPolicyComplianceUtils = checkNotNull(policyComplianceUtils);
@@ -199,7 +205,8 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
         if (!shouldSkipEducationScreens()) {
             final GlifLayout layout = findViewById(R.id.setup_wizard_layout);
             layout.findViewById(R.id.provisioning_progress).setVisibility(View.GONE);
-            mNextButton.setVisibility(View.VISIBLE);
+            Utils.addNextButton(layout, v -> onNextButtonClicked());
+            Utils.addAbortAndResetButton(layout, v -> onAbortButtonClicked());
         }
 
         if (shouldSkipEducationScreens() || Utils.isSilentProvisioning(this, mParams)) {
@@ -210,6 +217,14 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
     @VisibleForTesting
     protected void onNextButtonClicked() {
         markDeviceManagementEstablishedAndFinish();
+    }
+
+    @VisibleForTesting
+    protected void onAbortButtonClicked() {
+        final Intent intent = new Intent(this, ResetAndReturnDeviceActivity.class);
+        WizardManagerHelper.copyWizardManagerExtras(getIntent(), intent);
+        intent.putExtra(ProvisioningParams.EXTRA_PROVISIONING_PARAMS, mParams);
+        startActivity(intent);
     }
 
     private void finishActivity() {
@@ -341,20 +356,16 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
             // make the icon invisible
             layout.findViewById(R.id.sud_layout_icon).setVisibility(View.INVISIBLE);
         }
-        mNextButton = Utils.addNextButton(layout, v -> onNextButtonClicked());
-        mNextButton.setVisibility(View.INVISIBLE);
 
         handleSupportUrl(layout, customizationParams);
     }
 
     private void setupEducationViews(GlifLayout layout) {
-        final TextView header = layout.findViewById(R.id.suc_layout_title);
-        header.setTextColor(getColorStateList(R.color.header_text_color));
-
         final int progressLabelResId =
                 PROVISIONING_MODE_TO_PROGRESS_LABEL.get(getProvisioningMode());
         final TextView progressLabel = layout.findViewById(R.id.provisioning_progress);
         if (shouldSkipEducationScreens()) {
+            final TextView header = layout.findViewById(R.id.suc_layout_title);
             header.setText(progressLabelResId);
             progressLabel.setVisibility(View.INVISIBLE);
             layout.findViewById(R.id.subheader_description).setVisibility(View.INVISIBLE);
@@ -367,8 +378,10 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
 
     private void setupTransitionAnimationHelper(GlifLayout layout) {
         final TextView header = layout.findViewById(R.id.suc_layout_title);
+        final ImageView subHeaderIcon = layout.findViewById(R.id.subheader_icon);
         final TextView subHeaderTitle = layout.findViewById(R.id.subheader_title);
         final TextView subHeader = layout.findViewById(R.id.subheader_description);
+        final ImageView secondarySubHeaderIcon = layout.findViewById(R.id.secondary_subheader_icon);
         final TextView secondarySubHeaderTitle = layout.findViewById(
                 R.id.secondary_subheader_title);
         final TextView secondarySubHeader = layout.findViewById(
@@ -378,8 +391,9 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
         final TextView providerInfo = layout.findViewById(R.id.provider_info);
         final int provisioningMode = getProvisioningMode();
         final AnimationComponents animationComponents =
-                new AnimationComponents(header, subHeaderTitle, subHeader, secondarySubHeaderTitle,
-                        secondarySubHeader, drawable, providerInfo);
+                new AnimationComponents(header, subHeaderIcon, subHeaderTitle, subHeader,
+                        secondarySubHeaderIcon, secondarySubHeaderTitle, secondarySubHeader,
+                        drawable, providerInfo);
         mTransitionAnimationHelper = new TransitionAnimationHelper(provisioningMode,
                 /* adminCanGrantSensorsPermissions= */ !mParams.deviceOwnerPermissionGrantOptOut,
                 animationComponents, this);
@@ -410,11 +424,8 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
         final String deviceProvider = getString(R.string.organization_admin);
         final String contactDeviceProvider =
                 getString(R.string.contact_device_provider, deviceProvider);
-        final ClickableSpanFactory spanFactory =
-                new ClickableSpanFactory(getColor(R.color.blue_text));
-        mUtils.handleSupportUrl(this, customization, spanFactory,
-                new AccessibilityContextMenuMaker(this), info, deviceProvider,
-                contactDeviceProvider);
+        mUtils.handleSupportUrl(this, customization, new AccessibilityContextMenuMaker(this), info,
+                deviceProvider, contactDeviceProvider);
     }
 
     private void startTransitionAnimation() {

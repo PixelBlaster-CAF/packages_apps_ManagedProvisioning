@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Apl berikut akan mengurus peranti anda:"</string>
     <string name="next" msgid="1004321437324424398">"Seterusnya"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Menyediakan profil kerja…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Pentadbir IT anda berupaya memantau dan mengurus tetapan, akses korporat, apl, kebenaran dan data yang berkaitan dengan profil ini, termasuk aktiviti rangkaian anda serta lokasi, sejarah panggilan dan sejarah carian kenalan peranti anda.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Hubungi pentadbir anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Pentadbir IT anda berupaya memantau dan mengurus tetapan, akses korporat, apl, kebenaran dan data yang berkaitan dengan peranti ini, termasuk aktiviti rangkaian anda serta lokasi, sejarah panggilan dan sejarah carian kenalan peranti anda.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Hubungi pentadbir IT anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Pentadbir IT anda berupaya memantau dan mengurus tetapan, akses korporat, apl, kebenaran dan data yang berkaitan dengan profil ini, termasuk aktiviti rangkaian anda serta lokasi, sejarah panggilan dan sejarah carian kenalan peranti anda.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Hubungi pentadbir anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Pentadbir IT anda berupaya memantau dan mengurus tetapan, akses korporat, apl, kebenaran dan data yang berkaitan dengan peranti ini, termasuk aktiviti rangkaian anda serta lokasi, sejarah panggilan dan sejarah carian kenalan peranti anda.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Hubungi pentadbir IT anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Untuk menggunakan ciri perlindungan kecurian, anda mesti mempunyai kunci skrin yang dilindungi kata laluan untuk peranti anda."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Hubungi pentadbir IT anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Ketahui lebih lanjut"</string>
@@ -172,6 +176,10 @@
     <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"Pentadbir IT anda boleh membenarkan apl mengakses tetapan pada peranti ini, termasuk mikrofon, kamera dan lokasi."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Menyediakan peranti anda…"</string>
     <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Gunakan peranti ini untuk mengakses apl kerja anda dengan mudah. Peranti ini bukan peribadi, maka pentadbir IT anda mungkin dapat melihat data dan aktiviti anda. Untuk mengetahui lebih lanjut, hubungi pentadbir IT anda."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Kembalikan peranti ini kepada pentadbir IT anda"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Kembali ke skrin sebelumnya atau tetapkan semula peranti ini dan kembalikan kepada pentadbir IT anda."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Batalkan persediaan"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Tetapkan semula &amp; kembalikan peranti"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Apl kerja disimpan dalam profil kerja anda dan diurus oleh pentadbir IT anda"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Apl peribadi diasingkan dan disembunyikan daripada apl kerja"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"Pentadbir IT anda boleh mengawal peranti ini dan menyekat apl tertentu"</string>

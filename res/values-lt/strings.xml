@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Ši programa tvarkys jūsų įrenginį:"</string>
     <string name="next" msgid="1004321437324424398">"Kitas"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Nustatomas darbo profilis..."</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"IT administratorius gali stebėti ir tvarkyti nustatymus, įmonės prieigą, programas, leidimus ir su šiuo profiliu susijusius duomenis, įskaitant tinklo veiklą bei įrenginio vietovę, skambučių istoriją ir kontaktų paieškos istoriją.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Daugiau informacijos, įskaitant organizacijos privatumo politiką, galite gauti susisiekę su IT administratoriumi."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"IT administratorius gali stebėti ir tvarkyti nustatymus, įmonės prieigą, programas, leidimus ir su šiuo įrenginiu susijusius duomenis, įskaitant tinklo veiklą bei įrenginio vietovę, skambučių istoriją ir kontaktų paieškos istoriją.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Daugiau informacijos, įskaitant organizacijos privatumo politiką, galite gauti susisiekę su IT administratoriumi."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"IT administratorius gali stebėti ir tvarkyti nustatymus, įmonės prieigą, programas, leidimus ir su šiuo profiliu susijusius duomenis, įskaitant tinklo veiklą bei įrenginio vietovę, skambučių istoriją ir kontaktų paieškos istoriją.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Daugiau informacijos, įskaitant organizacijos privatumo politiką, galite gauti susisiekę su IT administratoriumi."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"IT administratorius gali stebėti ir tvarkyti nustatymus, įmonės prieigą, programas, leidimus ir su šiuo įrenginiu susijusius duomenis, įskaitant tinklo veiklą bei įrenginio vietovę, skambučių istoriją ir kontaktų paieškos istoriją.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Daugiau informacijos, įskaitant organizacijos privatumo politiką, galite gauti susisiekę su IT administratoriumi."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Kad galėtumėte naudoti apsaugos nuo vagystės funkcijas, turite nustatyti slaptažodžiu apsaugotą įrenginio ekrano užraktą."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Susisiekite su IT administratoriumi, jei reikia daugiau informacijos, įskaitant organizacijos privatumo politiką."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Sužinokite daugiau"</string>
@@ -172,6 +176,10 @@
     <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"IT administratorius gali leisti programoms pasiekti šio įrenginio nustatymus, įskaitant mikrofono, fotoaparato ir vietovės."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Nustatomas įrenginys…"</string>
     <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Naudokite šį įrenginį, kad lengvai pasiektumėte darbo programas. Šis įrenginys nėra privatus, todėl IT administratorius gali peržiūrėti jūsų duomenis ir veiklą. Jei norite sužinoti daugiau, susisiekite su savo IT administratoriumi."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Grąžinkite šį įrenginį IT administratoriui"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Grįžkite į ankstesnį ekraną arba nustatykite šį įrenginį iš naujo ir grąžinkite jį IT administratoriui."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Atšaukti sąranką"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Nustatyti įrenginį iš naujo ir grąžinti"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Darbo programos saugomos darbo profilyje ir jas tvarko IT administratorius"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Asmeninės programos laikomos atskirai ir paslėptos nuo darbo programų"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"IT administratorius gali valdyti šį įrenginį ir blokuoti tam tikras programas"</string>

@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"برنامه زیر، دستگاهتان را مدیریت می‌کند:"</string>
     <string name="next" msgid="1004321437324424398">"بعدی"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"درحال راه‌اندازی نمایه کاری…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"‏سرپرست IT می‌تواند تنظیمات، دسترسی شرکتی، برنامه‌ها، مجوزها، و داده‌های مرتبط با این نمایه - ازجمله فعالیت شما در شبکه و همچنین مکان دستگاه، سابقه تماس، و سابقه جستجوی مخاطب - را پایش و مدیریت کند.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>برای دریافت اطلاعات بیشتر، ازجمله خط‌مشی‌های رازداری سازمان، با سرپرست IT تماس بگیرید."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"‏سرپرست IT می‌تواند تنظیمات، دسترسی شرکتی، برنامه‌ها، مجوزها، و داده‌های مرتبط با این دستگاه - ازجمله فعالیت شما در شبکه و همچنین مکان دستگاه، سابقه تماس، و سابقه جستجوی مخاطب - را پایش و مدیریت کند.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>برای دریافت اطلاعات بیشتر، ازجمله خط‌مشی‌های رازداری سازمان، با سرپرست IT تماس بگیرید."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"‏سرپرست IT می‌تواند تنظیمات، دسترسی شرکتی، برنامه‌ها، مجوزها، و داده‌های مرتبط با این نمایه - ازجمله فعالیت شما در شبکه و همچنین مکان دستگاه، سابقه تماس، و سابقه جستجوی مخاطب - را پایش و مدیریت کند.<xliff:g id="LINE_BREAK">
+
+</xliff:g>برای دریافت اطلاعات بیشتر، ازجمله خط‌مشی‌های رازداری سازمان، با سرپرست IT تماس بگیرید."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"‏سرپرست IT می‌تواند تنظیمات، دسترسی شرکتی، برنامه‌ها، مجوزها، و داده‌های مرتبط با این دستگاه - ازجمله فعالیت شما در شبکه و همچنین مکان دستگاه، سابقه تماس، و سابقه جستجوی مخاطب - را پایش و مدیریت کند.<xliff:g id="LINE_BREAK">
+
+</xliff:g>برای دریافت اطلاعات بیشتر، ازجمله خط‌مشی‌های رازداری سازمان، با سرپرست IT تماس بگیرید."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"برای استفاده از قابلیت‌های محافظت دربرابر دزدی، باید برای دستگاهتان قفل صفحه با محافظت گذرواژه داشته باشید."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"‏برای کسب اطلاعات بیشتر، ازجمله درباره خط‌مشی‌های رازداری سازمان، با سرپرست IT‌ تماس بگیرید."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"بیشتر بدانید"</string>
@@ -172,6 +176,10 @@
     <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"سرپرست فناوری اطلاعات شما می‌تواند به برنامه‌ها اجازه دهد به تنظیمات این دستگاه (ازجمله میکروفون، دوربین، و مکان) دسترسی داشته باشند."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"درحال راه‌اندازی دستگاه…"</string>
     <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"‏Use this device to easily access your work apps (برای دسترسی آسان به برنامه‌های کاری، از این دستگاه استفاده کنید). This device isn\'t private, so your IT admin may be able to see your data and activity (این دستگاه خصوصی نیست و بنابراین ممکن است سرپرست IT بتواند داده‌ها و فعالیتتان را ببیند). To learn more, contact your IT admin (برای آشنایی بیشتر، با سرپرست IT تماس بگیرید)."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"این دستگاه را به سرپرست فناوری اطلاعات برگردانید"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"به صفحه قبلی برگردید یا این دستگاه را بازنشانی کنید و آن را به سرپرست فناوری اطلاعات برگردانید."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"لغو راه‌اندازی"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"بازنشانی و برگرداندن دستگاه"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"برنامه‌های کاری در نمایه کاری هستند و سرپرست فناوری اطلاعات آن‌ها را مدیریت می‌کند"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"برنامه‌های شخصی از برنامه‌های کاری جداست و از آن پنهان است"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"سرپرست فناوری اطلاعات می‌تواند این دستگاه را کنترل کند و برخی از برنامه‌ها را مسدود کند"</string>

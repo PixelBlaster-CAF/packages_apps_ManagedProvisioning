@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"निम्‍न ऐप आपके डिवाइस को प्रबंधित करेगा:"</string>
     <string name="next" msgid="1004321437324424398">"आगे बढ़ें"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"वर्क प्रोफ़ाइल सेट अप की जा रही है…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"आपके आईटी एडमिन आपकी इंटरनेट से जुड़ी गतिविधि, इस प्रोफ़ाइल से जुड़ी सेटिंग, कॉर्पोरेट पहुंच, ऐप्लिकेशन, अनुमतियों और इस प्रोफ़ाइल से जुड़े डेटा के साथ ही आपके डिवाइस के जगह, कॉल इतिहास और संपर्कों के इतिहास की निगरानी और उसका प्रबंधन कर सकते हैं.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>अपने संगठन की निजता नीतियों के साथ ही और जानकारी के लिए अपने आईटी एडमिन से संपर्क करें."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"आपके आईटी एडमिन आपकी इंटरनेट से जुड़ी गतिविधि, इस प्रोफ़ाइल से जुड़ी सेटिंग, कॉर्पोरेट पहुंच, ऐप्लिकेशन, अनुमतियों और इस प्रोफ़ाइल से जुड़े डेटा के साथ ही आपके डिवाइस के जगह, कॉल इतिहास और संपर्क खोज इतिहास की निगरानी और उसका प्रबंधन कर सकते हैं.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>अपने संगठन की निजता नीतियों के साथ-साथ और जानकारी के लिए अपने आईटी एडमिन से संपर्क करें."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"आपके आईटी एडमिन आपकी इंटरनेट से जुड़ी गतिविधि, इस प्रोफ़ाइल से जुड़ी सेटिंग, कॉर्पोरेट पहुंच, ऐप्लिकेशन, अनुमतियों और इस प्रोफ़ाइल से जुड़े डेटा के साथ ही आपके डिवाइस के जगह, कॉल इतिहास और संपर्कों के इतिहास की निगरानी और उसका प्रबंधन कर सकते हैं.<xliff:g id="LINE_BREAK">
+
+</xliff:g>अपने संगठन की निजता नीतियों के साथ ही और जानकारी के लिए अपने आईटी एडमिन से संपर्क करें."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"आपके आईटी एडमिन आपकी इंटरनेट से जुड़ी गतिविधि, इस प्रोफ़ाइल से जुड़ी सेटिंग, कॉर्पोरेट पहुंच, ऐप्लिकेशन, अनुमतियों और इस प्रोफ़ाइल से जुड़े डेटा के साथ ही आपके डिवाइस के जगह, कॉल इतिहास और संपर्क खोज इतिहास की निगरानी और उसका प्रबंधन कर सकते हैं.<xliff:g id="LINE_BREAK">
+
+</xliff:g>अपने संगठन की निजता नीतियों के साथ-साथ और जानकारी के लिए अपने आईटी एडमिन से संपर्क करें."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"चोरी से सुरक्षा संबंधी सुविधाओं का उपयोग करने के लिए, आपके पास अपने डिवाइस के लिए पासवर्ड द्वारा सुरक्षित स्क्रीन लॉक होना चाहिए."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"अपने संगठन की निजता नीतियों के साथ ही और जानकारी के लिए अपने आईटी एडमिन से संपर्क करें."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"ज़्यादा जानें"</string>
@@ -169,9 +173,13 @@
     <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"आपकी गतिविधि और डेटा"</string>
     <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"आपका आईटी एडमिन इस डिवाइस पर आपका डेटा और गतिविधि देख सकता है."</string>
     <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"ऐप्लिकेशन की अनुमतियां"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"आपका आईटी एडमिन, अलग-अलग ऐप्लिकेशन को इस डिवाइस की सेटिंग ऐक्सेस करने की अनुमति दे सकता है. इनमें माइक्रोफ़ोन, कैमरा, और जगह की जानकारी की सेटिंग का ऐक्सेस भी शामिल है."</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"आपका आईटी एडमिन, अलग-अलग ऐप्लिकेशन को इस डिवाइस की सेटिंग ऐक्सेस करने की अनुमति दे सकता है. इनमें माइक्रोफ़ोन, कैमरा, और जगह की जानकारी की सेटिंग का ऐक्सेस शामिल है."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"आपका डिवाइस सेट किया जा रहा है…"</string>
     <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"इस डिवाइस का इस्तेमाल अपने काम से जुड़े ऐप्लिकेशन आसानी से ऐक्सेस करने के लिए करें. यह डिवाइस निजी नहीं है इसलिए आपके आईटी एडमिन आपका डेटा और गतिविधि देख सकते हैं. ज़्यादा जानने के लिए अपने आईटी एडमिन से संपर्क करें."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"यह डिवाइस अपने आईटी एडमिन को वापस दें"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"सेट अप पूरा करने के लिए पिछली स्क्रीन पर वापस जाएं या इस डिवाइस को रीसेट करके सेट अप रद्द करें और अपने आईटी एडमिन को वापस दें."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"सेट अप रद्द करें"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"डिवाइस को रीसेट करें और वापस दें"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"ऑफ़िस के काम के ऐप, वर्क प्रोफ़ाइल में रखे जाते हैं. इन्हें आईटी एडमिन प्रबंधित करता है"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"निजी ऐप्लिकेशन अलग होते हैं और ऑफ़िस के काम से जुड़े ऐप्लिकेशन से छिपे होते हैं"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"आपका आईटी एडमिन इस डिवाइस को कंट्रोल कर सकता है और कुछ ऐप्लिकेशन को ब्लॉक कर सकता है"</string>
