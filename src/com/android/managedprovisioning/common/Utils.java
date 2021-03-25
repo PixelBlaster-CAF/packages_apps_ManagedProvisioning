@@ -44,7 +44,6 @@ import android.content.pm.PackageManager.NameNotFoundException;
 import android.content.pm.ResolveInfo;
 import android.content.pm.UserInfo;
 import android.content.res.TypedArray;
-import android.graphics.Color;
 import android.net.ConnectivityManager;
 import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
@@ -667,13 +666,6 @@ public class Utils {
         return hash;
     }
 
-    public boolean isBrightColor(int color) {
-        // This comes from the YIQ transformation. We're using the formula:
-        // Y = .299 * R + .587 * G + .114 * B
-        return Color.red(color) * 299 + Color.green(color) * 587 + Color.blue(color) * 114
-                >= 1000 * THRESHOLD_BRIGHT_COLOR;
-    }
-
     /**
      * Returns whether given intent can be resolved for the user.
      */
@@ -699,7 +691,6 @@ public class Utils {
     }
 
     public void handleSupportUrl(Context context, CustomizationParams customizationParams,
-                ClickableSpanFactory clickableSpanFactory,
                 AccessibilityContextMenuMaker contextMenuMaker, TextView textView,
                 String deviceProvider, String contactDeviceProvider) {
         if (customizationParams.supportUrl == null) {
@@ -707,10 +698,11 @@ public class Utils {
             return;
         }
         final Intent intent = WebActivity.createIntent(
-                context, customizationParams.supportUrl, customizationParams.statusBarColor);
+                context, customizationParams.supportUrl);
 
-        handlePartialClickableTextView(textView, contactDeviceProvider, deviceProvider, intent,
-                clickableSpanFactory);
+        final ClickableSpanFactory spanFactory = new ClickableSpanFactory(getAccentColor(context));
+        handlePartialClickableTextView(
+                textView, contactDeviceProvider, deviceProvider, intent, spanFactory);
 
         contextMenuMaker.registerWithActivity(textView);
     }
@@ -796,9 +788,24 @@ public class Utils {
         return setPrimaryButton(layout, listener, ButtonType.NEXT, R.string.next);
     }
 
+    /**
+     * Adds an encryption primary button mixin to a {@link GlifLayout} screen.
+     */
+    public static FooterButton addEncryptButton(
+            GlifLayout layout, @NonNull OnClickListener listener) {
+        return setPrimaryButton(layout, listener, ButtonType.NEXT, R.string.encrypt);
+    }
+
     public static FooterButton addAcceptAndContinueButton(GlifLayout layout,
         @NonNull OnClickListener listener) {
         return setPrimaryButton(layout, listener, ButtonType.NEXT, R.string.accept_and_continue);
+    }
+
+    /** Adds a primary "Cancel setup" button */
+    public static FooterButton addResetButton(GlifLayout layout,
+            @NonNull OnClickListener listener) {
+        return setPrimaryButton(layout, listener, ButtonType.CANCEL,
+                R.string.fully_managed_device_reset_and_return_button);
     }
 
     private static FooterButton setPrimaryButton(GlifLayout layout, OnClickListener listener,
@@ -812,6 +819,29 @@ public class Utils {
             .build();
         mixin.setPrimaryButton(primaryButton);
         return primaryButton;
+    }
+
+    /** Adds a secondary "abort & reset" button. */
+    public static FooterButton addAbortAndResetButton(GlifLayout layout,
+            @NonNull OnClickListener listener) {
+        final int buttonType = ButtonType.CANCEL;
+        final int buttonLabel = R.string.fully_managed_device_cancel_setup_button;
+
+        return addSecondaryButton(layout, listener, buttonType, buttonLabel);
+    }
+
+    private static FooterButton addSecondaryButton(GlifLayout layout,
+            @NonNull OnClickListener listener,
+            @ButtonType int buttonType, @StringRes int buttonLabel) {
+        final FooterBarMixin mixin = layout.getMixin(FooterBarMixin.class);
+        final FooterButton secondaryButton = new FooterButton.Builder(layout.getContext())
+                .setText(buttonLabel)
+                .setListener(listener)
+                .setButtonType(buttonType)
+                .setTheme(R.style.SudGlifButton_Secondary)
+                .build();
+        mixin.setSecondaryButton(secondaryButton);
+        return secondaryButton;
     }
 
     public SimpleDialog.Builder createCancelProvisioningResetDialogBuilder() {

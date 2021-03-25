@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Şu uygulama, cihazınızı yönetecek:"</string>
     <string name="next" msgid="1004321437324424398">"İleri"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"İş profili oluşturuluyor…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"IT yöneticiniz cihazınızın konumu, çağrı geçmişi ve kişi arama geçmişinin yanı sıra ağ etkinliğinizi de içerecek şekilde bu profille ilişkilendirilen ayarları, şirket erişimini, uygulamaları, izinleri ve verileri izleyebilir ve yönetebilir.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Kuruluşunuzun gizlilik politikalarını da içeren daha fazla bilgi için IT yöneticinizle iletişime geçin."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"IT yöneticiniz cihazınızın konumu, çağrı geçmişi ve kişi arama geçmişinin yanı sıra ağ etkinliğinizi de içerecek şekilde bu cihazla ilişkilendirilen ayarları, şirket erişimini, uygulamaları, izinleri ve verileri izleyebilir ve yönetebilir.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Kuruluşunuzun gizlilik politikalarını da içeren daha fazla bilgi için IT yöneticinizle iletişime geçin."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"IT yöneticiniz cihazınızın konumu, çağrı geçmişi ve kişi arama geçmişinin yanı sıra ağ etkinliğinizi de içerecek şekilde bu profille ilişkilendirilen ayarları, şirket erişimini, uygulamaları, izinleri ve verileri izleyebilir ve yönetebilir.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Kuruluşunuzun gizlilik politikalarını da içeren daha fazla bilgi için IT yöneticinizle iletişime geçin."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"IT yöneticiniz cihazınızın konumu, çağrı geçmişi ve kişi arama geçmişinin yanı sıra ağ etkinliğinizi de içerecek şekilde bu cihazla ilişkilendirilen ayarları, şirket erişimini, uygulamaları, izinleri ve verileri izleyebilir ve yönetebilir.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Kuruluşunuzun gizlilik politikalarını da içeren daha fazla bilgi için IT yöneticinizle iletişime geçin."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Hırsızlığa karşı koruma özelliklerini kullanmak için cihazınızda şifre korumalı bir ekran kilidinizin olması gerekir."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Kuruluşunuzun gizlilik politikaları da dahil olmak üzere daha fazla bilgi için IT yöneticinizle iletişime geçin."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Daha fazla bilgi"</string>
@@ -172,6 +176,10 @@
     <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"BT yöneticiniz, bu cihazdaki uygulamaların mikrofon, kamera ve konum dahil olmak üzere ayarlara erişmesine izin verebilir."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Cihazınız ayarlanıyor…"</string>
     <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"İş uygulamalarınıza kolayca erişmek için bu cihazı kullanın. Bu cihaz gizli olmadığından IT yöneticiniz verilerinizi ve etkinliklerinizi görebilir. Daha fazla bilgi edinmek için IT yöneticinizle iletişime geçin."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Bu cihazı BT yöneticinize iade edin"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Önceki ekrana dönün veya bu cihazı sıfırlayıp BT yöneticinize iade edin."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Kurulumu iptal et"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Cihazı sıfırla ve iade et"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"İş uygulamaları iş profilinizde tutulur ve BT yöneticiniz tarafından yönetilir"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Kişisel uygulamalar ayrı olup iş uygulamalarından gizlenir"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"BT yöneticiniz bu cihazı kontrol edebilir ve belirli uygulamaları engelleyebilir"</string>

@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Enheten hanteras med följande app:"</string>
     <string name="next" msgid="1004321437324424398">"Nästa"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Konfigurerar jobbprofilen …"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"IT-administratören kan övervaka och hantera inställningar, företagsåtkomst, appar, data med koppling till profilen, inklusive nätverksaktivitet, samt plats, samtalshistorik och sökhistorik i kontakter för enheten.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Kontakta IT-administratören om du vill få mer information, till exempel om organisationens sekretesspolicy."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"IT-administratören kan övervaka och hantera inställningar, företagsåtkomst, appar, data med koppling till enheten, inklusive nätverksaktivitet, samt plats, samtalshistorik och sökhistorik i kontakter för enheten.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Kontakta IT-administratören om du vill få mer information, till exempel om organisationens sekretesspolicy."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"IT-administratören kan övervaka och hantera inställningar, företagsåtkomst, appar, data med koppling till profilen, inklusive nätverksaktivitet, samt plats, samtalshistorik och sökhistorik i kontakter för enheten.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Kontakta IT-administratören om du vill få mer information, till exempel om organisationens sekretesspolicy."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"IT-administratören kan övervaka och hantera inställningar, företagsåtkomst, appar, data med koppling till enheten, inklusive nätverksaktivitet, samt plats, samtalshistorik och sökhistorik i kontakter för enheten.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Kontakta IT-administratören om du vill få mer information, till exempel om organisationens sekretesspolicy."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Enheten måste ha ett lösenordsskyddat skärmlås för att du ska kunna använda stöldskyddsfunktioner."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Kontakta IT-administratören om du vill få mer information, till exempel om organisationens sekretesspolicy."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Läs mer"</string>
@@ -172,6 +176,10 @@
     <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"IT-administratören tillåter inte att appar får åtkomst till inställningar på den här enheten, till exempel för mikrofon, kamera och plats."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Konfigurerar enheten …"</string>
     <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Få enkelt åtkomst till dina jobbappar på den här enheten. Enheten är inte privat, så IT-administratören kanske kan se din aktivitet och data på enheten. Kontakta IT-administratören om du vill veta mer."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Lämna tillbaka enheten till IT-administratören"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Återgå till föregående skärm eller återställ den här enheten och lämna tillbaka den till IT-administratören."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Avbryt konfigureringen"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Återställ och lämna tillbaka enheten"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Jobbappar i jobbprofilen hanteras av IT-administratören"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Privata appar lagras för sig och syns inte bland jobbapparna"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"IT-administratören kan styra denna enhet och blockera appar"</string>
