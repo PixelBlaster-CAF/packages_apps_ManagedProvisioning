@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Šī lietotne pārvaldīs jūsu ierīci:"</string>
     <string name="next" msgid="1004321437324424398">"Tālāk"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Notiek darba profila iestatīšana..."</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"IT administrators var pārraudzīt un pārvaldīt ar šo profilu saistītos iestatījumus, korporatīvo piekļuvi, lietotnes, atļaujas un datus, tostarp aktivitāti tīklā, kā arī informāciju par ierīces atrašanās vietu, zvanu vēsturi un kontaktpersonu meklēšanas vēsturi.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Lai iegūtu plašāku informāciju, tostarp informāciju par organizācijas konfidencialitātes politikām, sazinieties ar IT administratoru."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"IT administrators var pārraudzīt un pārvaldīt ar šo ierīci saistītos iestatījumus, korporatīvo piekļuvi, lietotnes, atļaujas un datus, tostarp aktivitāti tīklā, kā arī informāciju par ierīces atrašanās vietu, zvanu vēsturi un kontaktpersonu meklēšanas vēsturi.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Lai iegūtu plašāku informāciju, tostarp informāciju par organizācijas konfidencialitātes politikām, sazinieties ar IT administratoru."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"IT administrators var pārraudzīt un pārvaldīt ar šo profilu saistītos iestatījumus, korporatīvo piekļuvi, lietotnes, atļaujas un datus, tostarp aktivitāti tīklā, kā arī informāciju par ierīces atrašanās vietu, zvanu vēsturi un kontaktpersonu meklēšanas vēsturi.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Lai iegūtu plašāku informāciju, tostarp informāciju par organizācijas konfidencialitātes politikām, sazinieties ar IT administratoru."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"IT administrators var pārraudzīt un pārvaldīt ar šo ierīci saistītos iestatījumus, korporatīvo piekļuvi, lietotnes, atļaujas un datus, tostarp aktivitāti tīklā, kā arī informāciju par ierīces atrašanās vietu, zvanu vēsturi un kontaktpersonu meklēšanas vēsturi.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Lai iegūtu plašāku informāciju, tostarp informāciju par organizācijas konfidencialitātes politikām, sazinieties ar IT administratoru."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Lai izmantotu zādzību novēršanas funkcijas, jūsu ierīcē ir jābūt iestatītai ar paroli aizsargātai ekrāna bloķēšanai."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Lai iegūtu plašāku informāciju, tostarp informāciju par uzņēmuma konfidencialitātes politikām, sazinieties ar IT administratoru."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Uzzināt vairāk"</string>
@@ -172,6 +176,10 @@
     <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"Jūsu IT administrators var atļaut lietotnēm piekļūt iestatījumiem šajā ierīcē, tostarp mikrofonam, kamerai un atrašanās vietai."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Notiek jūsu ierīces iestatīšana…"</string>
     <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Izmantojot šo ierīci, varat ērti piekļūt darba lietotnēm. Šī ierīce nav privāta, tāpēc IT administrators varbūt varēs skatīt jūsu datus un darbības. Lai uzzinātu vairāk, sazinieties ar organizācijas IT administratoru."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Ierīces atgriešana IT administratoram"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Atgriezieties iepriekšējā ekrānā vai atiestatiet šo ierīci un atgrieziet to savam IT administratoram."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Atcelt iestatīšanu"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Atiestatīt un atgriezt ierīci"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Darba lietotnes darba profilā pārvalda IT administrators"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Personīgās lietotnes ir nošķirtas no darba lietotnēm"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"IT administrators var kontrolēt ierīci un bloķēt lietotnes"</string>

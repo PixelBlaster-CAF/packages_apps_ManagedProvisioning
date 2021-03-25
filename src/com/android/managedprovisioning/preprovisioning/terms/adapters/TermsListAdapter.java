@@ -15,20 +15,19 @@
  */
 package com.android.managedprovisioning.preprovisioning.terms.adapters;
 
-import static com.android.internal.util.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
-import android.annotation.ColorInt;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.accessibility.AccessibilityNodeInfo;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.managedprovisioning.R;
 import com.android.managedprovisioning.common.AccessibilityContextMenuMaker;
+import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.preprovisioning.terms.TermsDocument;
 
 import java.util.List;
@@ -43,21 +42,20 @@ public class TermsListAdapter extends BaseExpandableListAdapter {
     private final AccessibilityContextMenuMaker mContextMenuMaker;
     private final GroupExpandedInfo mGroupExpandedInfo;
     private final Context mContext;
-    private final int mStatusBarColor;
+    private final Utils mUtils;
 
     /**
      * Creates a new instance of the class.
      */
     public TermsListAdapter(Context context, List<TermsDocument> termsDocuments,
             LayoutInflater layoutInflater, AccessibilityContextMenuMaker
-            contextMenuMaker, GroupExpandedInfo groupExpandedInfo,
-            @ColorInt int statusBarColor) {
-        mTermsDocuments = checkNotNull(termsDocuments);
-        mInflater = checkNotNull(layoutInflater);
-        mGroupExpandedInfo = checkNotNull(groupExpandedInfo);
-        mContextMenuMaker = checkNotNull(contextMenuMaker);
-        mContext = checkNotNull(context);
-        mStatusBarColor = statusBarColor;
+            contextMenuMaker, GroupExpandedInfo groupExpandedInfo, Utils utils) {
+        mTermsDocuments = requireNonNull(termsDocuments);
+        mInflater = requireNonNull(layoutInflater);
+        mGroupExpandedInfo = requireNonNull(groupExpandedInfo);
+        mContextMenuMaker = requireNonNull(contextMenuMaker);
+        mContext = requireNonNull(context);
+        mUtils = requireNonNull(utils);
     }
 
     @Override
@@ -111,8 +109,6 @@ public class TermsListAdapter extends BaseExpandableListAdapter {
 
         ImageView chevron = groupView.findViewById(R.id.chevron);
         chevron.setRotation(isExpanded ? 90 : -90); // chevron down / up retrospectively
-        groupView.findViewById(R.id.divider).setVisibility(
-                shouldShowGroupDivider(groupPosition) ? View.VISIBLE : View.INVISIBLE);
 
         return groupView;
     }
@@ -134,7 +130,8 @@ public class TermsListAdapter extends BaseExpandableListAdapter {
 
         TermsDocument disclaimer = getDisclaimer(groupPosition);
         TextView textView = view.findViewById(R.id.disclaimer_content);
-        TermsAdapterUtils.populateContentTextView(mContext, textView, disclaimer, mStatusBarColor);
+        TermsAdapterUtils.populateContentTextView(
+                mContext, textView, disclaimer, mUtils.getAccentColor(mContext));
         mContextMenuMaker.registerWithActivity(textView);
         return view;
     }
