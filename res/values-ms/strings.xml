@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Apl berikut akan mengurus peranti anda:"</string>
     <string name="next" msgid="1004321437324424398">"Seterusnya"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Menyediakan profil kerja…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Pentadbir IT anda berupaya memantau dan mengurus tetapan, akses korporat, apl, kebenaran dan data yang berkaitan dengan profil ini, termasuk aktiviti rangkaian anda serta lokasi, sejarah panggilan dan sejarah carian kenalan peranti anda.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Hubungi pentadbir anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Pentadbir IT anda berupaya memantau dan mengurus tetapan, akses korporat, apl, kebenaran dan data yang berkaitan dengan peranti ini, termasuk aktiviti rangkaian anda serta lokasi, sejarah panggilan dan sejarah carian kenalan peranti anda.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Hubungi pentadbir IT anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Pentadbir IT anda berupaya memantau dan mengurus tetapan, akses korporat, apl, kebenaran dan data yang berkaitan dengan profil ini, termasuk aktiviti rangkaian anda serta lokasi, sejarah panggilan dan sejarah carian kenalan peranti anda.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Hubungi pentadbir anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Pentadbir IT anda berupaya memantau dan mengurus tetapan, akses korporat, apl, kebenaran dan data yang berkaitan dengan peranti ini, termasuk aktiviti rangkaian anda serta lokasi, sejarah panggilan dan sejarah carian kenalan peranti anda.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Hubungi pentadbir IT anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Untuk menggunakan ciri perlindungan kecurian, anda mesti mempunyai kunci skrin yang dilindungi kata laluan untuk peranti anda."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Hubungi pentadbir IT anda untuk mendapatkan maklumat lanjut, termasuk dasar privasi organisasi anda."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Ketahui lebih lanjut"</string>
@@ -166,12 +170,18 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"Mari sediakan peranti kerja anda"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"Pastikan apl kerja di hujung jari anda"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"Peranti ini bukan peribadi"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"Aktiviti &amp; data anda"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"Pentadbir IT anda mungkin dapat melihat data dan aktiviti anda pada peranti ini."</string>
-    <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"Kebenaran apl"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"Pentadbir IT anda boleh membenarkan apl mengakses tetapan pada peranti ini, termasuk mikrofon, kamera dan lokasi."</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"Pentadbir IT anda mungkin dapat melihat data dan aktiviti anda pada peranti ini.\n\nUntuk mengetahui lebih lanjut, hubungi <xliff:g id="IT_ADMIN">%1$s</xliff:g> anda."</string>
+    <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"Aktiviti &amp; data anda"</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"Pentadbir IT anda mungkin dapat melihat data dan aktiviti anda pada peranti ini."</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"Kebenaran apl"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"Pentadbir IT boleh menetapkan kebenaran untuk apl pada peranti ini, seperti kebenaran mikrofon, kamera dan lokasi."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Menyediakan peranti anda…"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Gunakan peranti ini untuk mengakses apl kerja anda dengan mudah. Peranti ini bukan peribadi, maka pentadbir IT anda mungkin dapat melihat data dan aktiviti anda. Untuk mengetahui lebih lanjut, hubungi pentadbir IT anda."</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1090645190066781456">"Gunakan peranti ini untuk mengakses apl kerja anda dengan mudah. Peranti ini bukan peribadi, maka pentadbir IT anda mungkin dapat melihat data dan aktiviti anda."</string>
+    <string name="fully_managed_device_with_permission_control_provisioning_summary" msgid="6634797147105465856">"Gunakan peranti ini untuk mengakses apl kerja anda dengan mudah. Peranti ini bukan peribadi, maka pentadbir IT anda mungkin dapat melihat aktiviti dan data anda. Pentadbir IT juga boleh menetapkan kebenaran untuk apl pada peranti ini, seperti kebenaran mikrofon, kamera dan lokasi."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Kembalikan peranti ini kepada pentadbir IT anda"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Kembali ke skrin sebelumnya atau tetapkan semula peranti ini dan kembalikan kepada pentadbir IT anda."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Batalkan persediaan"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Tetapkan semula &amp; kembalikan peranti"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Apl kerja disimpan dalam profil kerja anda dan diurus oleh pentadbir IT anda"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Apl peribadi diasingkan dan disembunyikan daripada apl kerja"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"Pentadbir IT anda boleh mengawal peranti ini dan menyekat apl tertentu"</string>
@@ -179,8 +189,8 @@
     <string name="just_a_sec" msgid="6244676028626237220">"Tunggu sebentar…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"Peringatan privasi"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"Pentadbir IT anda mungkin dapat melihat data dan aktiviti anda pada peranti ini"</string>
-    <string name="financed_device_screen_header" msgid="7890706080917322376">"Peranti ini telah dibeli secara kredit daripada <xliff:g id="CREDITOR_NAME">%1$s</xliff:g>"</string>
+    <string name="financed_device_screen_header" msgid="6875169548352717124">"Peranti ini disediakan oleh <xliff:g id="CREDITOR_NAME">%s</xliff:g>"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> boleh:"</string>
-    <string name="install_creditor_app_description" msgid="6159751782301108878">"Pasang apl <xliff:g id="CREDITOR_NAME">%1$s</xliff:g> supaya anda boleh membuat pembayaran untuk peranti ini"</string>
-    <string name="lock_device_description" msgid="2940362560732989166">"Hadkan akses kepada peranti ini jika anda tidak membuat pembayaran"</string>
+    <string name="install_creditor_app_description" msgid="6056052518227986620">"Pasang apl <xliff:g id="CREDITOR_NAME">%s</xliff:g> pada peranti ini"</string>
+    <string name="lock_device_description" msgid="9198967942380649144">"Kunci peranti ini jika anda tidak membuat pembayaran"</string>
 </resources>

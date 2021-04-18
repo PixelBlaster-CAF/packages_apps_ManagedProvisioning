@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Die volgende program sal jou toestel bestuur:"</string>
     <string name="next" msgid="1004321437324424398">"Volgende"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Stel tans werkprofiel op …"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Jou IT-administrateur kan instellings, korporatiewe toegang, programme, toestemmings en data wat met hierdie profiel geassosieer word, insluitend jou netwerkaktiwiteit, asook jou toestel se ligging, oproepgeskiedenis en kontaksoekgeskiedenis, monitor en bestuur.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Kontak jou IT-administrateur vir meer inligting, insluitend jou organisasie se privaatheidsbeleide."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Jou IT-administrateur kan instellings, korporatiewe toegang, programme, toestemmings en data wat met hierdie toestel geassosieer word, insluitend jou netwerkaktiwiteit, asook jou toestel se ligging, oproepgeskiedenis en kontaksoekgeskiedenis, monitor en bestuur.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Kontak jou IT-administrateur vir meer inligting, insluitend jou organisasie se privaatheidsbeleide."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Jou IT-administrateur kan instellings, korporatiewe toegang, programme, toestemmings en data wat met hierdie profiel geassosieer word, insluitend jou netwerkaktiwiteit, asook jou toestel se ligging, oproepgeskiedenis en kontaksoekgeskiedenis, monitor en bestuur.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Kontak jou IT-administrateur vir meer inligting, insluitend jou organisasie se privaatheidsbeleide."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Jou IT-administrateur kan instellings, korporatiewe toegang, programme, toestemmings en data wat met hierdie toestel geassosieer word, insluitend jou netwerkaktiwiteit, asook jou toestel se ligging, oproepgeskiedenis en kontaksoekgeskiedenis, monitor en bestuur.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Kontak jou IT-administrateur vir meer inligting, insluitend jou organisasie se privaatheidsbeleide."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Jy moet \'n wagwoordbeskermde skermslot vir jou toestel hê om diefstalbeskerming-kenmerke te gebruik."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Kontak jou IT-administrateur vir meer inligting, insluitend jou organisasie se privaatheidsbeleide."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Kom meer te wete"</string>
@@ -166,12 +170,18 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"Kom ons stel jou werktoestel op"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"Hou jou werkprogramme binne jou bereik"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"Hierdie toestel is nie privaat nie"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"Jou aktiwiteit en data"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"Jou IT-administrateur kan dalk jou data en aktiwiteit op hierdie toestel sien."</string>
-    <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"Programtoestemmings"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"Jou IT-admin kan programme toegang tot instellings op hierdie toestel gee, insluitend die mikrofoon, kamera en ligging."</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"Jou IT-administrateur kan dalk jou data en aktiwiteit op hierdie toestel sien.\n\nKontak jou <xliff:g id="IT_ADMIN">%1$s</xliff:g> om meer te wete te kom."</string>
+    <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"Jou aktiwiteit en data"</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"Jou IT-administrateur kan dalk jou data en aktiwiteit op hierdie toestel sien."</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"Programtoestemmings"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"Jou IT-administrateur kan toestemmings vir programme op hierdie toestel stel, soos mikrofoon-, kamera- en liggingtoestemmings."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Stel tans jou toestel op …"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Gebruik hierdie toestel om maklik toegang tot jou werkprogramme te kry. Hierdie toestel is nie privaat nie en jou IT-administrateur kan dalk jou data en aktiwiteit sien. Kontak jou IT-administrateur om meer te wete te kom."</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1090645190066781456">"Gebruik hierdie toestel om maklik toegang tot jou werkprogramme te kry. Hierdie toestel is nie privaat nie en jou IT-administrateur kan dalk jou data en aktiwiteit sien."</string>
+    <string name="fully_managed_device_with_permission_control_provisioning_summary" msgid="6634797147105465856">"Gebruik hierdie toestel om maklik toegang tot jou werkprogramme te kry. Hierdie toestel is nie privaat nie en jou IT-administrateur kan dalk jou aktiwiteit en data sien. Jou IT-administrateur kan ook toestemmings vir programme op hierdie toestel stel, soos mikrofoon-, kamera- en liggingtoestemmings."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Gee hierdie toestel terug vir jou IT-administrateur."</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Gaan terug na die vorige skerm of stel hierdie toestel terug en gee dit terug vir jou IT-administrateur."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Kanselleer opstelling"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Stel toestel terug en gee dit terug"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Werkprogramme word in jou werkprofiel gehou en deur jou IT-administrateur bestuur"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Persoonlike programme is apart en versteek van werkprogramme"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"Jou IT-admin kan dié toestel beheer en programme blokkeer"</string>
@@ -179,8 +189,8 @@
     <string name="just_a_sec" msgid="6244676028626237220">"Net \'n oomblik …"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"Privaatheidonthounota"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"Jou IT-administrateur kan dalk jou data en aktiwiteit op hierdie toestel sien"</string>
-    <string name="financed_device_screen_header" msgid="7890706080917322376">"Hierdie toestel is by <xliff:g id="CREDITOR_NAME">%1$s</xliff:g> op krediet gekoop"</string>
+    <string name="financed_device_screen_header" msgid="6875169548352717124">"Hierdie toestel word verskaf deur <xliff:g id="CREDITOR_NAME">%s</xliff:g>"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> kan:"</string>
-    <string name="install_creditor_app_description" msgid="6159751782301108878">"Die <xliff:g id="CREDITOR_NAME">%1$s</xliff:g>-program installeer sodat jy betalings vir hierdie toestel kan doen"</string>
-    <string name="lock_device_description" msgid="2940362560732989166">"Toegang tot hierdie toestel beperk as jy nie betalings maak nie"</string>
+    <string name="install_creditor_app_description" msgid="6056052518227986620">"Installeer die <xliff:g id="CREDITOR_NAME">%s</xliff:g>-program op hierdie toestel"</string>
+    <string name="lock_device_description" msgid="9198967942380649144">"Sluit hierdie toestel as jy nie betalings doen nie"</string>
 </resources>

@@ -25,8 +25,10 @@ import androidx.annotation.VisibleForTesting;
 
 import com.android.managedprovisioning.R;
 import com.android.managedprovisioning.common.DialogBuilder;
+import com.android.managedprovisioning.common.SettingsFacade;
 import com.android.managedprovisioning.common.SetupGlifLayoutActivity;
 import com.android.managedprovisioning.common.SimpleDialog;
+import com.android.managedprovisioning.common.ThemeHelper;
 import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.model.ProvisioningParams;
 
@@ -48,11 +50,13 @@ public abstract class AbstractProvisioningActivity extends SetupGlifLayoutActivi
 
     static final int STATE_PROVISIONING_INTIIALIZING = 1;
     static final int STATE_PROVISIONING_STARTED = 2;
-    static final int STATE_PROVISIONING_FINALIZED = 3;
+    static final int STATE_PROVISIONING_COMPLETED = 3;
+    static final int STATE_PROVISIONING_FINALIZED = 4;
 
     @Retention(RetentionPolicy.SOURCE)
     @IntDef({STATE_PROVISIONING_INTIIALIZING,
             STATE_PROVISIONING_STARTED,
+            STATE_PROVISIONING_COMPLETED,
             STATE_PROVISIONING_FINALIZED})
     private @interface ProvisioningState {}
 
@@ -63,13 +67,13 @@ public abstract class AbstractProvisioningActivity extends SetupGlifLayoutActivi
     @VisibleForTesting static final String CANCEL_PROVISIONING_DIALOG_RESET
             = "CancelProvisioningDialogReset";
 
-    protected ProvisioningManagerInterface mProvisioningManager;
     protected ProvisioningParams mParams;
     protected @ProvisioningState int mState;
 
     @VisibleForTesting
-    protected AbstractProvisioningActivity(Utils utils) {
-        super(utils);
+    protected AbstractProvisioningActivity(
+            Utils utils, SettingsFacade settingsFacade, ThemeHelper themeHelper) {
+        super(utils, settingsFacade, themeHelper);
     }
 
     // Lazily initialize ProvisioningManager, since we can't call in ProvisioningManager.getInstance

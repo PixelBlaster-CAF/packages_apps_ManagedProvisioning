@@ -57,6 +57,7 @@
 
     <!-- General -->
     <dimen name="spacer_0">0dp</dimen>
+    <dimen name="spacer_2">2dp</dimen>
     <dimen name="spacer_8">8dp</dimen>
     <dimen name="spacer_12">12dp</dimen>
     <dimen name="spacer_16">16dp</dimen>
@@ -85,7 +86,4 @@
     <dimen name="terms_screen_padding">@dimen/spacer_0</dimen>
 
     <dimen name="car_avatar_icon_size">56dp</dimen>
-
-    <!-- Provisioning -->
-    <dimen name="animation_height">162dp</dimen>
 </resources>

@@ -26,6 +26,10 @@ import androidx.annotation.VisibleForTesting;
 import com.android.managedprovisioning.R;
 import com.android.managedprovisioning.common.ProvisionLogger;
 import com.android.managedprovisioning.common.RepeatingVectorAnimation;
+import com.android.managedprovisioning.common.SettingsFacade;
+import com.android.managedprovisioning.common.ThemeHelper;
+import com.android.managedprovisioning.common.ThemeHelper.DefaultNightModeChecker;
+import com.android.managedprovisioning.common.ThemeHelper.DefaultSetupWizardBridge;
 import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.model.CustomizationParams;
 import com.android.managedprovisioning.model.ProvisioningParams;
@@ -43,9 +47,11 @@ import com.google.android.setupdesign.GlifLayout;
 public class AdminIntegratedFlowPrepareActivity extends AbstractProvisioningActivity {
 
     private RepeatingVectorAnimation mRepeatingVectorAnimation;
+    private AdminIntegratedFlowPrepareManager mProvisioningManager;
 
     public AdminIntegratedFlowPrepareActivity() {
-        this(new Utils());
+        this(new Utils(), new SettingsFacade(),
+                new ThemeHelper(new DefaultNightModeChecker(), new DefaultSetupWizardBridge()));
     }
 
     public static boolean shouldRunPrepareActivity(
@@ -73,8 +79,9 @@ public class AdminIntegratedFlowPrepareActivity extends AbstractProvisioningActi
     }
 
     @VisibleForTesting
-    protected AdminIntegratedFlowPrepareActivity(Utils utils) {
-        super(utils);
+    protected AdminIntegratedFlowPrepareActivity(
+            Utils utils, SettingsFacade settingsFacade, ThemeHelper themeHelper) {
+        super(utils, settingsFacade, themeHelper);
     }
 
     @Override

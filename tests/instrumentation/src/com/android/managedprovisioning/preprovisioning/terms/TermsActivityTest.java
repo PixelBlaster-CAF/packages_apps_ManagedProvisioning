@@ -35,7 +35,6 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.provider.Settings;
 
 import androidx.test.InstrumentationRegistry;
 import androidx.test.espresso.ViewAssertion;
@@ -47,16 +46,19 @@ import androidx.test.rule.ActivityTestRule;
 import com.android.managedprovisioning.R;
 import com.android.managedprovisioning.TestInstrumentationRunner;
 import com.android.managedprovisioning.common.SettingsFacade;
+import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.model.DisclaimersParam;
 import com.android.managedprovisioning.model.ProvisioningParams;
 
 import org.junit.After;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -83,18 +85,28 @@ public class TermsActivityTest {
     @Mock
     private SettingsFacade mSettingsFacade;
 
+    private Context mContext = InstrumentationRegistry.getTargetContext();
+
     @Rule
     public ActivityTestRule<TermsActivity> mActivityRule = new ActivityTestRule<>(
             TermsActivity.class, true, false);
 
     @Before
-    public void setUp() throws Settings.SettingNotFoundException {
+    public void setUp() {
         MockitoAnnotations.initMocks(this);
         when(mSettingsFacade.isDuringSetupWizard(any(Context.class))).thenReturn(false);
 
         TestInstrumentationRunner.registerReplacedActivity(TermsActivity.class,
                 (classLoader, className, intent) -> new TermsActivity(
-                        (file) -> mPathToContent.get(file.getPath()), null, mSettingsFacade));
+                        /* contextMenuMaker= */ null,
+                        mSettingsFacade,
+                        (appCompatActivity, params) -> new TermsViewModel(
+                                new TermsProvider(
+                                        mContext,
+                                        (file) -> mPathToContent.get(file.getPath()),
+                                        params,
+                                        new Utils(),
+                                        ArrayList::new))));
         mPathToContent.clear();
     }
 
@@ -103,6 +115,7 @@ public class TermsActivityTest {
         TestInstrumentationRunner.unregisterReplacedActivity(TermsActivity.class);
     }
 
+    @Ignore("b/181323689")
     // TODO(b/35613314): remove @FlakyTest once bug fixed
     @FlakyTest
     @Test
@@ -167,6 +180,7 @@ public class TermsActivityTest {
         onView(withId(R.id.disclaimer_content)).check(matches(withText("item1\nitem2\n")));
     }
 
+    @Ignore("b/181323689")
     // TODO(b/35613314): remove @FlakyTest once bug fixed
     @FlakyTest
     @Test

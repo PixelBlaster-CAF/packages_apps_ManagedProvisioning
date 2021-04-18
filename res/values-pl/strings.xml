@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Ta aplikacja będzie zarządzać urządzeniem:"</string>
     <string name="next" msgid="1004321437324424398">"Dalej"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Konfiguruję profil służbowy…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Administrator IT może monitorować ustawienia, firmowe uprawnienia dostępu, aplikacje, uprawnienia i dane powiązane z tym profilem, w tym lokalizację urządzenia, historię połączeń i historię wyszukiwania kontaktów.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Skontaktuj się z administratorem IT, aby dowiedzieć się więcej oraz poznać politykę prywatności obowiązującą w Twojej organizacji."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Administrator IT może monitorować ustawienia, firmowe uprawnienia dostępu, aplikacje, uprawnienia i dane powiązane z tym urządzeniem, w tym lokalizację urządzenia, historię połączeń i historię wyszukiwania kontaktów.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Skontaktuj się z administratorem IT, aby dowiedzieć się więcej oraz poznać politykę prywatności obowiązującą w Twojej organizacji."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Administrator IT może monitorować ustawienia, firmowe uprawnienia dostępu, aplikacje, uprawnienia i dane powiązane z tym profilem, w tym lokalizację urządzenia, historię połączeń i historię wyszukiwania kontaktów.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Skontaktuj się z administratorem IT, aby dowiedzieć się więcej oraz poznać politykę prywatności obowiązującą w Twojej organizacji."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Administrator IT może monitorować ustawienia, firmowe uprawnienia dostępu, aplikacje, uprawnienia i dane powiązane z tym urządzeniem, w tym lokalizację urządzenia, historię połączeń i historię wyszukiwania kontaktów.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Skontaktuj się z administratorem IT, aby dowiedzieć się więcej oraz poznać politykę prywatności obowiązującą w Twojej organizacji."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Aby korzystać z funkcji ochrony przed kradzieżą, musisz włączyć na urządzeniu blokadę ekranu zabezpieczoną hasłem."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Aby dowiedzieć się więcej i poznać politykę prywatności Twojej organizacji, skontaktuj się z administratorem IT."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Więcej informacji"</string>
@@ -166,12 +170,18 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"Skonfiguruj urządzenie służbowe"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"Miej aplikacje służbowe zawsze pod ręką"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"To urządzenie nie jest prywatne"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"Dane o Twojej aktywności"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"Twój administrator IT może mieć podgląd Twoich danych i aktywności na tym urządzeniu."</string>
-    <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"Uprawnienia aplikacji"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"Administrator IT może zezwolić na dostęp aplikacji do ustawień na tym urządzeniu, w tym do mikrofonu, aparatu i lokalizacji."</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"Administrator IT może mieć podgląd Twoich danych i aktywności na tym urządzeniu.\n\nAby dowiedzieć się więcej, skontaktuj się z: .<xliff:g id="IT_ADMIN">%1$s</xliff:g>"</string>
+    <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"Twoje dane i aktywność"</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"Administrator IT może mieć podgląd Twoich danych i aktywności na tym urządzeniu."</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"Uprawnienia aplikacji"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"Administrator IT może konfigurować uprawnienia dla aplikacji na tym urządzeniu, w tym dostęp do mikrofonu, aparatu i lokalizacji."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Konfiguruję urządzenie…"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Użyj tego urządzenia, by łatwo korzystać z aplikacji służbowych. To urządzenie nie jest prywatne, więc Twój administrator IT może mieć podgląd Twoich danych i aktywności. Aby dowiedzieć się więcej, skontaktuj się z administratorem IT."</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1090645190066781456">"Użyj tego urządzenia, aby łatwo korzystać z aplikacji służbowych. To urządzenie nie jest prywatne, więc administrator IT może mieć podgląd Twoich danych i aktywności."</string>
+    <string name="fully_managed_device_with_permission_control_provisioning_summary" msgid="6634797147105465856">"Użyj tego urządzenia, aby łatwo korzystać z aplikacji służbowych. To urządzenie nie jest prywatne, więc administrator IT może mieć podgląd Twojej aktywności i danych. Administrator IT może również konfigurować uprawnienia dla aplikacji na tym urządzeniu, w tym dostęp do mikrofonu, aparatu i lokalizacji."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Oddaj urządzenie administratorowi IT"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Wróć na poprzedni ekran lub zresetuj urządzenie i oddaj je administratorowi IT."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Anuluj konfigurację"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Zresetuj i oddaj urządzenie"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Aplikacje służbowe znajdują się w profilu służbowym i zarządza nimi administrator"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Aplikacje osobiste znajdują się w innym miejscu i są niewidoczne dla aplikacji służbowych"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"Administrator może zarządzać tym urządzeniem i blokować niektóre aplikacje"</string>
@@ -179,8 +189,8 @@
     <string name="just_a_sec" msgid="6244676028626237220">"Chwileczkę…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"Przypomnienie o prywatności"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"Twój administrator IT może mieć podgląd Twoich danych i aktywności na tym urządzeniu"</string>
-    <string name="financed_device_screen_header" msgid="7890706080917322376">"To urządzenie zostało zakupione na kredyt od firmy <xliff:g id="CREDITOR_NAME">%1$s</xliff:g>"</string>
+    <string name="financed_device_screen_header" msgid="6875169548352717124">"To urządzenie dostarcza organizacja <xliff:g id="CREDITOR_NAME">%s</xliff:g>"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"Firma <xliff:g id="CREDITOR_NAME">%1$s</xliff:g> może:"</string>
-    <string name="install_creditor_app_description" msgid="6159751782301108878">"zainstalować aplikację <xliff:g id="CREDITOR_NAME">%1$s</xliff:g>, która umożliwia dokonywanie płatności za korzystanie z tego urządzenia;"</string>
-    <string name="lock_device_description" msgid="2940362560732989166">"ograniczyć dostęp do tego urządzenia, jeśli nie dokonasz płatności."</string>
+    <string name="install_creditor_app_description" msgid="6056052518227986620">"Zainstaluj na tym urządzeniu aplikację organizacji <xliff:g id="CREDITOR_NAME">%s</xliff:g>"</string>
+    <string name="lock_device_description" msgid="9198967942380649144">"Jeśli nie dokonujesz płatności, zablokuj urządzenie"</string>
 </resources>

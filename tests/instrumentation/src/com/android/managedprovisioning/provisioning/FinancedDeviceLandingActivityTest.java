@@ -38,6 +38,7 @@ import com.android.managedprovisioning.TestUtils;
 import com.android.managedprovisioning.model.ProvisioningParams;
 
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -62,14 +63,15 @@ public class FinancedDeviceLandingActivityTest {
         TestUtils.wakeupDeviceAndPressHome(UiDevice.getInstance(getInstrumentation()));
     }
 
+    @Ignore("b/181323689")
     @Test
     public void onAcceptAndContinueButtonClicked() {
         // GIVEN the activity launched
         ProvisioningParams params = generateProvisioningParams();
         launchActivityWithParams(params);
 
-        // WHEN the user clicks Accept & continue
-        onView(withText(R.string.accept_and_continue)).perform(click());
+        // WHEN the user clicks Next
+        onView(withText(R.string.next)).perform(click());
 
         // THEN the activity should finish
         assertTrue(mActivityRule.getActivity().isFinishing());

@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Следното приложение ще управлява устройството ви:"</string>
     <string name="next" msgid="1004321437324424398">"Напред"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Служебният потребителски профил се настройва…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Системният ви администратор може да наблюдава и управлява настройките, корпоративния достъп, приложенията, разрешенията и данните, свързани с този потребителски профил, включително активността ви в мрежата, както и информацията за местоположението на устройството ви, историята на обажданията и тази на търсенията на контакти.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Обърнете се към системния си администратор за повече информация, включително относно правилата за поверителност на организацията ви."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Системният ви администратор може да наблюдава и управлява настройките, корпоративния достъп, приложенията, разрешенията и данните, свързани с това устройство, включително активността ви в мрежата, както и информацията за местоположението на устройството ви, историята на обажданията и тази на търсенията на контакти.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Обърнете се към системния си администратор за повече информация, включително относно правилата за поверителност на организацията ви."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Системният ви администратор може да наблюдава и управлява настройките, корпоративния достъп, приложенията, разрешенията и данните, свързани с този потребителски профил, включително активността ви в мрежата, както и информацията за местоположението на устройството ви, историята на обажданията и тази на търсенията на контакти.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Обърнете се към системния си администратор за повече информация, включително относно правилата за поверителност на организацията ви."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Системният ви администратор може да наблюдава и управлява настройките, корпоративния достъп, приложенията, разрешенията и данните, свързани с това устройство, включително активността ви в мрежата, както и информацията за местоположението на устройството ви, историята на обажданията и тази на търсенията на контакти.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Обърнете се към системния си администратор за повече информация, включително относно правилата за поверителност на организацията ви."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"За да използвате функциите за защита при кражба, трябва да имате парола като опция за заключване на екрана на устройството си."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Обърнете се към системния си администратор за повече информация, включително относно правилата за поверителност на организацията ви."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Научете повече"</string>
@@ -166,12 +170,18 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"Да настроим служебното ви устройство"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"Лесен достъп до служебните ви приложения"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"Това устройство не е лично"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"Вашите данни и активност"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"Системният ви администратор може да преглежда данните и активността ви на това устройство."</string>
-    <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"Разрешения за приложенията"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"Системният ви администратор може да разреши на приложенията да осъществяват достъп до настройките на това устройство, включително тези за микрофона, камерата и местоположението."</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"Системният ви администратор може да преглежда данните и активността ви на това устройство.\n\nЗа да научите повече, обърнете се към <xliff:g id="IT_ADMIN">%1$s</xliff:g>."</string>
+    <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"Вашите данни и активност"</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"Системният ви администратор може да преглежда данните и активността ви на това устройство."</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"Разрешения за приложенията"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"Системният ви администратор може да задава разрешения за приложенията на това устройство, като например тези за микрофона, камерата и за достъп до местоположението."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Устройството ви се настройва…"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Използвайте това устройство за лесен достъп до служебните приложения. Устройството не е лично, така че системният ви администратор може да преглежда данните и активността ви. За да научите повече, обърнете се към него."</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1090645190066781456">"Използвайте това устройство за лесен достъп до служебните приложения. Устройството не е лично, така че системният ви администратор може да преглежда данните и активността ви."</string>
+    <string name="fully_managed_device_with_permission_control_provisioning_summary" msgid="6634797147105465856">"Използвайте това устройство за лесен достъп до служебните приложения. Устройството не е лично, така че системният ви администратор може да преглежда активността и данните ви. Той може също да задава разрешения за приложенията на това устройство, като например тези за микрофона, камерата и за достъп до местоположението."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Върнете това устройство на системния си администратор"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Върнете се към предишния екран или нулирайте това устройство и го върнете на системния си администратор."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Анулиране на настройването"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Нулиране и връщане на устройството"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Служебните приложения са в служебния ви профил и се управляват от системния администратор"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Личните приложения се съхраняват отделно и са скрити от служебните"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"Системният администратор може да управлява устройството и да блокира определени приложения"</string>
@@ -179,8 +189,8 @@
     <string name="just_a_sec" msgid="6244676028626237220">"Една секунда…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"Напомняне за поверителността"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"Системният ви администратор може да преглежда данните и активността ви на това устройство"</string>
-    <string name="financed_device_screen_header" msgid="7890706080917322376">"Това устройство бе купено на кредит от <xliff:g id="CREDITOR_NAME">%1$s</xliff:g>"</string>
+    <string name="financed_device_screen_header" msgid="6875169548352717124">"Това устройство е предоставено от <xliff:g id="CREDITOR_NAME">%s</xliff:g>"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> може да:"</string>
-    <string name="install_creditor_app_description" msgid="6159751782301108878">"Инсталира приложението на <xliff:g id="CREDITOR_NAME">%1$s</xliff:g>, за да можете да извършвате плащания за това устройство."</string>
-    <string name="lock_device_description" msgid="2940362560732989166">"Ограничи достъпа до това устройство, ако не извършвате плащания."</string>
+    <string name="install_creditor_app_description" msgid="6056052518227986620">"Инсталиране на приложението на <xliff:g id="CREDITOR_NAME">%s</xliff:g> на това устройство"</string>
+    <string name="lock_device_description" msgid="9198967942380649144">"Заключване на устройството, ако не извършвате плащания"</string>
 </resources>

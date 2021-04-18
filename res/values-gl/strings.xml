@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"A seguinte aplicación xestionará o teu dispositivo:"</string>
     <string name="next" msgid="1004321437324424398">"Seguinte"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Configurando o perfil de traballo..."</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"O teu administrador de TI pode controlar e xestionar a configuración, o acceso corporativo, as aplicacións, os permisos e os datos asociados con este perfil (entre os que se inclúe a actividade da túa rede); así como a localización do dispositivo, o historial de chamadas e o historial de busca de contactos.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Ponte en contacto co teu administrador de TI para recibir máis información e consultar as políticas de privacidade da túa organización."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"O teu administrador de TI pode controlar e xestionar a configuración, o acceso corporativo, as aplicacións, os permisos e os datos asociados con este dispositivo (entre os que se inclúe a actividade da túa rede); así como a localización do dispositivo, o historial de chamadas e o historial de busca de contactos.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Ponte en contacto co teu administrador de TI para recibir máis información e consultar as políticas de privacidade da túa organización."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"O teu administrador de TI pode controlar e xestionar a configuración, o acceso corporativo, as aplicacións, os permisos e os datos asociados con este perfil (entre os que se inclúe a actividade da túa rede); así como a localización do dispositivo, o historial de chamadas e o historial de busca de contactos.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Ponte en contacto co teu administrador de TI para recibir máis información e consultar as políticas de privacidade da túa organización."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"O teu administrador de TI pode controlar e xestionar a configuración, o acceso corporativo, as aplicacións, os permisos e os datos asociados con este dispositivo (entre os que se inclúe a actividade da túa rede); así como a localización do dispositivo, o historial de chamadas e o historial de busca de contactos.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Ponte en contacto co teu administrador de TI para recibir máis información e consultar as políticas de privacidade da túa organización."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Para usar as funcións antirroubo, o teu dispositivo debe contar cun bloqueo da pantalla protexido por contrasinal."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Ponte en contacto co teu administrador de TI para recibir máis información, como as políticas de privacidade da túa organización."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Máis información"</string>
@@ -166,12 +170,18 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"Configuremos o dispositivo do traballo"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"Accede facilmente ás túas aplicacións do traballo"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"Este dispositivo non é privado"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"A túa actividade e os teus datos"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"O teu administrador de TI pode ter acceso aos teus datos e á actividade deste dispositivo."</string>
-    <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"Permisos de aplicacións"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"Agora o teu administrador de TI pode permitir que as aplicacións accedan á configuración deste dispositivo, incluso ao micrófono, á cámara e á localización."</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"O teu administrador de TI pode ter acceso aos teus datos e á actividade deste dispositivo.\n\nPara obter máis información, ponte en contacto con el (<xliff:g id="IT_ADMIN">%1$s</xliff:g>)."</string>
+    <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"A túa actividade e os teus datos"</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"O teu administrador de TI pode ter acceso aos teus datos e á actividade deste dispositivo."</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"Permisos de aplicacións"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"O teu administrador de TI pode definir permisos (por exemplo, de acceso ao micrófono, á cámara e á localización) para as aplicacións deste dispositivo."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Configurando o teu dispositivo…"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Utiliza este dispositivo para acceder facilmente ás túas aplicacións do traballo. Este dispositivo non é privado, polo que o teu administrador de TI pode ter acceso aos teus datos e á túa actividade. Para consultar máis información, ponte en contacto co teu administrador de TI."</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1090645190066781456">"Utiliza este dispositivo para acceder facilmente ás túas aplicacións do traballo. Este dispositivo non é privado, polo que o teu administrador de TI pode ter acceso aos teus datos e á túa actividade."</string>
+    <string name="fully_managed_device_with_permission_control_provisioning_summary" msgid="6634797147105465856">"Utiliza este dispositivo para acceder facilmente ás túas aplicacións do traballo. Este dispositivo non é privado, polo que o teu administrador de TI pode ter acceso á túa actividade e aos teus datos. Así mesmo, o teu administrador de TI pode definir permisos (por exemplo, de acceso ao micrófono, á cámara e á localización) para as aplicacións deste dispositivo."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Devólvelle este dispositivo ao teu administrador de TI"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Volve á pantalla anterior ou restablece este dispositivo e devólvello ao teu administrador de TI."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Cancelar configuración"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Restablecer dispositivo e devolvelo"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"O administrador de TI xestiona as aplicacións laborais no teu perfil de traballo"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"As aplicacións persoais están separadas das do traballo e, ademais, ocultas"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"O administrador de TI pode controlar o dispositivo e bloquear determinadas aplicacións"</string>
@@ -179,8 +189,8 @@
     <string name="just_a_sec" msgid="6244676028626237220">"Un segundo…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"Recordatorio de privacidade"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"O teu administrador de TI pode ter acceso aos teus datos e á actividade deste dispositivo"</string>
-    <string name="financed_device_screen_header" msgid="7890706080917322376">"Este dispositivo comprouse con crédito de <xliff:g id="CREDITOR_NAME">%1$s</xliff:g>"</string>
+    <string name="financed_device_screen_header" msgid="6875169548352717124">"<xliff:g id="CREDITOR_NAME">%s</xliff:g> proporciona este dispositivo"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> pode facer o seguinte:"</string>
-    <string name="install_creditor_app_description" msgid="6159751782301108878">"Instalar a aplicación de <xliff:g id="CREDITOR_NAME">%1$s</xliff:g> para que poidas facer pagos con este dispositivo"</string>
-    <string name="lock_device_description" msgid="2940362560732989166">"Restrinxir o acceso a este dispositivo se non fas pagos"</string>
+    <string name="install_creditor_app_description" msgid="6056052518227986620">"Instala a aplicación de <xliff:g id="CREDITOR_NAME">%s</xliff:g> neste dispositivo"</string>
+    <string name="lock_device_description" msgid="9198967942380649144">"Bloquea este dispositivo se non fas pagos"</string>
 </resources>

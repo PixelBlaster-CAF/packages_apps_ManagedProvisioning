@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"Eftirfarandi forrit mun stjórna tækinu:"</string>
     <string name="next" msgid="1004321437324424398">"Áfram"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"Setur upp vinnusnið…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Kerfisstjórinn þinn getur fylgst með og stjórnað stillingum, fyrirtækisaðgangi, forritum, heimildum og gögnum sem tengjast þessum prófíl, auk netnotkunar og staðsetningu tækis, símtalaferli og leit að tengiliðum.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Frekari upplýsingar fást hjá kerfisstjóranum, þar á meðal um persónuverndarstefnur fyrirtækisins þíns."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Kerfisstjórinn þinn getur fylgst með og stjórnað stillingum, fyrirtækisaðgangi, forritum, heimildum og gögnum sem tengjast þessu tæki, auk netnotkunar og staðsetningu tækis, símtalaferli og leit að tengiliðum.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>Frekari upplýsingar fást hjá kerfisstjóranum, þar á meðal um persónuverndarstefnur fyrirtækisins þíns."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"Kerfisstjórinn þinn getur fylgst með og stjórnað stillingum, fyrirtækisaðgangi, forritum, heimildum og gögnum sem tengjast þessum prófíl, auk netnotkunar og staðsetningu tækis, símtalaferli og leit að tengiliðum.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Frekari upplýsingar fást hjá kerfisstjóranum, þar á meðal um persónuverndarstefnur fyrirtækisins þíns."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"Kerfisstjórinn þinn getur fylgst með og stjórnað stillingum, fyrirtækisaðgangi, forritum, heimildum og gögnum sem tengjast þessu tæki, auk netnotkunar og staðsetningu tækis, símtalaferli og leit að tengiliðum.<xliff:g id="LINE_BREAK">
+
+</xliff:g>Frekari upplýsingar fást hjá kerfisstjóranum, þar á meðal um persónuverndarstefnur fyrirtækisins þíns."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Til að nota þjófavarnareiginleikana þarftu að vera með skjálás með aðgangsorði á tækinu."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Hafðu samband við kerfisstjórann til að fá frekari upplýsingar, þar á meðal um persónuverndarstefnu fyrirtækisins."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Frekari upplýsingar"</string>
@@ -166,12 +170,18 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"Setjum upp vinnutækið þitt"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"Hafðu vinnuforritin innan handar"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"Þetta er ekki einkatæki"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"Þínar aðgerðir og gögn"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"Kerfisstjórinn þinn kann að geta séð gögn og virkni í þessu tæki."</string>
-    <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"Heimildir forrits"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"Kerfisstjórinn getur heimilað aðgang forrita að stillingum þessa tækis, þ. á m. hljóðnema, myndavél og staðsetningu."</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"Kerfisstjórinn þinn kann að geta séð gögn og virkni í þessu tæki.\n\nHafðu samband við <xliff:g id="IT_ADMIN">%1$s</xliff:g> til að fá frekari upplýsingar."</string>
+    <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"Þínar aðgerðir og gögn"</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"Kerfisstjórinn þinn kann að geta séð gögn og virkni í þessu tæki."</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"Heimildir forrits"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"Kerfisstjórinn getur stillt heimildir forrita í þessu tæki, þ. á m. hljóðnema-, myndavélar- og staðsetningarheimildir."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Setur tækið upp…"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"Notaðu þetta tæki til að hafa greiðan aðgang að vinnuforritunum þínum. Þetta tæki er ekki einkatæki og því gæti kerfisstjóri séð gögn og virkni þína. Hafðu samband við kerfisstjórann til að fá frekari upplýsingar."</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1090645190066781456">"Notaðu þetta tæki til að hafa greiðan aðgang að vinnuforritunum þínum. Þetta tæki er ekki einkatæki og því gæti kerfisstjórinn séð gögn þín og virkni."</string>
+    <string name="fully_managed_device_with_permission_control_provisioning_summary" msgid="6634797147105465856">"Notaðu þetta tæki til að hafa greiðan aðgang að vinnuforritunum þínum. Þetta tæki er ekki einkatæki og því gæti kerfisstjórinn séð virkni þína og gögn. Kerfisstjórinn getur einnig stillt heimildir forrita í þessu tæki, þ. á m. hljóðnema-, myndavélar- og staðsetningarheimildir."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"Skilaðu þessu tæki aftur til viðkomandi kerfisstjóra"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"Farðu aftur á næsta skjá á undan eða endurstilltu þetta tæki og skilaðu því til viðkomandi kerfisstjóra."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"Hætta við uppsetningu"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"Endurstilla og skila þessu tæki"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Vinnuforrit eru geymd á vinnusniði og stjórnað af kerfisstjóra"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Forrit til einkanota eru aðskilin og falin fyrir vinnuforritum"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"Kerfisstjóri getur stjórnað tækinu og lokað á tiltekin forrit"</string>
@@ -179,8 +189,8 @@
     <string name="just_a_sec" msgid="6244676028626237220">"Augnablik…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"Áminning um persónuvernd"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"Kerfisstjórinn þinn kann að geta séð gögn og virkni í þessu tæki"</string>
-    <string name="financed_device_screen_header" msgid="7890706080917322376">"Þetta tæki var keypt fyrir inneign frá <xliff:g id="CREDITOR_NAME">%1$s</xliff:g>"</string>
+    <string name="financed_device_screen_header" msgid="6875169548352717124">"Þetta tæki er frá <xliff:g id="CREDITOR_NAME">%s</xliff:g>"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> má:"</string>
-    <string name="install_creditor_app_description" msgid="6159751782301108878">"Setja upp <xliff:g id="CREDITOR_NAME">%1$s</xliff:g> forritið svo þú getir greitt fyrir þetta tæki"</string>
-    <string name="lock_device_description" msgid="2940362560732989166">"Takmarka aðgang að þessu tæki ef þú greiðir ekki"</string>
+    <string name="install_creditor_app_description" msgid="6056052518227986620">"Setja upp forritið frá <xliff:g id="CREDITOR_NAME">%s</xliff:g> í þessu tæki"</string>
+    <string name="lock_device_description" msgid="9198967942380649144">"Læsa þessu tæki ef þú innir ekki greiðslur af hendi"</string>
 </resources>

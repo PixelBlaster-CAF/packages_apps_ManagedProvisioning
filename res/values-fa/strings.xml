@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"برنامه زیر، دستگاهتان را مدیریت می‌کند:"</string>
     <string name="next" msgid="1004321437324424398">"بعدی"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"درحال راه‌اندازی نمایه کاری…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"‏سرپرست IT می‌تواند تنظیمات، دسترسی شرکتی، برنامه‌ها، مجوزها، و داده‌های مرتبط با این نمایه - ازجمله فعالیت شما در شبکه و همچنین مکان دستگاه، سابقه تماس، و سابقه جستجوی مخاطب - را پایش و مدیریت کند.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>برای دریافت اطلاعات بیشتر، ازجمله خط‌مشی‌های رازداری سازمان، با سرپرست IT تماس بگیرید."</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"‏سرپرست IT می‌تواند تنظیمات، دسترسی شرکتی، برنامه‌ها، مجوزها، و داده‌های مرتبط با این دستگاه - ازجمله فعالیت شما در شبکه و همچنین مکان دستگاه، سابقه تماس، و سابقه جستجوی مخاطب - را پایش و مدیریت کند.<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>برای دریافت اطلاعات بیشتر، ازجمله خط‌مشی‌های رازداری سازمان، با سرپرست IT تماس بگیرید."</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"‏سرپرست IT می‌تواند تنظیمات، دسترسی شرکتی، برنامه‌ها، مجوزها، و داده‌های مرتبط با این نمایه - ازجمله فعالیت شما در شبکه و همچنین مکان دستگاه، سابقه تماس، و سابقه جستجوی مخاطب - را پایش و مدیریت کند.<xliff:g id="LINE_BREAK">
+
+</xliff:g>برای دریافت اطلاعات بیشتر، ازجمله خط‌مشی‌های رازداری سازمان، با سرپرست IT تماس بگیرید."</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"‏سرپرست IT می‌تواند تنظیمات، دسترسی شرکتی، برنامه‌ها، مجوزها، و داده‌های مرتبط با این دستگاه - ازجمله فعالیت شما در شبکه و همچنین مکان دستگاه، سابقه تماس، و سابقه جستجوی مخاطب - را پایش و مدیریت کند.<xliff:g id="LINE_BREAK">
+
+</xliff:g>برای دریافت اطلاعات بیشتر، ازجمله خط‌مشی‌های رازداری سازمان، با سرپرست IT تماس بگیرید."</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"برای استفاده از قابلیت‌های محافظت دربرابر دزدی، باید برای دستگاهتان قفل صفحه با محافظت گذرواژه داشته باشید."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"‏برای کسب اطلاعات بیشتر، ازجمله درباره خط‌مشی‌های رازداری سازمان، با سرپرست IT‌ تماس بگیرید."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"بیشتر بدانید"</string>
@@ -166,12 +170,18 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"بیایید دستگاه محل کارتان را راه‌اندازی کنیم"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"دردسترس قرار دادن برنامه‌های کاری"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"این دستگاه خصوصی نیست"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"فعالیت و داده‌های شما"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"‏ممکن است سرپرست IT بتواند داده‌ها و فعالیتتان را در این دستگاه ببیند."</string>
-    <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"اجازه‌های برنامه"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"سرپرست فناوری اطلاعات شما می‌تواند به برنامه‌ها اجازه دهد به تنظیمات این دستگاه (ازجمله میکروفون، دوربین، و مکان) دسترسی داشته باشند."</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"ممکن است سرپرست سیستم شما بتواند داده‌ها و فعالیتتان در این دستگاه را ببیند.\n\nبرای دریافت اطلاعات بیشتر، با <xliff:g id="IT_ADMIN">%1$s</xliff:g> تماس بگیرید."</string>
+    <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"فعالیت و داده‌های شما"</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"‏ممکن است سرپرست IT بتواند داده‌ها و فعالیتتان را در این دستگاه ببیند."</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"اجازه‌های برنامه"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"سرپرست سیستم شما می‌تواند برای برنامه‌های این دستگاه اجازه‌هایی تنظیم کند، برای مثال اجازه‌های میکروفون، دوربین، و مکان."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"درحال راه‌اندازی دستگاه…"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"‏Use this device to easily access your work apps (برای دسترسی آسان به برنامه‌های کاری، از این دستگاه استفاده کنید). This device isn\'t private, so your IT admin may be able to see your data and activity (این دستگاه خصوصی نیست و بنابراین ممکن است سرپرست IT بتواند داده‌ها و فعالیتتان را ببیند). To learn more, contact your IT admin (برای آشنایی بیشتر، با سرپرست IT تماس بگیرید)."</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1090645190066781456">"از این دستگاه برای دسترسی آسان به برنامه‌های کاری استفاده کنید. این دستگاه خصوصی نیست، بنابراین ممکن است سرپرست سیستم بتواند داده‌ها و فعالیتتان را ببیند."</string>
+    <string name="fully_managed_device_with_permission_control_provisioning_summary" msgid="6634797147105465856">"از این دستگاه برای دسترسی آسان به برنامه‌های کاری استفاده کنید. این دستگاه خصوصی نیست، بنابراین ممکن است سرپرست سیستم بتواند داده‌ها و فعالیتتان را ببیند. سرپرست سیستم شما می‌تواند اجازه‌های برنامه‌های این دستگاه را نیز تنظیم کند، برای مثال، اجازه‌های میکروفون، دوربین، و مکان."</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"این دستگاه را به سرپرست فناوری اطلاعات برگردانید"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"به صفحه قبلی برگردید یا این دستگاه را بازنشانی کنید و آن را به سرپرست فناوری اطلاعات برگردانید."</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"لغو راه‌اندازی"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"بازنشانی و برگرداندن دستگاه"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"برنامه‌های کاری در نمایه کاری هستند و سرپرست فناوری اطلاعات آن‌ها را مدیریت می‌کند"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"برنامه‌های شخصی از برنامه‌های کاری جداست و از آن پنهان است"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"سرپرست فناوری اطلاعات می‌تواند این دستگاه را کنترل کند و برخی از برنامه‌ها را مسدود کند"</string>
@@ -179,8 +189,8 @@
     <string name="just_a_sec" msgid="6244676028626237220">"لحظه‌ای صبر کنید…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"یادآوری حریم‌خصوصی"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"‏ممکن است سرپرست IT بتواند داده‌ها و فعالیت شما را در این دستگاه ببیند"</string>
-    <string name="financed_device_screen_header" msgid="7890706080917322376">"این دستگاه به‌صورت اعتباری از <xliff:g id="CREDITOR_NAME">%1$s</xliff:g> خریداری شده است"</string>
+    <string name="financed_device_screen_header" msgid="6875169548352717124">"این دستگاه را <xliff:g id="CREDITOR_NAME">%s</xliff:g> ارائه داده است"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> می‌تواند:"</string>
-    <string name="install_creditor_app_description" msgid="6159751782301108878">"برنامه <xliff:g id="CREDITOR_NAME">%1$s</xliff:g> را نصب کنید تا بتوانید اقساط این دستگاه را پرداخت کنید"</string>
-    <string name="lock_device_description" msgid="2940362560732989166">"اگر اقساط را پرداخت نکنید، دسترسی به این دستگاه محدود می‌شود"</string>
+    <string name="install_creditor_app_description" msgid="6056052518227986620">"برنامه <xliff:g id="CREDITOR_NAME">%s</xliff:g> را در این دستگاه نصب کنید"</string>
+    <string name="lock_device_description" msgid="9198967942380649144">"اگر هزینه را پرداخت نکنید، دستگاه قفل می‌شود"</string>
 </resources>

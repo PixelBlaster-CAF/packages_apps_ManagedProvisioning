@@ -28,8 +28,12 @@
     <string name="the_following_is_your_mdm_for_device" msgid="6717973404364414816">"以下应用将管理您的设备："</string>
     <string name="next" msgid="1004321437324424398">"下一步"</string>
     <string name="setting_up_workspace" msgid="7862472373642601041">"正在设置工作资料…"</string>
-    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"您的 IT 管理员可以监控和管理与此资料相关的设置、企业权限、应用、权限以及数据（其中包括您的网络活动以及您设备的位置信息、通话记录和联系人搜索记录）。<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>如需了解详情（包括贵组织的隐私权政策），请与您的 IT 管理员联系。"</string>
-    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"您的 IT 管理员可以监控和管理与此设备相关的设置、企业权限、应用、权限以及数据（其中包括您的网络活动以及您设备的位置信息、通话记录和联系人搜索记录）。<xliff:g id="LINE_BREAK">&lt;br&gt;&lt;br&gt;</xliff:g>如需了解详情（包括贵组织的隐私权政策），请与您的 IT 管理员联系。"</string>
+    <string name="admin_has_ability_to_monitor_profile" msgid="7051310668406162979">"您的 IT 管理员可以监控和管理与此资料相关的设置、企业权限、应用、权限以及数据（其中包括您的网络活动以及您设备的位置信息、通话记录和联系人搜索记录）。<xliff:g id="LINE_BREAK">
+
+</xliff:g>如需了解详情（包括贵组织的隐私权政策），请与您的 IT 管理员联系。"</string>
+    <string name="admin_has_ability_to_monitor_device" msgid="6303112630697870695">"您的 IT 管理员可以监控和管理与此设备相关的设置、企业权限、应用、权限以及数据（其中包括您的网络活动以及您设备的位置信息、通话记录和联系人搜索记录）。<xliff:g id="LINE_BREAK">
+
+</xliff:g>如需了解详情（包括贵组织的隐私权政策），请与您的 IT 管理员联系。"</string>
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"要使用防盗保护功能，您必须为您的设备设置一种采用密码保护的屏幕锁定方式。"</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"如需了解详情（包括贵组织的隐私权政策），请与您的 IT 管理员联系。"</string>
     <string name="learn_more_link" msgid="3012495805919550043">"了解详情"</string>
@@ -166,12 +170,18 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"请设置您的工作用设备"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"让您的工作应用触手可及"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"此设备并非私人设备"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader_title" msgid="5417642884373347663">"您的活动记录和数据"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"您的 IT 管理员或许可以查看您在此设备上的数据和活动。"</string>
-    <string name="fully_managed_device_provisioning_permissions_title" msgid="5887976804117387279">"应用权限"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="5851437453029164791">"您的 IT 管理员可允许应用访问此设备上的设置，包括麦克风、相机和位置信息设置。"</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"您的 IT 管理员或许可以查看您在此设备上的数据和活动。\n\n如需了解详情，请与您的<xliff:g id="IT_ADMIN">%1$s</xliff:g>联系。"</string>
+    <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"您的活动和数据"</string>
+    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"您的 IT 管理员或许可以查看您在此设备上的数据和活动。"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"应用权限"</string>
+    <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"您的 IT 管理员可为此设备上的应用设置权限，例如麦克风、相机和位置权限。"</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"正在设置您的设备…"</string>
-    <string name="fully_managed_device_provisioning_summary" msgid="1176062866187662479">"使用此设备可轻松访问您的工作应用。此设备并非私人设备，因此，您的 IT 管理员或许可以查看您的数据和活动。如需了解详情，请与您的 IT 管理员联系。"</string>
+    <string name="fully_managed_device_provisioning_summary" msgid="1090645190066781456">"使用此设备可轻松访问您的工作应用。此设备并非私人设备，因此，您的 IT 管理员或许可以查看您的数据和活动。"</string>
+    <string name="fully_managed_device_with_permission_control_provisioning_summary" msgid="6634797147105465856">"使用此设备可轻松访问您的工作应用。此设备并非私人设备，因此，您的 IT 管理员或许可以查看您的活动和数据。IT 管理员还可为此设备上的应用设置权限，例如麦克风、相机和位置权限。"</string>
+    <string name="fully_managed_device_provisioning_return_device_title" msgid="8500829014794276683">"将此设备交还给 IT 管理员"</string>
+    <string name="fully_managed_device_provisioning_return_device_subheader" msgid="6194410367910957686">"返回到上一屏幕，或重置此设备并将其交还给 IT 管理员。"</string>
+    <string name="fully_managed_device_cancel_setup_button" msgid="4910041382610777599">"取消设置"</string>
+    <string name="fully_managed_device_reset_and_return_button" msgid="6451125722998550681">"重置并交还设备"</string>
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"工作应用会保存在您的工作资料中，并由您的 IT 管理员管理"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"个人应用与工作应用相互独立，两者不会同时显示"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"您的 IT 管理员可以控制此设备并屏蔽特定应用"</string>
@@ -179,8 +189,8 @@
     <string name="just_a_sec" msgid="6244676028626237220">"请稍候…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"隐私权提醒"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"您的 IT 管理员或许可以查看您在此设备上的数据和活动"</string>
-    <string name="financed_device_screen_header" msgid="7890706080917322376">"此设备是您向<xliff:g id="CREDITOR_NAME">%1$s</xliff:g>赊购的"</string>
+    <string name="financed_device_screen_header" msgid="6875169548352717124">"此设备由<xliff:g id="CREDITOR_NAME">%s</xliff:g>提供"</string>
     <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g>可以执行以下操作："</string>
-    <string name="install_creditor_app_description" msgid="6159751782301108878">"在此设备上安装<xliff:g id="CREDITOR_NAME">%1$s</xliff:g>应用，以便您付款"</string>
-    <string name="lock_device_description" msgid="2940362560732989166">"如果您未付款，就会限制您使用此设备"</string>
+    <string name="install_creditor_app_description" msgid="6056052518227986620">"在此设备上安装<xliff:g id="CREDITOR_NAME">%s</xliff:g>应用"</string>
+    <string name="lock_device_description" msgid="9198967942380649144">"如果您未付款，贷方可锁定此设备"</string>
 </resources>

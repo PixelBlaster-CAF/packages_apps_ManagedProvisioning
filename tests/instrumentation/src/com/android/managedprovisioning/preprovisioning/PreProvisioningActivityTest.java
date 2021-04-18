@@ -38,6 +38,9 @@ import com.android.managedprovisioning.common.GetProvisioningModeUtils;
 import com.android.managedprovisioning.common.ManagedProvisioningSharedPreferences;
 import com.android.managedprovisioning.common.PolicyComplianceUtils;
 import com.android.managedprovisioning.common.SettingsFacade;
+import com.android.managedprovisioning.common.ThemeHelper;
+import com.android.managedprovisioning.common.ThemeHelper.DefaultNightModeChecker;
+import com.android.managedprovisioning.common.ThemeHelper.DefaultSetupWizardBridge;
 import com.android.managedprovisioning.common.UriBitmap;
 import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.parser.MessageParser;
@@ -45,6 +48,7 @@ import com.android.managedprovisioning.preprovisioning.terms.TermsActivity;
 
 import org.junit.AfterClass;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,27 +76,34 @@ public class PreProvisioningActivityTest {
 
         TestInstrumentationRunner.registerReplacedActivity(PreProvisioningActivity.class,
                 (classLoader, className, intent) -> new PreProvisioningActivity(
-                        activity -> new PreProvisioningController(
+                        activity -> new PreProvisioningActivityController(
                                 activity,
                                 activity,
-                                new TimeLogger(activity, 0 /* category */),
-                                new MessageParser(activity),
                                 mUtils,
                                 new SettingsFacade(),
-                                EncryptionController.getInstance(activity),
                                 new ManagedProvisioningSharedPreferences(activity),
                                 new PolicyComplianceUtils(),
-                                new GetProvisioningModeUtils()) {
+                                new GetProvisioningModeUtils(),
+                                new PreProvisioningViewModel(
+                                        new TimeLogger(activity, 0 /* category */),
+                                        new MessageParser(activity),
+                                        EncryptionController.getInstance(activity))
+                        ) {
                             @Override
                             protected boolean checkDevicePolicyPreconditions() {
                                 return true;
                             }
 
                             @Override
-                            protected boolean verifyActionAndCaller(Intent intent, String caller) {
+                            protected boolean verifyActionAndCaller(Intent intent,
+                                    String caller) {
                                 return true;
                             }
-                        }, null, mUtils));
+                        }, null,
+                        mUtils,
+                        new SettingsFacade(),
+                        new ThemeHelper(
+                                new DefaultNightModeChecker(), new DefaultSetupWizardBridge())));
     }
 
     @AfterClass
@@ -100,22 +111,26 @@ public class PreProvisioningActivityTest {
         TestInstrumentationRunner.unregisterReplacedActivity(TermsActivity.class);
     }
 
+    @Ignore("b/181323689")
     @Test
     public void deviceOwnerDefaultLogo() {
         Activity activity = mActivityRule.launchActivity(
                 createIntent(ACTION_PROVISION_MANAGED_DEVICE));
         CustomizationVerifier v = new CustomizationVerifier(activity);
+
         v.assertDefaultLogoCorrect(DEFAULT_LOGO_COLOR);
     }
 
+    @Ignore("b/181323689")
     @Test
     public void deviceOwnerCustomLogo() throws IOException {
         UriBitmap expectedLogo = UriBitmap.createSimpleInstance();
 
         Activity activity = mActivityRule.launchActivity(
-                createIntent(ACTION_PROVISION_MANAGED_DEVICE).putExtra(
-                        EXTRA_PROVISIONING_LOGO_URI, expectedLogo.getUri()));
+                createIntent(ACTION_PROVISION_MANAGED_DEVICE)
+                        .putExtra(EXTRA_PROVISIONING_LOGO_URI, expectedLogo.getUri()));
         CustomizationVerifier v = new CustomizationVerifier(activity);
+
         v.assertCustomLogoCorrect(expectedLogo.getBitmap());
     }
 
