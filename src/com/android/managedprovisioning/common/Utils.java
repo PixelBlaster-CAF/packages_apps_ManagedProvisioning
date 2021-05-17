@@ -19,9 +19,8 @@ package com.android.managedprovisioning.common;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_FINANCED_DEVICE;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_DEVICE;
 import static android.app.admin.DevicePolicyManager.ACTION_PROVISION_MANAGED_PROFILE;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_DEVICE_OWNER;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_OWNED;
+import static android.app.admin.DevicePolicyManager.FLAG_SUPPORTED_MODES_DEVICE_OWNER;
+import static android.app.admin.DevicePolicyManager.FLAG_SUPPORTED_MODES_ORGANIZATION_OWNED;
 import static android.content.pm.PackageManager.MATCH_HIDDEN_UNTIL_INSTALLED_COMPONENTS;
 import static android.content.pm.PackageManager.MATCH_UNINSTALLED_PACKAGES;
 import static android.net.NetworkCapabilities.NET_CAPABILITY_INTERNET;
@@ -85,6 +84,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
+import java.util.function.Consumer;
 
 /**
  * Class containing various auxiliary methods.
@@ -698,8 +698,9 @@ public class Utils {
     }
 
     public void handleSupportUrl(Context context, CustomizationParams customizationParams,
-                AccessibilityContextMenuMaker contextMenuMaker, TextView textView,
-                String deviceProvider, String contactDeviceProvider) {
+            AccessibilityContextMenuMaker contextMenuMaker, TextView textView,
+            String deviceProvider, String contactDeviceProvider,
+            Consumer<Intent> clickHandler) {
         if (customizationParams.supportUrl == null) {
             textView.setText(contactDeviceProvider);
             return;
@@ -707,7 +708,8 @@ public class Utils {
         final Intent intent = WebActivity.createIntent(
                 context, customizationParams.supportUrl);
 
-        final ClickableSpanFactory spanFactory = new ClickableSpanFactory(getAccentColor(context));
+        final ClickableSpanFactory spanFactory =
+                new ClickableSpanFactory(getAccentColor(context), clickHandler);
         handlePartialClickableTextView(
                 textView, contactDeviceProvider, deviceProvider, intent, spanFactory);
 
@@ -830,10 +832,9 @@ public class Utils {
     }
 
     public boolean isOrganizationOwnedAllowed(ProvisioningParams params) {
-        return params.initiatorRequestedProvisioningModes == SUPPORTED_MODES_ORGANIZATION_OWNED
-                || params.initiatorRequestedProvisioningModes
-                        == SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED
-                || params.initiatorRequestedProvisioningModes == SUPPORTED_MODES_DEVICE_OWNER;
+        int provisioningModes = params.initiatorRequestedProvisioningModes;
+        return containsBinaryFlags(provisioningModes, FLAG_SUPPORTED_MODES_ORGANIZATION_OWNED)
+                || containsBinaryFlags(provisioningModes, FLAG_SUPPORTED_MODES_DEVICE_OWNER);
     }
 
     public boolean isManagedProfileProvisioningStartedByDpc(
@@ -870,5 +871,12 @@ public class Utils {
                 .setMessage(dialogMsgResId)
                 .setNegativeButtonMessage(negativeResId)
                 .setPositiveButtonMessage(positiveResId);
+    }
+
+    /**
+     * Returns {@code true} if {@code value} contains the {@code flags} binary flags.
+     */
+    public boolean containsBinaryFlags(int value, int flags) {
+        return (value & flags) == flags;
     }
 }

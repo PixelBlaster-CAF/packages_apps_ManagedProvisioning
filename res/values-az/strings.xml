@@ -37,7 +37,7 @@
     <string name="theft_protection_disabled_warning" msgid="3708092473574738478">"Oğurluğa qarşı qorunma xüsusiyyətlərini istifadə etmək üçün, cihazınızda parol ilə qorunan ekran kilidi olmalıdır."</string>
     <string name="contact_your_admin_for_more_info" msgid="9209568156969966347">"Təşkilatın məxfilik siyasətləri daxil olmaq ətraflı məlumat əldə etmək üçün IT admini ilə əlaqə saxlayın."</string>
     <string name="learn_more_link" msgid="3012495805919550043">"Ətraflı öyrənin"</string>
-    <string name="cancel_setup" msgid="2949928239276274745">"Ləğv et"</string>
+    <string name="cancel_setup" msgid="2949928239276274745">"Ləğv edin"</string>
     <string name="ok_setup" msgid="4593707675416137504">"Ok"</string>
     <string name="user_consent_msg" msgid="8820951802130353584">"Razıyam"</string>
     <string name="url_error" msgid="5958494012986243186">"Bu linki göstərmək olmur."</string>
@@ -50,7 +50,7 @@
     <string name="read_more_delete_profile" msgid="7789171620401666343">"Davam etməmişdən əvvəl "<a href="#read_this_link">"bunu oxuyun"</a>"."</string>
     <string name="sure_you_want_to_delete_profile" msgid="6927697984573575564">"Davam etsəniz, bu profildə bütün tətbiqlər və data silinəcək."</string>
     <string name="delete_profile" msgid="2299218578684663459">"Sil"</string>
-    <string name="cancel_delete_profile" msgid="5155447537894046036">"Ləğv et"</string>
+    <string name="cancel_delete_profile" msgid="5155447537894046036">"Ləğv edin"</string>
     <string name="encrypt_device_text_for_profile_owner_setup" msgid="7828515754696057140">"İş profilini quraşdırmaq üçün əvvəlcə cihazı şifrələməli olacaqsınız. Bu proses bir az vaxt ala bilər."</string>
     <string name="encrypt_device_text_for_device_owner_setup" msgid="5194673142404735676">"Bu cihazı quraşdırmaq üçün əvvəlcə onu şifrələməli olacaqsınız. Bu proses bir az vaxt ala bilər."</string>
     <string name="encrypt_this_device_question" msgid="8719916619866892601">"Cihaz şifrələnsin?"</string>
@@ -63,7 +63,7 @@
     <string name="work_profile_cant_be_added_contact_admin" msgid="5393019630297157418">"İş profilini bu cihaza əlavə etmək mümkün deyil. Sualınız varsa, IT admini ilə əlaqə saxlayın."</string>
     <string name="change_device_launcher" msgid="4523563368433637980">"Cihaz başladıcısını dəyişin"</string>
     <string name="launcher_app_cant_be_used_by_work_profile" msgid="3524366082000739743">"Bu işəsalma tətbiqi iş profili tərəfindən istifadə edilə bilməz"</string>
-    <string name="cancel_provisioning" msgid="3408069559452653724">"Ləğv et"</string>
+    <string name="cancel_provisioning" msgid="3408069559452653724">"Ləğv edin"</string>
     <string name="pick_launcher" msgid="4257084827403983845">"Ok"</string>
     <string name="user_setup_incomplete" msgid="6494920045526591079">"İstifadəçi Ayarı Tamamlanmayıb"</string>
     <string name="default_owned_device_username" msgid="3915120202811807955">"İş cihazı istifadəçisi"</string>
@@ -170,9 +170,8 @@
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"İş cihazı quraşdırın"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"İş tətbiqlərini əlinizin altında saxlayın"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"Bu cihaz şəxsidir"</string>
-    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="9114358756158824064">"İT admininiz bu cihazda data və fəaliyyətinizə baxa bilər.\n\nƏtraflı məlumat üçün <xliff:g id="IT_ADMIN">%1$s</xliff:g> ilə əlaqə saxlayın."</string>
+    <string name="fully_managed_device_provisioning_step_2_subheader" msgid="2848998570491578119">"IT admini bu cihazda data və fəaliyyətinizə baxa bilər."</string>
     <string name="fully_managed_device_provisioning_permissions_header" msgid="2852101532084770993">"Fəaliyyət və datanız"</string>
-    <string name="fully_managed_device_provisioning_permissions_subheader" msgid="4019030073535269884">"IT admini bu cihazda data və fəaliyyətinizə baxa bilər."</string>
     <string name="fully_managed_device_provisioning_permissions_secondary_header" msgid="4419374850927705136">"Tətbiq icazələri"</string>
     <string name="fully_managed_device_provisioning_permissions_secondary_subheader" msgid="8328298923037335068">"İT admini mikrofon, kamera və məkan icazələri kimi bu cihazdakı tətbiqlər üçün icazələr təyin edə bilər."</string>
     <string name="fully_managed_device_provisioning_progress_label" msgid="3925516135130021966">"Cihaz quraşdırılır..."</string>
@@ -190,7 +189,8 @@
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"Məxfilik xatırlatması"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"IT admini bu cihazda data və fəaliyyətinizə baxa bilər"</string>
     <string name="financed_device_screen_header" msgid="6875169548352717124">"Bu cihaz <xliff:g id="CREDITOR_NAME">%s</xliff:g> tərəfindən təmin edilib"</string>
-    <string name="creditor_capabilities_header" msgid="6217362648469323253">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> bunu edə bilər:"</string>
-    <string name="install_creditor_app_description" msgid="6056052518227986620">"Bu cihazda <xliff:g id="CREDITOR_NAME">%s</xliff:g> tətbiqini quraşdırın"</string>
-    <string name="lock_device_description" msgid="9198967942380649144">"Ödəniş etmirsinizsə, bu cihazı kilidləyin"</string>
+    <string name="financed_make_payments_subheader_title" msgid="7517793486744056995">"<xliff:g id="CREDITOR_NAME">%s</xliff:g> tətbiqi ilə ödəniş edin"</string>
+    <string name="financed_make_payments_subheader_description" msgid="1222254084091306375">"Bu cihaz üçün ödəniş etmək üçün <xliff:g id="CREDITOR_NAME_0">%1$s</xliff:g> <xliff:g id="CREDITOR_NAME_1">%2$s</xliff:g> tətbiqini quraşdıra bilər."</string>
+    <string name="financed_restrict_device_subheader_title" msgid="5218186267108559679">"<xliff:g id="CREDITOR_NAME">%s</xliff:g> bu cihazı məhdudlaşdıra bilər"</string>
+    <string name="financed_restrict_device_subheader_description" msgid="5683975693718163300">"<xliff:g id="CREDITOR_NAME">%1$s</xliff:g> ödəniş etməsəniz, bu cihaza girişi məhdudlaşdıra bilər."</string>
 </resources>

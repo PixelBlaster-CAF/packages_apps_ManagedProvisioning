@@ -26,6 +26,8 @@ import android.os.Bundle;
 
 import com.android.managedprovisioning.model.ProvisioningParams;
 
+import com.google.android.setupcompat.util.WizardManagerHelper;
+
 /**
  * A utility class for checking for the existence of and starting DPC's activity with intent filter
  * with action {@link DevicePolicyManager#ACTION_GET_PROVISIONING_MODE}.
@@ -54,13 +56,18 @@ public class GetProvisioningModeUtils {
      */
     public boolean startGetProvisioningModeActivityIfResolved(
             Activity parentActivity, ProvisioningParams params, Bundle additionalExtras,
-            int requestCode) {
+            int requestCode, TransitionHelper transitionHelper) {
         if (!isGetProvisioningModeActivityResolvable(parentActivity, params)) {
             return false;
         }
         Intent getProvisioningModeIntent = getGetProvisioningModeIntent(params);
         getProvisioningModeIntent.putExtras(additionalExtras);
-        parentActivity.startActivityForResult(getProvisioningModeIntent, requestCode);
+        if (parentActivity.getIntent() != null) {
+            WizardManagerHelper.copyWizardManagerExtras(
+                    parentActivity.getIntent(), getProvisioningModeIntent);
+        }
+        transitionHelper.startActivityForResultWithTransition(
+                parentActivity, getProvisioningModeIntent, requestCode);
         return true;
     }
 

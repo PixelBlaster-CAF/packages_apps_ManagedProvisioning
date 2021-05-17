@@ -15,8 +15,7 @@
  */
 package com.android.managedprovisioning.provisioning;
 
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_PERSONALLY_OWNED;
+import static android.app.admin.DevicePolicyManager.FLAG_SUPPORTED_MODES_PERSONALLY_OWNED;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -98,10 +97,8 @@ public class LandingActivity extends SetupGlifLayoutActivity {
         }
     }
 
-    private boolean shouldShowAccountManagementDisclaimer(int initiatorRequestedProvisioningModes) {
-        return initiatorRequestedProvisioningModes
-                        == SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED
-                || initiatorRequestedProvisioningModes == SUPPORTED_MODES_PERSONALLY_OWNED;
+    private boolean shouldShowAccountManagementDisclaimer(int provisioningModes) {
+        return mUtils.containsBinaryFlags(provisioningModes, FLAG_SUPPORTED_MODES_PERSONALLY_OWNED);
     }
 
     private void onNextButtonClicked(ProvisioningParams params) {
@@ -109,10 +106,11 @@ public class LandingActivity extends SetupGlifLayoutActivity {
             final Intent intent = new Intent(this, AdminIntegratedFlowPrepareActivity.class);
             WizardManagerHelper.copyWizardManagerExtras(getIntent(), intent);
             intent.putExtra(ProvisioningParams.EXTRA_PROVISIONING_PARAMS, params);
-            startActivityForResult(intent, ADMIN_INTEGRATED_FLOW_PREPARE_REQUEST_CODE);
+            getTransitionHelper().startActivityForResultWithTransition(
+                    this, intent, ADMIN_INTEGRATED_FLOW_PREPARE_REQUEST_CODE);
         } else {
             setResult(Activity.RESULT_OK);
-            finish();
+            getTransitionHelper().finishActivity(this);
         }
     }
 
@@ -121,14 +119,16 @@ public class LandingActivity extends SetupGlifLayoutActivity {
         final String contactDeviceProvider =
                 getString(R.string.contact_device_provider, deviceProvider);
         mUtils.handleSupportUrl(this, customizationParams, mContextMenuMaker, info, deviceProvider,
-                contactDeviceProvider);
+                contactDeviceProvider, intent ->
+                        getTransitionHelper().startActivityWithTransition(
+                                LandingActivity.this, intent));
     }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == ADMIN_INTEGRATED_FLOW_PREPARE_REQUEST_CODE) {
             setResult(resultCode);
-            finish();
+            getTransitionHelper().finishActivity(this);
         }
     }
 }

@@ -27,6 +27,8 @@ import android.os.UserHandle;
 import com.android.managedprovisioning.analytics.ProvisioningAnalyticsTracker;
 import com.android.managedprovisioning.model.ProvisioningParams;
 
+import com.google.android.setupcompat.util.WizardManagerHelper;
+
 import java.util.function.BiConsumer;
 
 /**
@@ -48,11 +50,17 @@ public class PolicyComplianceUtils {
      */
     public boolean startPolicyComplianceActivityForResultIfResolved(Activity parentActivity,
             ProvisioningParams params, int requestCode, Utils utils,
-            ProvisioningAnalyticsTracker provisioningAnalyticsTracker) {
+            ProvisioningAnalyticsTracker provisioningAnalyticsTracker,
+            TransitionHelper transitionHelper) {
         return startPolicyComplianceActivityIfResolvedInternal(parentActivity, params, utils,
-                provisioningAnalyticsTracker, (Intent intent, UserHandle userHandle) ->
-                        parentActivity.startActivityForResultAsUser(
-                                intent, requestCode, userHandle));
+                provisioningAnalyticsTracker, (Intent intent, UserHandle userHandle) -> {
+                    if (parentActivity.getIntent() != null) {
+                        WizardManagerHelper.copyWizardManagerExtras(
+                                parentActivity.getIntent(), intent);
+                    }
+                    transitionHelper.startActivityForResultAsUserWithTransition(
+                            parentActivity, intent, requestCode, userHandle);
+                });
     }
 
     /**
@@ -62,8 +70,12 @@ public class PolicyComplianceUtils {
     public boolean startPolicyComplianceActivityIfResolved(Context context,
             ProvisioningParams params, Utils utils,
             ProvisioningAnalyticsTracker provisioningAnalyticsTracker) {
-        return startPolicyComplianceActivityIfResolvedInternal(context, params, utils,
-                provisioningAnalyticsTracker, context::startActivityAsUser);
+        return startPolicyComplianceActivityIfResolvedInternal(
+                context,
+                params,
+                utils,
+                provisioningAnalyticsTracker,
+                context::startActivityAsUser);
     }
 
     private boolean startPolicyComplianceActivityIfResolvedInternal(

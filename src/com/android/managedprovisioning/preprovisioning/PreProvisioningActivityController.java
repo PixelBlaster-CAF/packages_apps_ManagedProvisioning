@@ -33,15 +33,15 @@ import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_ALLOWED_P
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_IMEI;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_KEEP_ACCOUNT_ON_MIGRATION;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_LEAVE_ALL_SYSTEM_APPS_ENABLED;
-import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT;
+import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SENSORS_PERMISSION_GRANT_OPT_OUT;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SERIAL_NUMBER;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SKIP_EDUCATION_SCREENS;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_TRIGGER;
+import static android.app.admin.DevicePolicyManager.FLAG_SUPPORTED_MODES_DEVICE_OWNER;
+import static android.app.admin.DevicePolicyManager.FLAG_SUPPORTED_MODES_ORGANIZATION_OWNED;
 import static android.app.admin.DevicePolicyManager.PROVISIONING_MODE_MANAGED_PROFILE_ON_PERSONAL_DEVICE;
 import static android.app.admin.DevicePolicyManager.PROVISIONING_TRIGGER_QR_CODE;
 import static android.app.admin.DevicePolicyManager.PROVISIONING_TRIGGER_UNSPECIFIED;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_DEVICE_OWNER;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_OWNED;
 import static android.nfc.NfcAdapter.ACTION_NDEF_DISCOVERED;
 
 import static com.android.managedprovisioning.analytics.ProvisioningAnalyticsTracker.CANCELLED_BEFORE_PROVISIONING;
@@ -190,10 +190,9 @@ public class PreProvisioningActivityController {
 
         /**
          * Start provisioning.
-         * @param userId the id of the user we want to start provisioning on
          * @param params the {@link ProvisioningParams} object related to the ongoing provisioning
          */
-        void startProvisioning(int userId, ProvisioningParams params);
+        void startProvisioning(ProvisioningParams params);
 
         /**
          * Show an error dialog indicating that the current launcher does not support managed
@@ -240,10 +239,6 @@ public class PreProvisioningActivityController {
          * The original provisioning action, kept for backwards compatibility.
          */
         public String provisioningAction;
-        /**
-         * {@link Intent} to launch the view terms screen.
-         */
-        public Intent viewTermsIntent;
         public boolean isOrganizationOwnedProvisioning;
     }
 
@@ -304,6 +299,7 @@ public class PreProvisioningActivityController {
 
         mViewModel.getTimeLogger().start();
         mProvisioningAnalyticsTracker.logPreProvisioningStarted(mContext, intent);
+        mViewModel.onProvisioningInitiated();
 
         if (mUtils.checkAdminIntegratedFlowPreconditions(params)) {
             if (mUtils.shouldShowOwnershipDisclaimerScreen(params)) {
@@ -413,7 +409,6 @@ public class PreProvisioningActivityController {
         uiParams.provisioningAction = mViewModel.getParams().provisioningAction;
         uiParams.packageName = packageName;
         uiParams.isDeviceManaged = mDevicePolicyManager.isDeviceManaged();
-        uiParams.viewTermsIntent = createViewTermsIntent();
         uiParams.isOrganizationOwnedProvisioning =
                 mViewModel.getParams().isOrganizationOwnedProvisioning;
 
@@ -480,10 +475,6 @@ public class PreProvisioningActivityController {
 
     private void maybeUpdateSkipEducationScreens(ProvisioningParams.Builder builder,
             Intent resultIntent) {
-        // TODO(b/175396701): Remove this hack
-        if (mViewModel.getParams().skipEducationScreens) {
-            return;
-        }
         if (resultIntent.hasExtra(EXTRA_PROVISIONING_SKIP_EDUCATION_SCREENS)) {
             builder.setSkipEducationScreens(resultIntent.getBooleanExtra(
                     EXTRA_PROVISIONING_SKIP_EDUCATION_SCREENS, /* defaultValue */ false));
@@ -560,7 +551,7 @@ public class PreProvisioningActivityController {
 
         if (params.allowedProvisioningModes.contains(
                 DevicePolicyManager.PROVISIONING_MODE_FULLY_MANAGED_DEVICE)) {
-            bundle.putBoolean(EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT,
+            bundle.putBoolean(EXTRA_PROVISIONING_SENSORS_PERMISSION_GRANT_OPT_OUT,
                     params.deviceOwnerPermissionGrantOptOut);
         }
         return bundle;
@@ -568,11 +559,11 @@ public class PreProvisioningActivityController {
 
     private boolean shouldPassPersonalDataToAdminApp() {
         ProvisioningParams params = mViewModel.getParams();
-        return params.initiatorRequestedProvisioningModes == SUPPORTED_MODES_ORGANIZATION_OWNED
-                || params.initiatorRequestedProvisioningModes == SUPPORTED_MODES_DEVICE_OWNER;
+        return params.initiatorRequestedProvisioningModes == FLAG_SUPPORTED_MODES_ORGANIZATION_OWNED
+                || params.initiatorRequestedProvisioningModes == FLAG_SUPPORTED_MODES_DEVICE_OWNER;
     }
 
-    private Intent createViewTermsIntent() {
+    protected Intent createViewTermsIntent() {
         return new Intent(mContext, TermsActivity.class).putExtra(
             ProvisioningParams.EXTRA_PROVISIONING_PARAMS, mViewModel.getParams());
     }
@@ -614,13 +605,13 @@ public class PreProvisioningActivityController {
                 // Cancel the boot reminder as provisioning has now started.
                 mViewModel.getEncryptionController().cancelEncryptionReminder();
                 stopTimeLogger();
-                mUi.startProvisioning(mUserManager.getUserHandle(), mViewModel.getParams());
+                mUi.startProvisioning(mViewModel.getParams());
             }
         } else { // DO case
             // Cancel the boot reminder as provisioning has now started.
             mViewModel.getEncryptionController().cancelEncryptionReminder();
             stopTimeLogger();
-            mUi.startProvisioning(mUserManager.getUserHandle(), mViewModel.getParams());
+            mUi.startProvisioning(mViewModel.getParams());
         }
 
         mViewModel.onProvisioningStartedAfterUserConsent();

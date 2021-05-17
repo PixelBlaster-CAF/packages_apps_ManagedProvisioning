@@ -38,8 +38,8 @@ import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_LOCALE;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_LOCAL_TIME;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_LOGO_URI;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_ORGANIZATION_NAME;
-import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_RETURN_BEFORE_POLICY_COMPLIANCE;
+import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SENSORS_PERMISSION_GRANT_OPT_OUT;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SKIP_EDUCATION_SCREENS;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SKIP_ENCRYPTION;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_SUPPORTED_MODES;
@@ -61,12 +61,9 @@ import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_WIFI_PROX
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_WIFI_SECURITY_TYPE;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_WIFI_SSID;
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_WIFI_USER_CERTIFICATE;
+import static android.app.admin.DevicePolicyManager.FLAG_SUPPORTED_MODES_ORGANIZATION_OWNED;
 import static android.app.admin.DevicePolicyManager.PROVISIONING_TRIGGER_CLOUD_ENROLLMENT;
 import static android.app.admin.DevicePolicyManager.PROVISIONING_TRIGGER_QR_CODE;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_DEVICE_OWNER;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_ORGANIZATION_OWNED;
-import static android.app.admin.DevicePolicyManager.SUPPORTED_MODES_PERSONALLY_OWNED;
 import static android.nfc.NfcAdapter.ACTION_NDEF_DISCOVERED;
 
 import static com.android.internal.util.Preconditions.checkNotNull;
@@ -99,12 +96,10 @@ import com.android.managedprovisioning.model.PackageDownloadInfo;
 import com.android.managedprovisioning.model.ProvisioningParams;
 import com.android.managedprovisioning.model.WifiInfo;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.IllformedLocaleException;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -242,16 +237,9 @@ public class ExtrasProvisioningDataParser implements ProvisioningDataParser {
     static final String EXTRA_PROVISIONING_USE_MOBILE_DATA_SHORT = "a.a.e.PUMD";
 
     @VisibleForTesting
-    static final String EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT_SHORT = "a.a.e.PPGOO";
+    static final String EXTRA_PROVISIONING_SENSORS_PERMISSION_GRANT_OPT_OUT_SHORT = "a.a.e.PPSGOO";
 
     private static final Map<String, String> SHORTER_EXTRAS = buildShorterExtrasMap();
-
-    private static final ArrayList<Integer> SUPPORTED_MODES_ALLOWED_VALUES =
-            new ArrayList<>(List.of(
-                    SUPPORTED_MODES_ORGANIZATION_OWNED,
-                    SUPPORTED_MODES_PERSONALLY_OWNED,
-                    SUPPORTED_MODES_ORGANIZATION_AND_PERSONALLY_OWNED,
-                    SUPPORTED_MODES_DEVICE_OWNER));
 
     private static Map<String, String> buildShorterExtrasMap() {
         Map<String, String> shorterExtras = new HashMap<>();
@@ -345,8 +333,8 @@ public class ExtrasProvisioningDataParser implements ProvisioningDataParser {
                 EXTRA_PROVISIONING_SKIP_EDUCATION_SCREENS_SHORT);
         shorterExtras.put(
                 EXTRA_PROVISIONING_USE_MOBILE_DATA, EXTRA_PROVISIONING_USE_MOBILE_DATA_SHORT);
-        shorterExtras.put(EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT,
-                EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT_SHORT);
+        shorterExtras.put(EXTRA_PROVISIONING_SENSORS_PERMISSION_GRANT_OPT_OUT,
+                EXTRA_PROVISIONING_SENSORS_PERMISSION_GRANT_OPT_OUT_SHORT);
         return shorterExtras;
     }
 
@@ -551,12 +539,11 @@ public class ExtrasProvisioningDataParser implements ProvisioningDataParser {
                     .parse(getParcelableArrayExtraFromLongName(
                             intent, EXTRA_PROVISIONING_DISCLAIMERS));
 
-            String organizationName = null;
+            String organizationName =
+                    getStringExtraFromLongName(intent, EXTRA_PROVISIONING_ORGANIZATION_NAME);
             String supportUrl = null;
             if (isProvisionManagedDeviceFromTrustedSourceIntent || isFinancedDeviceProvisioning) {
-                organizationName = getStringExtraFromLongName(
-                        intent,EXTRA_PROVISIONING_ORGANIZATION_NAME);
-                supportUrl = getStringExtraFromLongName(intent,EXTRA_PROVISIONING_SUPPORT_URL);
+                supportUrl = getStringExtraFromLongName(intent, EXTRA_PROVISIONING_SUPPORT_URL);
             }
 
             final boolean leaveAllSystemAppsEnabled = isManagedProfileAction
@@ -572,7 +559,7 @@ public class ExtrasProvisioningDataParser implements ProvisioningDataParser {
 
             final boolean adminOptedOutOfSensorsPermissionGrants =
                     getBooleanExtraFromLongName(intent,
-                            EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT,
+                            EXTRA_PROVISIONING_SENSORS_PERMISSION_GRANT_OPT_OUT,
                             ProvisioningParams.DEFAULT_EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT);
             return ProvisioningParams.Builder.builder()
                     .setProvisioningId(provisioningId)
@@ -596,7 +583,7 @@ public class ExtrasProvisioningDataParser implements ProvisioningDataParser {
                     .setIsQrProvisioning(provisioningTrigger == PROVISIONING_TRIGGER_QR_CODE)
                     .setProvisioningTrigger(provisioningTrigger)
                     .setAllowedProvisioningModes(mParserUtils.getAllowedProvisioningModes(
-                            mContext, initiatorRequestedProvisioningModes))
+                            mContext, initiatorRequestedProvisioningModes, mUtils))
                     .setInitiatorRequestedProvisioningModes(
                             initiatorRequestedProvisioningModes)
                     .setSkipOwnershipDisclaimer(getSkipOwnershipDisclaimer(intent))
@@ -641,15 +628,11 @@ public class ExtrasProvisioningDataParser implements ProvisioningDataParser {
         if (!intent.getAction().equals(ACTION_PROVISION_MANAGED_DEVICE_FROM_TRUSTED_SOURCE)) {
             return ProvisioningParams.DEFAULT_EXTRA_PROVISIONING_SUPPORTED_MODES;
         }
-        int initiatorRequestedProvisioningModes = getIntExtraFromLongName(intent,
+        int supportedModes = getIntExtraFromLongName(intent,
                 EXTRA_PROVISIONING_SUPPORTED_MODES,
-                SUPPORTED_MODES_ORGANIZATION_OWNED);
-        if (!SUPPORTED_MODES_ALLOWED_VALUES.contains(initiatorRequestedProvisioningModes)) {
-            throw new IllegalArgumentException(
-                    "Invalid value for EXTRA_PROVISIONING_SUPPORTED_MODES: "
-                            + initiatorRequestedProvisioningModes);
-        }
-        return initiatorRequestedProvisioningModes;
+                FLAG_SUPPORTED_MODES_ORGANIZATION_OWNED);
+        mParserUtils.validateSupportedModes(supportedModes);
+        return supportedModes;
     }
 
     /**
