@@ -164,9 +164,9 @@
     <string name="work_profile_provisioning_accept_header_post_suw" msgid="1353127953275291089">"Կարգավորեք ձեր աշխատանքային պրոֆիլը"</string>
     <string name="work_profile_provisioning_step_1_header" msgid="7914961694921466366">"Աշխատանքային հավելվածները պահվում են ձեր աշխատանքային պրոֆիլում"</string>
     <string name="work_profile_provisioning_step_2_header" msgid="6001172190404670248">"Դադարեցրեք աշխատանքային հավելվածները օրվա ավարտին"</string>
-    <string name="work_profile_provisioning_step_3_header" msgid="4316106639726774330">"Ձեր աշխատանքային պրոֆիլի տվյալները տեսանելի են ձեր ՏՏ ադմինիստրատորին"</string>
+    <string name="work_profile_provisioning_step_3_header" msgid="4316106639726774330">"Ձեր աշխատանքային պրոֆիլի տվյալները տեսանելի են ՏՏ ադմինիստրատորին"</string>
     <string name="work_profile_provisioning_progress_label" msgid="2627905308998389193">"Աշխատանքային պրոֆիլը կարգավորվում է…"</string>
-    <string name="work_profile_provisioning_summary" msgid="3436190271657388747">"Աշխատանքային հավելվածները պահվում են ձեր աշխատանքային պրոֆիլում։ Դրանք կարող եք դադարեցնել աշխատանքային օրվա ավարտին։ Ձեր աշխատանքային պրոֆիլի տվյալները տեսանելի են ձեր ՏՏ ադմինիստրատորին։"</string>
+    <string name="work_profile_provisioning_summary" msgid="3436190271657388747">"Աշխատանքային հավելվածները պահվում են ձեր աշխատանքային պրոֆիլում։ Դրանք կարող եք դադարեցնել աշխատանքային օրվա ավարտին։ Ձեր աշխատանքային պրոֆիլի տվյալները տեսանելի են ՏՏ ադմինիստրատորին։"</string>
     <string name="fully_managed_device_provisioning_accept_header" msgid="2944032660440403130">"Կարգավորեք աշխատանքային սարքը"</string>
     <string name="fully_managed_device_provisioning_step_1_header" msgid="6396274703116708592">"Աշխատանքային հավելվածները՝ ձեր գրպանում"</string>
     <string name="fully_managed_device_provisioning_step_2_header" msgid="7165472083121590030">"Այս սարքն անձնական չէ"</string>
@@ -184,7 +184,7 @@
     <string name="cope_provisioning_step_1_header" msgid="1945759718804756423">"Աշխատանքային հավելվածները ձեր աշխատանքային պրոֆիլում են, կառավարիչ՝ ՏՏ ադմինիստրատորը"</string>
     <string name="cope_provisioning_step_2_header" msgid="2388399739294883042">"Անձնական հավելվածները թաքցված են և առանձին են աշխատանքայիններից"</string>
     <string name="cope_provisioning_step_3_header" msgid="7161795433847296201">"ՏՏ ադմինիստրատորը կարող է վերահսկել սարքը և արգելափակել որոշ հավելվածներ"</string>
-    <string name="cope_provisioning_summary" msgid="993014104601034878">"Աշխատանքային հավելվածները պահվում են ձեր աշխատանքային պրոֆիլում և կառավարվում են ձեր ՏՏ ադմինիստրատորի կողմից։ Անձնական հավելվածները թաքցված են և առանձնացված աշխատանքային հավելվածներից։ Ձեր ՏՏ ադմինիստրատորը կարող է վերահսկել այս սարքը և արգելափակել որոշակի հավելվածներ։"</string>
+    <string name="cope_provisioning_summary" msgid="993014104601034878">"Աշխատանքային հավելվածները պահվում են ձեր աշխատանքային պրոֆիլում և կառավարվում են ձեր ՏՏ ադմինիստրատորի կողմից։ Անձնական հավելվածները առանձին են և թաքցված են, երբ ցուցադրվում են աշխատանքայինները։ Ձեր ՏՏ ադմինիստրատորը կարող է վերահսկել այս սարքը և արգելափակել որոշակի հավելվածներ։"</string>
     <string name="just_a_sec" msgid="6244676028626237220">"Սպասեք մի փոքր…"</string>
     <string name="fully_managed_device_provisioning_privacy_title" msgid="4017627906103556021">"Գաղտնիության վերաբերյալ հիշեցում"</string>
     <string name="fully_managed_device_provisioning_privacy_body" msgid="2219074604343348608">"ՏՏ ադմինիստրատորը կարող է տեսնել ձեր տվյալներն ու գործողությունները"</string>
