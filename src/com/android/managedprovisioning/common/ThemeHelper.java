@@ -37,8 +37,6 @@ import androidx.webkit.WebViewFeature;
 
 import com.android.managedprovisioning.R;
 
-import com.airbnb.lottie.LottieAnimationView;
-import com.airbnb.lottie.LottieComposition;
 import com.google.android.setupcompat.util.WizardManagerHelper;
 import com.google.android.setupdesign.util.ThemeResolver;
 
@@ -51,13 +49,10 @@ public class ThemeHelper {
 
     private final NightModeChecker mNightModeChecker;
     private final SetupWizardBridge mSetupWizardBridge;
-    private final AnimationDynamicColorsHelper mAnimationDynamicColorsHelper;
 
     public ThemeHelper(NightModeChecker nightModeChecker, SetupWizardBridge setupWizardBridge) {
-        mNightModeChecker = requireNonNull(nightModeChecker);
-        mSetupWizardBridge = requireNonNull(setupWizardBridge);
-        // TODO(b/190182035): Tidy up tests after adding dependency injection support
-        mAnimationDynamicColorsHelper = new AnimationDynamicColorsHelper();
+        mNightModeChecker = nightModeChecker;
+        mSetupWizardBridge = setupWizardBridge;
     }
 
     /**
@@ -111,18 +106,6 @@ public class ThemeHelper {
             return;
         }
         WebSettingsCompat.setForceDark(webSettings, getForceDarkMode(context));
-    }
-
-    /**
-     * Updates the relevant animation with theme-specific colors.
-     * <p>If the supplied {@link LottieAnimationView} does not have a loaded {@link
-     * LottieComposition}, it asynchronously waits for it to load and then applies the colors.
-     */
-    public void setupAnimationDynamicColors(
-            Context context, LottieAnimationView lottieAnimationView) {
-        mAnimationDynamicColorsHelper.setupAnimationDynamicColors(
-                new LottieAnimationWrapper(lottieAnimationView),
-                getDefaultNightMode(context));
     }
 
     private int getForceDarkMode(Context context) {

@@ -21,33 +21,23 @@ import static com.google.common.truth.Truth.assertThat;
 
 import androidx.test.filters.SmallTest;
 
-import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.TransitionAnimationState;
-
 import org.junit.Test;
 
 @SmallTest
 public class ProvisioningViewModelTest {
+
+    private static final int CURRENT_TRANSITION_SCREEN = 4;
+
     private final ProvisioningViewModel mViewModel = new ProvisioningViewModel();
 
     @Test
-    public void setTransitionAnimationState_works() {
-        TransitionAnimationState originalState = createTransitionState();
-        mViewModel.saveTransitionAnimationState(originalState);
-
-        TransitionAnimationState restoredState = mViewModel.restoreTransitionAnimationState();
-
-        assertThat(restoredState).isEqualTo(originalState);
+    public void getCurrentTransitionScreen_defaultsToZero() {
+        assertThat(mViewModel.getCurrentTransitionScreen()).isEqualTo(0);
     }
 
     @Test
-    public void restoreTransitionAnimationState_nullByDefault() {
-        TransitionAnimationState restoredState = mViewModel.restoreTransitionAnimationState();
-
-        assertThat(restoredState).isNull();
-    }
-
-    private TransitionAnimationState createTransitionState() {
-        return new TransitionAnimationState(/* animationIndex= */ 2, /* progress= */
-                0.5f, /* lastTransitionTimestamp= */ 1234);
+    public void setCurrentTransitionScreen_works() {
+        mViewModel.setCurrentTransitionScreen(CURRENT_TRANSITION_SCREEN);
+        assertThat(mViewModel.getCurrentTransitionScreen()).isEqualTo(CURRENT_TRANSITION_SCREEN);
     }
 }

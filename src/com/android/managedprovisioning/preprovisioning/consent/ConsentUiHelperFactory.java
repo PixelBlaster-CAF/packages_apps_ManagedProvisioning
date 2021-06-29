@@ -17,7 +17,6 @@ package com.android.managedprovisioning.preprovisioning.consent;
 
 import android.app.Activity;
 
-import com.android.managedprovisioning.common.ThemeHelper;
 import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.preprovisioning.PreProvisioningActivityBridgeCallbacks;
 
@@ -29,10 +28,9 @@ public class ConsentUiHelperFactory {
             Activity activity,
             ConsentUiHelperCallback callback,
             Utils utils,
-            PreProvisioningActivityBridgeCallbacks preProvisioningActivityBridgeCallbacks,
-            ThemeHelper themeHelper) {
+            PreProvisioningActivityBridgeCallbacks preProvisioningActivityBridgeCallbacks) {
         // Currently there's just one
         return new ConsentUiHelperImpl(activity, callback, utils,
-                preProvisioningActivityBridgeCallbacks, themeHelper);
+                preProvisioningActivityBridgeCallbacks);
     }
 }

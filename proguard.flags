@@ -10,6 +10,3 @@
 -keep public class com.android.managedprovisioning.ManagedProvisioningBaseApplication {
     public protected *;
 }
--keep public class com.android.managedprovisioning.common.HomogenousBiMap {
-    public *;
-}

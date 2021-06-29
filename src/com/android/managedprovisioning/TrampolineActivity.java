@@ -36,7 +36,7 @@ public class TrampolineActivity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        mTransitionHelper.applyContentScreenTransitions(this);
+        mTransitionHelper.applyTransitions(this);
         super.onCreate(savedInstanceState);
         Intent target = (Intent) getIntent().getParcelableExtra(EXTRA_INTENT);
         if (target != null) {

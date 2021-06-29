@@ -15,6 +15,7 @@
  */
 package com.android.managedprovisioning.provisioning;
 
+import static com.android.internal.util.Preconditions.checkNotNull;
 import static com.android.managedprovisioning.provisioning.ProvisioningActivity.PROVISIONING_MODE_FULLY_MANAGED_DEVICE;
 import static com.android.managedprovisioning.provisioning.ProvisioningActivity.PROVISIONING_MODE_WORK_PROFILE;
 import static com.android.managedprovisioning.provisioning.ProvisioningActivity.PROVISIONING_MODE_WORK_PROFILE_ON_ORG_OWNED_DEVICE;
@@ -23,6 +24,7 @@ import static java.util.Objects.requireNonNull;
 
 import android.annotation.StringRes;
 import android.content.Context;
+import android.graphics.drawable.AnimatedVectorDrawable;
 import android.os.Handler;
 import android.os.Looper;
 import android.view.View;
@@ -34,14 +36,13 @@ import com.android.internal.annotations.VisibleForTesting;
 import com.android.managedprovisioning.R;
 import com.android.managedprovisioning.common.CrossFadeHelper;
 import com.android.managedprovisioning.common.CrossFadeHelper.Callback;
+import com.android.managedprovisioning.common.RepeatingVectorAnimation;
 import com.android.managedprovisioning.provisioning.ProvisioningActivity.ProvisioningMode;
 
-import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.setupdesign.util.ItemStyler;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Handles the animated transitions in the education screens. Transitions consist of cross fade
@@ -52,37 +53,31 @@ class TransitionAnimationHelper {
     interface TransitionAnimationCallback {
         void onAllTransitionsShown();
 
-        void onAnimationSetup(LottieAnimationView animationView);
-    }
-
-    interface TransitionAnimationStateManager {
-        void saveState(TransitionAnimationState state);
-
-        TransitionAnimationState restoreState();
+        void onTransitionStart(int screenIndex, AnimatedVectorDrawable animatedVectorDrawable);
     }
 
     @VisibleForTesting
     static final ProvisioningModeWrapper WORK_PROFILE_WRAPPER =
             new ProvisioningModeWrapper(new TransitionScreenWrapper[] {
         new TransitionScreenWrapper(R.string.work_profile_provisioning_step_1_header,
-                R.raw.separate_work_and_personal_animation),
+                R.drawable.separate_work_and_personal_animation),
         new TransitionScreenWrapper(R.string.work_profile_provisioning_step_2_header,
-                R.raw.pause_work_apps_animation),
+                R.drawable.pause_work_apps_animation),
         new TransitionScreenWrapper(R.string.work_profile_provisioning_step_3_header,
-                R.raw.not_private_animation)
+                R.drawable.not_private_animation)
     }, R.string.work_profile_provisioning_summary);
 
     @VisibleForTesting
     static final ProvisioningModeWrapper WORK_PROFILE_ON_ORG_OWNED_DEVICE_WRAPPER =
             new ProvisioningModeWrapper(new TransitionScreenWrapper[] {
         new TransitionScreenWrapper(R.string.cope_provisioning_step_1_header,
-                R.raw.separate_work_and_personal_animation),
+                R.drawable.separate_work_and_personal_animation),
         new TransitionScreenWrapper(R.string.cope_provisioning_step_2_header,
                 /* description= */ 0,
-                R.raw.personal_apps_separate_hidden_from_work_animation,
+                R.drawable.personal_apps_separate_hidden_from_work_animation,
                 /* shouldLoop */ false),
         new TransitionScreenWrapper(R.string.cope_provisioning_step_3_header,
-                R.raw.it_admin_control_device_block_apps_animation)
+                R.drawable.it_admin_control_device_block_apps_animation)
     }, R.string.cope_provisioning_summary);
 
     private static final int TRANSITION_TIME_MILLIS = 5000;
@@ -93,76 +88,47 @@ class TransitionAnimationHelper {
     private final Runnable mStartNextTransitionRunnable = this::startNextAnimation;
     private final boolean mShowAnimations;
     private TransitionAnimationCallback mCallback;
-    private TransitionAnimationStateManager mStateManager;
     private final ProvisioningModeWrapper mProvisioningModeWrapper;
 
     private Handler mUiThreadHandler = new Handler(Looper.getMainLooper());
-    private TransitionAnimationState mTransitionAnimationState;
+    private int mCurrentTransitionIndex;
+    private RepeatingVectorAnimation mRepeatingVectorAnimation;
 
     TransitionAnimationHelper(@ProvisioningMode int provisioningMode,
             boolean adminCanGrantSensorsPermissions,
             AnimationComponents animationComponents,
             TransitionAnimationCallback callback,
-            TransitionAnimationStateManager stateManager) {
-        mAnimationComponents = requireNonNull(animationComponents);
-        mCallback = requireNonNull(callback);
-        mStateManager = requireNonNull(stateManager);
+            int currentTransitionIndex) {
+        mAnimationComponents = checkNotNull(animationComponents);
+        mCallback = checkNotNull(callback);
         mProvisioningModeWrapper = getProvisioningModeWrapper(provisioningMode,
                 adminCanGrantSensorsPermissions);
         mCrossFadeHelper = getCrossFadeHelper();
         mShowAnimations = shouldShowAnimations();
 
-        applyContentDescription(
-                mAnimationComponents.mAnimationView,
-                mProvisioningModeWrapper.summary);
+        // TODO(b/182824327): Gracefully pause/resume edu screen animations rather than restarting
+        mCurrentTransitionIndex = currentTransitionIndex;
+
+        applyContentDescription();
+        updateUiValues(mCurrentTransitionIndex);
     }
 
     boolean areAllTransitionsShown() {
-        return mTransitionAnimationState.mAnimationIndex
-                == mProvisioningModeWrapper.transitions.length - 1;
+        return mCurrentTransitionIndex == mProvisioningModeWrapper.transitions.length - 1;
     }
 
     void start() {
-        mTransitionAnimationState = maybeRestoreState();
-        scheduleNextTransition(getTimeLeftForTransition(mTransitionAnimationState));
-        updateUiValues(mTransitionAnimationState.mAnimationIndex);
-        startCurrentAnimatedDrawable(mTransitionAnimationState.mProgress);
+        mUiThreadHandler.postDelayed(mStartNextTransitionRunnable, TRANSITION_TIME_MILLIS);
+        updateUiValues(mCurrentTransitionIndex);
+        startCurrentAnimatedDrawable();
     }
 
-    private long getTimeLeftForTransition(TransitionAnimationState transitionAnimationState) {
-        long timeSinceLastTransition =
-                System.currentTimeMillis() - transitionAnimationState.mLastTransitionTimestamp;
-        return TRANSITION_TIME_MILLIS - timeSinceLastTransition;
-    }
-
-    void stop() {
-        updateState();
-        mStateManager.saveState(mTransitionAnimationState);
-        clean();
-    }
-
-    private void updateState() {
-        mTransitionAnimationState.mProgress = mAnimationComponents.mAnimationView.getProgress();
-    }
-
-    private TransitionAnimationState maybeRestoreState() {
-        TransitionAnimationState transitionAnimationState = mStateManager.restoreState();
-        if (transitionAnimationState == null) {
-            return new TransitionAnimationState(
-                    /* animationIndex */ 0,
-                    /* progress */ 0,
-                    /* lastTransitionTimestamp */ System.currentTimeMillis());
-        }
-        return transitionAnimationState;
-    }
-
-    private void clean() {
+    void clean() {
         stopCurrentAnimatedDrawable();
         mCrossFadeHelper.cleanup();
         mUiThreadHandler.removeCallbacksAndMessages(null);
         mUiThreadHandler = null;
         mCallback = null;
-        mStateManager = null;
     }
 
     @VisibleForTesting
@@ -174,27 +140,22 @@ class TransitionAnimationHelper {
                 @Override
                 public void fadeOutCompleted() {
                     stopCurrentAnimatedDrawable();
-                    mTransitionAnimationState.mAnimationIndex++;
-                    updateUiValues(mTransitionAnimationState.mAnimationIndex);
-                    startCurrentAnimatedDrawable(/* startProgress */ 0f);
+                    mCurrentTransitionIndex++;
+                    updateUiValues(mCurrentTransitionIndex);
+                    startCurrentAnimatedDrawable();
                 }
 
                 @Override
                 public void fadeInCompleted() {
-                    mTransitionAnimationState.mLastTransitionTimestamp = System.currentTimeMillis();
-                    scheduleNextTransition(TRANSITION_TIME_MILLIS);
+                    mUiThreadHandler.postDelayed(
+                        mStartNextTransitionRunnable, TRANSITION_TIME_MILLIS);
                 }
             });
     }
 
-    private void scheduleNextTransition(long timeLeftForTransition) {
-        mUiThreadHandler.postDelayed(mStartNextTransitionRunnable, timeLeftForTransition);
-    }
-
     @VisibleForTesting
     void startNextAnimation() {
-        if (mTransitionAnimationState.mAnimationIndex
-                >= mProvisioningModeWrapper.transitions.length - 1) {
+        if (mCurrentTransitionIndex >= mProvisioningModeWrapper.transitions.length-1) {
             if (mCallback != null) {
                 mCallback.onAllTransitionsShown();
             }
@@ -204,15 +165,19 @@ class TransitionAnimationHelper {
     }
 
     @VisibleForTesting
-    void startCurrentAnimatedDrawable(float startProgress) {
+    void startCurrentAnimatedDrawable() {
         if (!mShowAnimations) {
             return;
         }
-        boolean shouldLoop =
-                getTransitionForIndex(mTransitionAnimationState.mAnimationIndex).shouldLoop;
-        mAnimationComponents.mAnimationView.loop(shouldLoop);
-        mAnimationComponents.mAnimationView.setProgress(startProgress);
-        mAnimationComponents.mAnimationView.playAnimation();
+        if (!(mAnimationComponents.mImage.getDrawable() instanceof AnimatedVectorDrawable)) {
+            return;
+        }
+        final AnimatedVectorDrawable vectorDrawable =
+                (AnimatedVectorDrawable) mAnimationComponents.mImage.getDrawable();
+        boolean shouldLoop = getTransitionForIndex(mCurrentTransitionIndex).shouldLoop;
+        mRepeatingVectorAnimation = new RepeatingVectorAnimation(vectorDrawable, shouldLoop);
+        mRepeatingVectorAnimation.start();
+        mCallback.onTransitionStart(mCurrentTransitionIndex, vectorDrawable);
     }
 
     @VisibleForTesting
@@ -220,14 +185,17 @@ class TransitionAnimationHelper {
         if (!mShowAnimations) {
             return;
         }
-        mAnimationComponents.mAnimationView.pauseAnimation();
+        if (!(mAnimationComponents.mImage.getDrawable() instanceof AnimatedVectorDrawable)) {
+            return;
+        }
+        mRepeatingVectorAnimation.stop();
     }
 
     @VisibleForTesting
     void updateUiValues(int currentTransitionIndex) {
         final TransitionScreenWrapper transition =
                 getTransitionForIndex(currentTransitionIndex);
-        setupHeaderText(transition);
+        mAnimationComponents.mHeader.setText(transition.header);
         setupDescriptionText(transition);
         setupAnimation(transition);
         updateItemValues(
@@ -242,21 +210,9 @@ class TransitionAnimationHelper {
                 transition.secondarySubHeader);
     }
 
-    private void setupHeaderText(TransitionScreenWrapper transition) {
-        mAnimationComponents.mHeader.setText(transition.header);
-        triggerTextToSpeechIfFocused(mAnimationComponents.mHeader);
-    }
-
-    private void triggerTextToSpeechIfFocused(TextView view) {
-        if (view.isAccessibilityFocused()) {
-            view.announceForAccessibility(view.getText().toString());
-        }
-    }
-
     private void setupAnimation(TransitionScreenWrapper transition) {
         if (mShowAnimations && transition.drawable != 0) {
-            mAnimationComponents.mAnimationView.setAnimation(transition.drawable);
-            mCallback.onAnimationSetup(mAnimationComponents.mAnimationView);
+            mAnimationComponents.mImage.setImageResource(transition.drawable);
             mAnimationComponents.mImageContainer.setVisibility(View.VISIBLE);
         } else {
             mAnimationComponents.mImageContainer.setVisibility(View.GONE);
@@ -267,7 +223,6 @@ class TransitionAnimationHelper {
         if (transition.description != 0) {
             mAnimationComponents.mDescription.setText(transition.description);
             mAnimationComponents.mDescription.setVisibility(View.VISIBLE);
-            triggerTextToSpeechIfFocused(mAnimationComponents.mDescription);
         } else {
             mAnimationComponents.mDescription.setVisibility(View.GONE);
         }
@@ -333,12 +288,12 @@ class TransitionAnimationHelper {
             provisioningSummaryId = R.string.fully_managed_device_provisioning_summary;
             secondScreenBuilder
                     .setDescription(R.string.fully_managed_device_provisioning_step_2_subheader)
-                    .setAnimation(R.raw.not_private_animation);
+                    .setAnimation(R.drawable.not_private_animation);
         }
 
         TransitionScreenWrapper firstScreen = new TransitionScreenWrapper(
                 R.string.fully_managed_device_provisioning_step_1_header,
-                R.raw.connect_on_the_go_animation);
+                R.drawable.connect_on_the_go_animation);
         return new ProvisioningModeWrapper(new TransitionScreenWrapper[] {
                 firstScreen, secondScreenBuilder.build()}, provisioningSummaryId);
     }
@@ -348,9 +303,10 @@ class TransitionAnimationHelper {
         return context.getResources().getBoolean(R.bool.show_edu_animations);
     }
 
-    private void applyContentDescription(View view, @StringRes int summaryRes) {
-        Context context = view.getContext();
-        view.setContentDescription(context.getString(summaryRes));
+    private void applyContentDescription() {
+        final TextView header = mAnimationComponents.mHeader;
+        final Context context = header.getContext();
+        header.setContentDescription(context.getString(mProvisioningModeWrapper.summary));
     }
 
     private static final class ProvisioningModeWrapper {
@@ -366,53 +322,23 @@ class TransitionAnimationHelper {
     static final class AnimationComponents {
         private final TextView mHeader;
         private final TextView mDescription;
-        private final LottieAnimationView mAnimationView;
+        private final ImageView mImage;
         private final ViewGroup mImageContainer;
         private final ViewGroup mItem1;
         private final ViewGroup mItem2;
 
         AnimationComponents(TextView header, TextView description, ViewGroup item1,
-                ViewGroup item2, LottieAnimationView animationView, ViewGroup imageContainer) {
+                ViewGroup item2, ImageView image, ViewGroup imageContainer) {
             this.mHeader = requireNonNull(header);
             this.mDescription = requireNonNull(description);
             this.mItem1 = requireNonNull(item1);
             this.mItem2 = requireNonNull(item2);
             this.mImageContainer = requireNonNull(imageContainer);
-            this.mAnimationView = requireNonNull(animationView);
+            this.mImage = requireNonNull(image);
         }
 
         List<View> asList() {
             return Arrays.asList(mHeader, mItem1, mItem2, mImageContainer);
-        }
-    }
-
-    static final class TransitionAnimationState {
-        private int mAnimationIndex;
-        private float mProgress;
-        private long mLastTransitionTimestamp;
-
-        TransitionAnimationState(
-                int animationIndex,
-                float progress,
-                long lastTransitionTimestamp) {
-            mAnimationIndex = animationIndex;
-            mProgress = progress;
-            mLastTransitionTimestamp = lastTransitionTimestamp;
-        }
-
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (!(o instanceof TransitionAnimationState)) return false;
-            TransitionAnimationState that = (TransitionAnimationState) o;
-            return mAnimationIndex == that.mAnimationIndex &&
-                    Float.compare(that.mProgress, mProgress) == 0 &&
-                    mLastTransitionTimestamp == that.mLastTransitionTimestamp;
-        }
-
-        @Override
-        public int hashCode() {
-            return Objects.hash(mAnimationIndex, mProgress, mLastTransitionTimestamp);
         }
     }
 }

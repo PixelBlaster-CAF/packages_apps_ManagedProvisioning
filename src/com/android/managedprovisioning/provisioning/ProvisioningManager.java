@@ -38,7 +38,6 @@ import com.android.managedprovisioning.common.ProvisionLogger;
 import com.android.managedprovisioning.common.SettingsFacade;
 import com.android.managedprovisioning.model.ProvisioningParams;
 import com.android.managedprovisioning.provisioning.ProvisioningViewModel.ProvisioningViewModelFactory;
-import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.TransitionAnimationState;
 
 /**
  * Singleton instance that provides communications between the ongoing provisioning process and the
@@ -180,12 +179,12 @@ public class ProvisioningManager implements ProvisioningControllerCallback,
         mHelper.error(titleId, messageId, factoryResetRequired);
     }
 
-    void saveTransitionAnimationState(TransitionAnimationState transitionAnimationState) {
-        mViewModel.saveTransitionAnimationState(transitionAnimationState);
+    void setCurrentTransitionAnimation(int currentTransitionAnimation) {
+        mViewModel.setCurrentTransitionScreen(currentTransitionAnimation);
     }
 
-    TransitionAnimationState restoreTransitionAnimationState() {
-        return mViewModel.restoreTransitionAnimationState();
+    int getCurrentTransitionAnimation() {
+        return mViewModel.getCurrentTransitionScreen();
     }
 
     private AbstractProvisioningController getController(ProvisioningParams params) {
