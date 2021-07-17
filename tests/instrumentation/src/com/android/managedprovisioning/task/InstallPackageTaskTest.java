@@ -61,6 +61,7 @@ public class InstallPackageTaskTest {
     private static final PackageLocationProvider FILE_NULL_PATH_PROVIDER = () -> null;
     private static final PackageLocationProvider FILE_INVALID_PATH_PROVIDER =
             () -> new File("invalid/path");
+    private static final String TEST_APP = "android.EmptyTestApp";
 
     private InstallPackageBlockingCallback mInstallPackageBlockingCallback;
 
@@ -186,7 +187,11 @@ public class InstallPackageTaskTest {
 
     private static TestApp writeApkToInstall(File appToInstallFile) throws IOException {
         TestAppProvider testAppProvider = new TestAppProvider();
-        TestApp testApp = testAppProvider.any();
+        TestApp testApp = testAppProvider
+                .query()
+                // TODO(b/192330233): We use this specific app as it does not have the testOnly flag
+                .wherePackageName().isEqualTo(TEST_APP)
+                .get();
         testApp.writeApkFile(appToInstallFile);
         return testApp;
     }

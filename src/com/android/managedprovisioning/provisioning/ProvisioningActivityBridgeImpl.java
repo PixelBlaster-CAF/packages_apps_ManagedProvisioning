@@ -21,8 +21,8 @@ import static com.google.android.setupdesign.util.ThemeHelper.shouldApplyExtende
 import android.app.Activity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Space;
 import android.widget.TextView;
 
 import androidx.annotation.StringRes;
@@ -34,6 +34,7 @@ import com.android.managedprovisioning.common.Utils;
 import com.android.managedprovisioning.model.CustomizationParams;
 import com.android.managedprovisioning.model.ProvisioningParams;
 import com.android.managedprovisioning.provisioning.ProvisioningActivity.ProvisioningMode;
+import com.android.managedprovisioning.provisioning.ProvisioningModeWrapperProvider.ProvisioningModeWrapper;
 import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.AnimationComponents;
 import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.TransitionAnimationCallback;
 import com.android.managedprovisioning.provisioning.TransitionAnimationHelper.TransitionAnimationStateManager;
@@ -171,16 +172,22 @@ abstract class ProvisioningActivityBridgeImpl implements ProvisioningActivityBri
         ViewGroup item2 = layout.findViewById(R.id.item2);
         LottieAnimationView drawable = layout.findViewById(R.id.animation);
         ViewGroup drawableContainer = layout.findViewById(R.id.animation_container);
+        Space space1 = layout.findViewById(R.id.space1);
+        Space space2 = layout.findViewById(R.id.space2);
         AnimationComponents animationComponents =
                 new AnimationComponents(
-                        header, description, item1, item2, drawable, drawableContainer);
-        mTransitionAnimationHelper = new TransitionAnimationHelper(getProvisioningMode(),
-                /* adminCanGrantSensorsPermissions= */
-                !getParams().deviceOwnerPermissionGrantOptOut,
+                        header, description, item1, item2, drawable, drawableContainer,
+                        space1, space2);
+
+        ProvisioningModeWrapperProvider provider = new ProvisioningModeWrapperProvider(getParams());
+        ProvisioningModeWrapper provisioningModeWrapper = provider
+                .getProvisioningModeWrapper(getProvisioningMode());
+        mTransitionAnimationHelper = new TransitionAnimationHelper(
                 animationComponents,
                 callback,
                 getStateManager(),
-                new StylerHelper());
+                new StylerHelper(),
+                provisioningModeWrapper);
     }
 
     private void setupEducationViews(

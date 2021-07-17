@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2021 The Android Open Source Project
+ * Copyright 2021 The Android Open Source Project
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,10 +13,17 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
-package com.android.managedprovisioning;
+package com.android.managedprovisioning.provisioning;
 
 /**
- * {@link ManagedProvisioningBaseApplication} for ManagedProvisioning.
+ * Callback intended to be used with {@link ResetAndReturnDeviceActivityBridge}.
+ *
+ * <p>It is the responsibility of the {@link ResetAndReturnDeviceActivityBridge} implementation
+ * to call through the callback.
  */
-public class ManagedProvisioningApplication extends ManagedProvisioningBaseApplication {}
+public interface ResetAndReturnDeviceActivityBridgeCallback {
+    /**
+     * Callback invoked when the reset button has been clicked.
+     */
+    void onResetButtonClicked();
+}
