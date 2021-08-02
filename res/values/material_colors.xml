@@ -20,6 +20,7 @@
     <color name="blue300">#8ab4f8</color>
     <color name="blue400">#669df6</color>
     <color name="blue600">#1a73e8</color>
+    <color name="blue800">#185abc</color>
 
     <color name="green50">#e6f4ea</color>
     <color name="green100">#ceead6</color>
@@ -50,6 +51,7 @@
     <color name="purple300">#c58af9</color>
     <color name="purple400">#af5cf7</color>
     <color name="purple600">#9334e6</color>
+    <color name="purple800">#7627bb</color>
 
     <color name="cyan100">#cBf0f8</color>
     <color name="cyan300">#78d9ec</color>

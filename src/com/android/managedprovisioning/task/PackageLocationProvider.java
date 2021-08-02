@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package com.android.managedprovisioning;
+package com.android.managedprovisioning.task;
 
-/**
- * {@link ManagedProvisioningBaseApplication} for ManagedProvisioning.
- */
-public class ManagedProvisioningApplication extends ManagedProvisioningBaseApplication {}
+import java.io.File;
+
+interface PackageLocationProvider {
+    File getPackageLocation();
+}

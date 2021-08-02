@@ -14,9 +14,16 @@
  * limitations under the License.
  */
 
-package com.android.managedprovisioning;
+package com.android.managedprovisioning.provisioning;
+
+import android.app.Activity;
 
 /**
- * {@link ManagedProvisioningBaseApplication} for ManagedProvisioning.
+ * A bridge that provides methods related to the reset and return device screen UX.
  */
-public class ManagedProvisioningApplication extends ManagedProvisioningBaseApplication {}
+public interface ResetAndReturnDeviceActivityBridge {
+    /**
+     * Initiates the UI.
+     */
+    void initiateUi(Activity activity);
+}

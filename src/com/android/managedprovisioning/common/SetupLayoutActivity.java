@@ -28,8 +28,10 @@ import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.android.managedprovisioning.ManagedProvisioningBaseApplication;
 import com.android.managedprovisioning.ManagedProvisioningScreens;
@@ -71,8 +73,11 @@ public abstract class SetupLayoutActivity extends AppCompatActivity {
         if (!isWaitingScreen()) {
             mTransitionHelper.applyContentScreenTransitions(this);
         }
+        updateDefaultNightMode();
         setTheme(mThemeHelper.inferThemeResId(this, getIntent()));
-        mThemeHelper.setupDynamicColors(this);
+        if (shouldSetupDynamicColors()) {
+            mThemeHelper.setupDynamicColors(this);
+        }
         super.onCreate(savedInstanceState);
         mTimeLogger = new TimeLogger(this, getMetricsCategory());
         mTimeLogger.start();
@@ -82,6 +87,22 @@ public abstract class SetupLayoutActivity extends AppCompatActivity {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
         logMetrics();
+    }
+
+    protected boolean shouldSetupDynamicColors() {
+        return true;
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
+        updateDefaultNightMode();
+    }
+
+    private void updateDefaultNightMode() {
+        int nightMode = mThemeHelper.getDefaultNightMode(this, getIntent());
+        AppCompatDelegate delegate = AppCompatDelegate.create(this, /* callback= */ null);
+        delegate.setLocalNightMode(nightMode);
     }
 
     @Override
