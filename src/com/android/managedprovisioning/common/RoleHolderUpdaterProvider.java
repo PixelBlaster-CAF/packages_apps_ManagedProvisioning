@@ -16,20 +16,20 @@
 
 package com.android.managedprovisioning.common;
 
-import androidx.annotation.LayoutRes;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+import android.content.Context;
 
-import com.android.managedprovisioning.model.CustomizationParams;
+import androidx.annotation.Nullable;
 
 /**
- * A handler that initializes the layout params.
+ * A provider for the role holder updater package name.
  */
-public interface InitializeLayoutConsumerHandler {
+public interface RoleHolderUpdaterProvider {
+    // TODO(b/207145607): Return the role holder updater using a framework API
+    RoleHolderUpdaterProvider DEFAULT = (Context context) -> "com.google.android.gms";
+
     /**
-     * A callback to initialize the layout params.
+     * Returns the package name of the role holder updater.
      */
-    void initializeLayoutParams(
-            @LayoutRes int layoutRes,
-            @Nullable @StringRes Integer headerRes);
+    @Nullable
+    String getPackageName(Context context);
 }
