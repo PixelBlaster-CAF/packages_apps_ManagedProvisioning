@@ -257,8 +257,8 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
         if (!mUtils.isFinancedDeviceAction(mParams.provisioningAction)) {
             return true;
         }
-        return mPolicyComplianceUtils.isPolicyComplianceActivityResolvableForUser(
-                this, mParams, mUtils, UserHandle.SYSTEM);
+        return mPolicyComplianceUtils.isPolicyComplianceActivityResolvableForManagedUser(
+                this, mParams, mUtils);
     }
 
     protected final void updateProvisioningFinalizedScreen() {
@@ -278,7 +278,6 @@ public class ProvisioningActivity extends AbstractProvisioningActivity
         final Intent intent = new Intent(this,
                 getActivityForScreen(ManagedProvisioningScreens.RESET_AND_RETURN_DEVICE));
         WizardManagerHelper.copyWizardManagerExtras(getIntent(), intent);
-        intent.putExtra(ProvisioningParams.EXTRA_PROVISIONING_PARAMS, mParams);
         getTransitionHelper().startActivityWithTransition(this, intent);
     }
 

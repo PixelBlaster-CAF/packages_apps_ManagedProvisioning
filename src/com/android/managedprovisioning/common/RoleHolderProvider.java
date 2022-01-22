@@ -16,20 +16,20 @@
 
 package com.android.managedprovisioning.common;
 
-import androidx.annotation.LayoutRes;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+import android.content.Context;
 
-import com.android.managedprovisioning.model.CustomizationParams;
+import androidx.annotation.Nullable;
 
 /**
- * A handler that initializes the layout params.
+ * A provider for the role holder package name.
  */
-public interface InitializeLayoutConsumerHandler {
+public interface RoleHolderProvider {
+    // TODO (b/207145606): Return the role holder package name using a framework API
+    RoleHolderProvider DEFAULT = (Context context) -> "com.afwsamples.testdpc";
+
     /**
-     * A callback to initialize the layout params.
+     * Returns the package name of the role holder.
      */
-    void initializeLayoutParams(
-            @LayoutRes int layoutRes,
-            @Nullable @StringRes Integer headerRes);
+    @Nullable
+    String getPackageName(Context context);
 }

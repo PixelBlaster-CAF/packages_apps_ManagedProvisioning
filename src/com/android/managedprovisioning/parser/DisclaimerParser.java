@@ -14,22 +14,17 @@
  * limitations under the License.
  */
 
-package com.android.managedprovisioning.common;
+package com.android.managedprovisioning.parser;
 
-import androidx.annotation.LayoutRes;
-import androidx.annotation.Nullable;
-import androidx.annotation.StringRes;
+import android.os.Parcelable;
 
-import com.android.managedprovisioning.model.CustomizationParams;
+import com.android.managedprovisioning.model.DisclaimersParam;
 
 /**
- * A handler that initializes the layout params.
+ * Parser which processes disclaimer parameters.
+ *
+ * @see android.app.admin.DevicePolicyManager#EXTRA_PROVISIONING_DISCLAIMERS
  */
-public interface InitializeLayoutConsumerHandler {
-    /**
-     * A callback to initialize the layout params.
-     */
-    void initializeLayoutParams(
-            @LayoutRes int layoutRes,
-            @Nullable @StringRes Integer headerRes);
+public interface DisclaimerParser {
+    DisclaimersParam parse(Parcelable[] disclaimers);
 }
