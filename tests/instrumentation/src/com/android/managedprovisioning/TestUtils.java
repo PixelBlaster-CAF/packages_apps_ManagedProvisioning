@@ -16,10 +16,13 @@
 
 package com.android.managedprovisioning;
 
+import static com.google.common.truth.Truth.assertWithMessage;
+
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.BaseBundle;
+import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.os.RemoteException;
 import android.support.test.uiautomator.UiDevice;
@@ -171,5 +174,31 @@ public class TestUtils extends AndroidTestCase {
         return EncryptionController.getInstance(
                 context,
                 new ComponentName(context, PostEncryptionActivity.class));
+    }
+
+    public static void assertIntentsEqual(Intent intent1, Intent intent2) {
+        assertWithMessage("Intent actions are not equal")
+                .that(intent1.getAction())
+                .isEqualTo(intent2.getAction());
+        assertWithMessage("Package names are not equal")
+                .that(intent1.getPackage())
+                .isEqualTo(intent2.getPackage());
+        assertBundlesEqual(intent1.getExtras(), intent2.getExtras());
+    }
+
+    private static void assertBundlesEqual(Bundle bundle1, Bundle bundle2) {
+        if (bundle1 != null) {
+            assertWithMessage("Intent bundles are not equal")
+                    .that(bundle2).isNotNull();
+            assertWithMessage("Intent bundles are not equal")
+                    .that(bundle1.keySet().size()).isEqualTo(bundle2.keySet().size());
+            for (String key : bundle1.keySet()) {
+                assertWithMessage("Intent bundles are not equal")
+                        .that(bundle1.get(key))
+                        .isEqualTo(bundle2.get(key));
+            }
+        } else {
+            assertWithMessage("Intent bundles are not equal").that(bundle2).isNull();
+        }
     }
 }

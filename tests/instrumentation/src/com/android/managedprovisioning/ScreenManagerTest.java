@@ -26,6 +26,7 @@ import static com.android.managedprovisioning.ManagedProvisioningScreens.PRE_PRO
 import static com.android.managedprovisioning.ManagedProvisioningScreens.PRE_PROVISIONING_VIA_NFC;
 import static com.android.managedprovisioning.ManagedProvisioningScreens.PROVISIONING;
 import static com.android.managedprovisioning.ManagedProvisioningScreens.RESET_AND_RETURN_DEVICE;
+import static com.android.managedprovisioning.ManagedProvisioningScreens.RETRY_LAUNCH;
 import static com.android.managedprovisioning.ManagedProvisioningScreens.TERMS;
 import static com.android.managedprovisioning.ManagedProvisioningScreens.WEB;
 
@@ -41,6 +42,8 @@ import android.content.pm.PackageManager;
 import androidx.test.InstrumentationRegistry;
 import androidx.test.filters.SmallTest;
 
+import com.android.managedprovisioning.common.RetryLaunchActivity;
+import com.android.managedprovisioning.finalization.FinalizationForwarderActivity;
 import com.android.managedprovisioning.finalization.FinalizationInsideSuwActivity;
 import com.android.managedprovisioning.preprovisioning.EncryptDeviceActivity;
 import com.android.managedprovisioning.preprovisioning.PostEncryptionActivity;
@@ -67,7 +70,7 @@ import java.util.stream.Collectors;
 
 @SmallTest
 public final class ScreenManagerTest {
-    private static final int EXPECTED_NUMBER_OF_SCREENS = 12;
+    private static final int EXPECTED_NUMBER_OF_SCREENS = 13;
     private static final Map<ManagedProvisioningScreens, Class<? extends Activity>>
             TEST_SCREEN_TO_ACTIVITY_MAP = createTestScreenToActivityMap();
     private static final Map<ManagedProvisioningScreens, Class<? extends Activity>>
@@ -77,6 +80,7 @@ public final class ScreenManagerTest {
             "com.android.managedprovisioning.PreProvisioningActivityAfterEncryption",
             "com.android.managedprovisioning.PreProvisioningActivityViaTrustedApp",
             "com.android.managedprovisioning.PreProvisioningActivityViaNfc",
+            FinalizationForwarderActivity.class.getName(),
             TrampolineActivity.class.getName()
     ));
 
@@ -111,6 +115,8 @@ public final class ScreenManagerTest {
                 .isEqualTo(TermsActivity.class);
         assertThat(screenManager.getActivityClassForScreen(FINANCED_DEVICE_LANDING))
                 .isEqualTo(FinancedDeviceLandingActivity.class);
+        assertThat(screenManager.getActivityClassForScreen(RETRY_LAUNCH))
+                .isEqualTo(RetryLaunchActivity.class);
     }
 
     @Test
@@ -199,6 +205,7 @@ public final class ScreenManagerTest {
         map.put(FINALIZATION_INSIDE_SUW, Activity.class);
         map.put(TERMS, Activity.class);
         map.put(FINANCED_DEVICE_LANDING, Activity.class);
+        map.put(RETRY_LAUNCH, Activity.class);
         return map;
     }
 
