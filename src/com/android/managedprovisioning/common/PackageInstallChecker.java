@@ -14,20 +14,16 @@
  * limitations under the License.
  */
 
-package com.android.managedprovisioning;
+package com.android.managedprovisioning.common;
 
-public enum ManagedProvisioningScreens {
-    PRE_PROVISIONING,
-    PRE_PROVISIONING_VIA_NFC,
-    LANDING,
-    PROVISIONING,
-    ADMIN_INTEGRATED_PREPARE,
-    RESET_AND_RETURN_DEVICE,
-    WEB,
-    ENCRYPT,
-    POST_ENCRYPT,
-    FINALIZATION_INSIDE_SUW,
-    TERMS,
-    FINANCED_DEVICE_LANDING,
-    RETRY_LAUNCH
+import android.content.pm.PackageManager;
+
+/**
+ * Checker that checks whether a package is installed.
+ */
+public interface PackageInstallChecker {
+    /**
+     * Returns {@code true} if the package {@code packageName} is installed.
+     */
+    boolean isPackageInstalled(String packageName, PackageManager packageManager);
 }

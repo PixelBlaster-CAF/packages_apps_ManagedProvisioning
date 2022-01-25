@@ -14,20 +14,20 @@
  * limitations under the License.
  */
 
-package com.android.managedprovisioning;
+package com.android.managedprovisioning.common;
 
-public enum ManagedProvisioningScreens {
-    PRE_PROVISIONING,
-    PRE_PROVISIONING_VIA_NFC,
-    LANDING,
-    PROVISIONING,
-    ADMIN_INTEGRATED_PREPARE,
-    RESET_AND_RETURN_DEVICE,
-    WEB,
-    ENCRYPT,
-    POST_ENCRYPT,
-    FINALIZATION_INSIDE_SUW,
-    TERMS,
-    FINANCED_DEVICE_LANDING,
-    RETRY_LAUNCH
+/**
+ * An object representing an event to be sent to an observer.
+ * <p>This class is meant to be extended to include relevant data for specific events.
+ */
+public abstract class ViewModelEvent {
+    private final int mType;
+
+    public ViewModelEvent(int type) {
+        mType = type;
+    }
+
+    public final int getType() {
+        return mType;
+    }
 }
