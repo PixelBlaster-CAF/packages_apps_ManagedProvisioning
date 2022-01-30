@@ -16,6 +16,8 @@
 
 package com.android.managedprovisioning.common;
 
+import static android.view.WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
+
 import static com.android.internal.logging.nano.MetricsProto.MetricsEvent.VIEW_UNKNOWN;
 import static com.android.managedprovisioning.provisioning.Constants.LOCK_TO_PORTRAIT_MODE;
 
@@ -27,6 +29,7 @@ import android.app.FragmentTransaction;
 import android.content.pm.ActivityInfo;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.VisibleForTesting;
@@ -79,6 +82,9 @@ public abstract class SetupLayoutActivity extends AppCompatActivity {
             mThemeHelper.setupDynamicColors(this);
         }
         super.onCreate(savedInstanceState);
+
+        getWindow().addSystemFlags(SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS);
+
         mTimeLogger = new TimeLogger(this, getMetricsCategory());
         mTimeLogger.start();
 
@@ -86,6 +92,7 @@ public abstract class SetupLayoutActivity extends AppCompatActivity {
         if (LOCK_TO_PORTRAIT_MODE && getResources().getBoolean(R.bool.lock_to_portrait)) {
             setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         }
+        getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         logMetrics();
     }
 
