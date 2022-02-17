@@ -35,6 +35,8 @@ import com.android.managedprovisioning.TestInstrumentationRunner;
 import com.android.managedprovisioning.TestUtils;
 import com.android.managedprovisioning.analytics.TimeLogger;
 import com.android.managedprovisioning.common.CustomizationVerifier;
+import com.android.managedprovisioning.common.DeviceManagementRoleHolderHelper;
+import com.android.managedprovisioning.common.DeviceManagementRoleHolderUpdaterHelper;
 import com.android.managedprovisioning.common.GetProvisioningModeUtils;
 import com.android.managedprovisioning.common.ManagedProvisioningSharedPreferences;
 import com.android.managedprovisioning.common.PolicyComplianceUtils;
@@ -44,6 +46,7 @@ import com.android.managedprovisioning.common.ThemeHelper.DefaultNightModeChecke
 import com.android.managedprovisioning.common.ThemeHelper.DefaultSetupWizardBridge;
 import com.android.managedprovisioning.common.UriBitmap;
 import com.android.managedprovisioning.common.Utils;
+import com.android.managedprovisioning.parser.DisclaimersParserImpl;
 import com.android.managedprovisioning.parser.MessageParser;
 import com.android.managedprovisioning.preprovisioning.terms.TermsActivity;
 
@@ -64,6 +67,10 @@ import java.io.IOException;
 public class PreProvisioningActivityTest {
     private static final int DEFAULT_LOGO_COLOR = Color.rgb(99, 99, 99);
 
+    private static final String TEST_ROLE_HOLDER_PACKAGE_NAME = "test.roleholder.package";
+    private static final String TEST_ROLE_HOLDER_UPDATER_PACKAGE_NAME =
+            "test.roleholderupdater.package";
+
     @Mock
     private Utils mUtils;
 
@@ -75,6 +82,16 @@ public class PreProvisioningActivityTest {
     public void setup() {
         when(mUtils.getAccentColor(any())).thenReturn(DEFAULT_LOGO_COLOR);
 
+        DeviceManagementRoleHolderHelper roleHolderHelper =
+                new DeviceManagementRoleHolderHelper(
+                        TEST_ROLE_HOLDER_PACKAGE_NAME,
+                        /* packageInstallChecker= */ (packageName, packageManager) -> false,
+                        /* resolveIntentChecker= */ (intent, packageManager) -> false,
+                        /* roleHolderStubChecker= */ (packageName, packageManager) -> false);
+        DeviceManagementRoleHolderUpdaterHelper roleHolderUpdaterHelper =
+                new DeviceManagementRoleHolderUpdaterHelper(
+                        TEST_ROLE_HOLDER_UPDATER_PACKAGE_NAME,
+                        /* packageInstallChecker= */ (packageName, packageManager) -> false);
         TestInstrumentationRunner.registerReplacedActivity(PreProvisioningActivity.class,
                 (classLoader, className, intent) -> new PreProvisioningActivity(
                         activity -> new PreProvisioningActivityController(
@@ -88,7 +105,11 @@ public class PreProvisioningActivityTest {
                                 new PreProvisioningViewModel(
                                         new TimeLogger(activity, 0 /* category */),
                                         new MessageParser(activity),
-                                        TestUtils.createEncryptionController(activity))
+                                        TestUtils.createEncryptionController(activity),
+                                        new PreProvisioningViewModel.DefaultConfig()),
+                                DisclaimersParserImpl::new,
+                                roleHolderHelper,
+                                roleHolderUpdaterHelper
                         ) {
                             @Override
                             protected boolean checkDevicePolicyPreconditions() {
@@ -104,7 +125,10 @@ public class PreProvisioningActivityTest {
                         mUtils,
                         new SettingsFacade(),
                         new ThemeHelper(
-                                new DefaultNightModeChecker(), new DefaultSetupWizardBridge())));
+                                new DefaultNightModeChecker(), new DefaultSetupWizardBridge()),
+                        /* roleHolderProvider= */ context -> TEST_ROLE_HOLDER_PACKAGE_NAME,
+                        /* roleHolderUpdaterProvider= */ context ->
+                                TEST_ROLE_HOLDER_UPDATER_PACKAGE_NAME));
     }
 
     @AfterClass

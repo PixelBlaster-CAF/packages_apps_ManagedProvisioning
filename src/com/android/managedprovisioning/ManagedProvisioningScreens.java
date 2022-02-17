@@ -28,5 +28,6 @@ public enum ManagedProvisioningScreens {
     POST_ENCRYPT,
     FINALIZATION_INSIDE_SUW,
     TERMS,
-    FINANCED_DEVICE_LANDING
+    FINANCED_DEVICE_LANDING,
+    RETRY_LAUNCH
 }

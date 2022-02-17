@@ -26,11 +26,13 @@ import static com.android.managedprovisioning.ManagedProvisioningScreens.PRE_PRO
 import static com.android.managedprovisioning.ManagedProvisioningScreens.PRE_PROVISIONING_VIA_NFC;
 import static com.android.managedprovisioning.ManagedProvisioningScreens.PROVISIONING;
 import static com.android.managedprovisioning.ManagedProvisioningScreens.RESET_AND_RETURN_DEVICE;
+import static com.android.managedprovisioning.ManagedProvisioningScreens.RETRY_LAUNCH;
 import static com.android.managedprovisioning.ManagedProvisioningScreens.TERMS;
 import static com.android.managedprovisioning.ManagedProvisioningScreens.WEB;
 
 import android.app.Activity;
 
+import com.android.managedprovisioning.common.RetryLaunchActivity;
 import com.android.managedprovisioning.finalization.FinalizationInsideSuwActivity;
 import com.android.managedprovisioning.preprovisioning.EncryptDeviceActivity;
 import com.android.managedprovisioning.preprovisioning.PostEncryptionActivity;
@@ -55,7 +57,7 @@ import java.util.Map;
  * #setOverrideActivity(ManagedProvisioningScreens, Class)} if they want the screens to map to
  * their own {@link Activity} implementations.
  */
-final class ScreenManager {
+public final class ScreenManager {
     static final Map<ManagedProvisioningScreens, Class<? extends Activity>>
             DEFAULT_SCREEN_TO_ACTIVITY_MAP = createBaseScreenMap();
 
@@ -104,6 +106,7 @@ final class ScreenManager {
         map.put(FINALIZATION_INSIDE_SUW, FinalizationInsideSuwActivity.class);
         map.put(TERMS, TermsActivity.class);
         map.put(FINANCED_DEVICE_LANDING, FinancedDeviceLandingActivity.class);
+        map.put(RETRY_LAUNCH, RetryLaunchActivity.class);
         return map;
     }
 

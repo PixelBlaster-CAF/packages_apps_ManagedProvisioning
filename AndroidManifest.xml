@@ -36,6 +36,7 @@
     <uses-permission android:name="android.permission.MANAGE_DEVICE_ADMINS" />
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE"/>
     <uses-permission android:name="android.permission.MANAGE_APP_OPS_MODES"/>
+    <uses-permission android:name="android.permission.HIDE_OVERLAY_WINDOWS"/>
 
     <uses-permission android:name="android.permission.CHANGE_COMPONENT_ENABLED_STATE" />
     <uses-permission android:name="android.permission.CHANGE_CONFIGURATION" />
@@ -76,6 +77,10 @@
     <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
 
     <uses-permission android:name="android.permission.START_FOREGROUND_SERVICES_FROM_BACKGROUND"/>
+
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+
+    <uses-permission android:name="android.permission.LAUNCH_DEVICE_MANAGER_SETUP" />
 
     <application
         android:label="@string/app_label"
@@ -248,15 +253,15 @@
             </intent-filter>
         </receiver>
 
-        <receiver android:name="com.android.managedprovisioning.manageduser.ManagedUserCreationListener"
+        <receiver android:name="com.android.managedprovisioning.provisioninglisteners.ProvisioningCompletedListener"
             android:exported="true">
             <intent-filter>
-                <action android:name="android.app.action.MANAGED_USER_CREATED" />
+                <action android:name="android.app.action.PROVISIONING_COMPLETED" />
             </intent-filter>
         </receiver>
 
         <receiver
-            android:name="com.android.managedprovisioning.manageduser.ManagedUserRemovalListener"
+            android:name="com.android.managedprovisioning.provisioninglisteners.ManagedUserRemovalListener"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.USER_REMOVED" />
@@ -264,12 +269,12 @@
         </receiver>
 
         <!-- TODO (b/146135268): Add permission for setup-wizard to guard access? -->
-        <activity android:name=".finalization.FinalizationInsideSuwActivity"
+        <activity android:name=".finalization.FinalizationForwarderActivity"
                   android:excludeFromRecents="true"
                   android:exported="true"
                   android:immersive="true"
                   android:launchMode="singleTop"
-                  android:theme="@style/SudThemeGlifV3.DayNight">
+                  android:theme="@android:style/Theme.Translucent.NoTitleBar">
             <intent-filter>
                 <!-- TODO (b/177666246): Remove PROVISION_FINALIZATION_INSIDE_SUW
                 after the setup wizard change which calls PROVISION_FINALIZATION is in prebuilt -->
@@ -279,6 +284,12 @@
             </intent-filter>
         </activity>
 
+        <activity android:name=".finalization.FinalizationInsideSuwActivity"
+                  android:excludeFromRecents="true"
+                  android:immersive="true"
+                  android:launchMode="singleTop"
+                  android:theme="@style/SudThemeGlifV3.DayNight" />
+
         <activity
             android:name=".provisioning.LandingActivity"
             android:theme="@style/SudThemeGlifV3.DayNight"
@@ -286,6 +297,11 @@
 
         <activity
             android:name=".provisioning.FinancedDeviceLandingActivity"
+            android:theme="@style/SudThemeGlifV3.DayNight"
+            android:immersive="true" />
+
+        <activity
+            android:name=".common.RetryLaunchActivity"
             android:theme="@style/SudThemeGlifV3.DayNight"
             android:immersive="true" />
 
