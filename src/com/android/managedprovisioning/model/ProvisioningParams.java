@@ -100,6 +100,8 @@ public final class ProvisioningParams extends PersistableBundlable {
     public static final boolean DEFAULT_EXTRA_PROVISIONING_SKIP_OWNERSHIP_DISCLAIMER = false;
     public static final boolean DEFAULT_EXTRA_PROVISIONING_RETURN_BEFORE_POLICY_COMPLIANCE = false;
     public static final boolean DEFAULT_EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT = false;
+    public static final boolean DEFAULT_EXTRA_PROVISIONING_KEEP_SCREEN_ON = false;
+    public static final boolean DEFAULT_EXTRA_ALLOW_OFFLINE = false;
 
     // Intent extra used internally for passing data between activities and service.
     public static final String EXTRA_PROVISIONING_PARAMS = "provisioningParams";
@@ -148,6 +150,10 @@ public final class ProvisioningParams extends PersistableBundlable {
             "provisioning-return-before-policy-compliance";
     private static final String TAG_DEVICE_OWNER_PERMISSION_GRANT_OPT_OUT =
             "device-owner-opt-out-of-permission-grants";
+    private static final String TAG_KEEP_SCREEN_ON = "keep-screen-on";
+    private static final String TAG_ALLOW_OFFLINE = "allow-offline";
+    private static final String TAG_ROLE_HOLDER_PACKAGE_DOWNLOAD_INFO =
+            "role-holder-download-info";
 
     public static final Parcelable.Creator<ProvisioningParams> CREATOR
             = new Parcelable.Creator<ProvisioningParams>() {
@@ -315,6 +321,22 @@ public final class ProvisioningParams extends PersistableBundlable {
      */
     public final boolean deviceOwnerPermissionGrantOptOut;
 
+    /**
+     * {@code true} if the screen should be on throughout the provisioning flow
+     */
+    public final boolean keepScreenOn;
+
+    /**
+     * {@code true} if offline provisioning is allowed
+     *
+     * @see DevicePolicyManager#EXTRA_PROVISIONING_ALLOW_OFFLINE
+     */
+    public final boolean allowOffline;
+
+    /** The download information of the role holder package. */
+    @Nullable
+    public final PackageDownloadInfo roleHolderDownloadInfo;
+
     public static String inferStaticDeviceAdminPackageName(ComponentName deviceAdminComponentName,
             String deviceAdminPackageName) {
         if (deviceAdminComponentName != null) {
@@ -383,6 +405,9 @@ public final class ProvisioningParams extends PersistableBundlable {
         skipOwnershipDisclaimer = builder.mSkipOwnershipDisclaimer;
         returnBeforePolicyCompliance = builder.mReturnBeforePolicyCompliance;
         deviceOwnerPermissionGrantOptOut = builder.mDeviceOwnerPermissionGrantOptOut;
+        keepScreenOn = builder.mKeepScreenOn;
+        allowOffline = builder.mAllowOffline;
+        roleHolderDownloadInfo = builder.mRoleHolderDownloadInfo;
 
         validateFields();
     }
@@ -441,6 +466,10 @@ public final class ProvisioningParams extends PersistableBundlable {
                 returnBeforePolicyCompliance);
         bundle.putBoolean(TAG_DEVICE_OWNER_PERMISSION_GRANT_OPT_OUT,
                 deviceOwnerPermissionGrantOptOut);
+        bundle.putBoolean(TAG_KEEP_SCREEN_ON, keepScreenOn);
+        bundle.putBoolean(TAG_ALLOW_OFFLINE, allowOffline);
+        putPersistableBundlableIfNotNull(bundle, TAG_ROLE_HOLDER_PACKAGE_DOWNLOAD_INFO,
+                roleHolderDownloadInfo);
         return bundle;
     }
 
@@ -497,6 +526,12 @@ public final class ProvisioningParams extends PersistableBundlable {
                 TAG_PROVISIONING_RETURN_BEFORE_POLICY_COMPLIANCE));
         builder.setDeviceOwnerPermissionGrantOptOut(
                 bundle.getBoolean(TAG_DEVICE_OWNER_PERMISSION_GRANT_OPT_OUT));
+        builder.setKeepScreenOn(bundle.getBoolean(TAG_KEEP_SCREEN_ON));
+        builder.setAllowOffline(bundle.getBoolean(TAG_ALLOW_OFFLINE));
+        builder.setRoleHolderDownloadInfo(getObjectAttrFromPersistableBundle(
+                bundle,
+                TAG_ROLE_HOLDER_PACKAGE_DOWNLOAD_INFO,
+                PackageDownloadInfo::fromPersistableBundle));
         return builder;
     }
 
@@ -627,6 +662,9 @@ public final class ProvisioningParams extends PersistableBundlable {
                 DEFAULT_EXTRA_PROVISIONING_RETURN_BEFORE_POLICY_COMPLIANCE;
         private boolean mDeviceOwnerPermissionGrantOptOut =
                 DEFAULT_EXTRA_PROVISIONING_PERMISSION_GRANT_OPT_OUT;
+        private boolean mKeepScreenOn = DEFAULT_EXTRA_PROVISIONING_KEEP_SCREEN_ON;
+        private boolean mAllowOffline = DEFAULT_EXTRA_ALLOW_OFFLINE;
+        public PackageDownloadInfo mRoleHolderDownloadInfo;
 
         public Builder setProvisioningId(long provisioningId) {
             mProvisioningId = provisioningId;
@@ -792,6 +830,32 @@ public final class ProvisioningParams extends PersistableBundlable {
          */
         public Builder setDeviceOwnerPermissionGrantOptOut(boolean optout) {
             mDeviceOwnerPermissionGrantOptOut = optout;
+            return this;
+        }
+
+        /**
+         * Setter for whether the screen should be on throughout the provisioning flow.
+         */
+        public Builder setKeepScreenOn(boolean keepScreenOn) {
+            mKeepScreenOn = keepScreenOn;
+            return this;
+        }
+
+        /**
+         * Setter for whether offline provisioning is allowed.
+         *
+         * @see DevicePolicyManager#EXTRA_PROVISIONING_ALLOW_OFFLINE
+         */
+        public Builder setAllowOffline(boolean allowOffline) {
+            mAllowOffline = allowOffline;
+            return this;
+        }
+
+        /**
+         * Setter for the role holder download info.
+         */
+        public Builder setRoleHolderDownloadInfo(PackageDownloadInfo roleHolderDownloadInfo) {
+            mRoleHolderDownloadInfo = roleHolderDownloadInfo;
             return this;
         }
 

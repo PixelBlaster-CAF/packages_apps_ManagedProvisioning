@@ -47,11 +47,13 @@ import android.widget.TextView;
 
 import androidx.annotation.VisibleForTesting;
 
+import com.android.managedprovisioning.ManagedProvisioningBaseApplication;
 import com.android.managedprovisioning.ManagedProvisioningScreens;
 import com.android.managedprovisioning.R;
 import com.android.managedprovisioning.analytics.MetricsWriterFactory;
 import com.android.managedprovisioning.analytics.ProvisioningAnalyticsTracker;
 import com.android.managedprovisioning.common.AccessibilityContextMenuMaker;
+import com.android.managedprovisioning.common.DefaultFeatureFlagChecker;
 import com.android.managedprovisioning.common.DefaultPackageInstallChecker;
 import com.android.managedprovisioning.common.DeviceManagementRoleHolderUpdaterHelper;
 import com.android.managedprovisioning.common.GetProvisioningModeUtils;
@@ -313,8 +315,20 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                         && mController.canRetryRoleHolderUpdate()) {
                     mController.startRoleHolderUpdaterWithLastState();
                     mController.incrementRoleHolderUpdateRetryCount();
-                } else {
+                } else if (resultCode == RESULT_OK
+                        || mController.getParams().allowOffline) {
                     mController.startAppropriateProvisioning(getIntent());
+                } else {
+                    ProvisionLogger.loge("Update failed and offline provisioning is not allowed.");
+                    if (mUtils.isOrganizationOwnedAllowed(mController.getParams())) {
+                        showFactoryResetDialog(R.string.cant_set_up_device,
+                                R.string.contact_your_admin_for_help);
+                    } else {
+                        showErrorAndClose(
+                                R.string.cant_set_up_device,
+                                R.string.contact_your_admin_for_help,
+                                "Failed to provision personally-owned device.");
+                    }
                 }
                 break;
             case START_DEVICE_MANAGEMENT_ROLE_HOLDER_PROVISIONING_REQUEST_CODE:
@@ -463,7 +477,8 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                 new DeviceManagementRoleHolderUpdaterHelper(
                         mRoleHolderUpdaterProvider.getPackageName(this),
                         RoleHolderProvider.DEFAULT.getPackageName(this),
-                        new DefaultPackageInstallChecker(mUtils));
+                        new DefaultPackageInstallChecker(mUtils),
+                        new DefaultFeatureFlagChecker(getContentResolver()));
         Intent intent = new Intent(this, getActivityForScreen(RETRY_LAUNCH));
         intent.putExtra(
                 EXTRA_INTENT_TO_LAUNCH,
@@ -482,6 +497,16 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                 /* activity= */ this,
                 retryLaunchIntent,
                 START_DEVICE_MANAGEMENT_ROLE_HOLDER_PROVISIONING_REQUEST_CODE);
+    }
+
+    @Override
+    public void onParamsValidated(ProvisioningParams params) {
+        if (params.keepScreenOn) {
+            ManagedProvisioningBaseApplication application =
+                    (ManagedProvisioningBaseApplication) getApplication();
+            application.markKeepScreenOn();
+            application.maybeKeepScreenOn(this);
+        }
     }
 
     private void requestLauncherPick() {
