@@ -23,7 +23,6 @@ import static com.android.managedprovisioning.finalization.FinalizationControlle
 import static com.android.managedprovisioning.provisioning.Constants.PROVISIONING_SERVICE_INTENT;
 
 import android.app.Activity;
-import android.app.BackgroundServiceStartNotAllowedException;
 import android.content.BroadcastReceiver;
 import android.content.ComponentName;
 import android.content.Context;
@@ -35,7 +34,6 @@ import android.os.UserHandle;
 import android.os.UserManager;
 
 import com.android.managedprovisioning.common.Globals;
-import com.android.managedprovisioning.common.ProvisionLogger;
 import com.android.managedprovisioning.common.TransitionHelper;
 import com.android.managedprovisioning.provisioning.ProvisioningService;
 
@@ -87,7 +85,9 @@ public abstract class FinalizationActivityBase extends Activity {
         super.onCreate(savedInstanceState);
         mFinalizationController = createFinalizationController();
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState == null) {
+            getApplicationContext().startService(PROVISIONING_SERVICE_INTENT);
+        } else {
             final Bundle controllerState = savedInstanceState.getBundle(CONTROLLER_STATE_KEY);
             if (controllerState != null) {
                 mFinalizationController.restoreInstanceState(controllerState);
@@ -100,16 +100,6 @@ public abstract class FinalizationActivityBase extends Activity {
         }
 
         tryFinalizeProvisioning();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        try {
-            getApplicationContext().startService(PROVISIONING_SERVICE_INTENT);
-        } catch (BackgroundServiceStartNotAllowedException e) {
-            ProvisionLogger.loge(e);
-        }
     }
 
     protected TransitionHelper getTransitionHelper() {
