@@ -14,21 +14,14 @@
  * limitations under the License.
  */
 
-package com.android.managedprovisioning;
+package com.android.managedprovisioning.common;
 
-public enum ManagedProvisioningScreens {
-    PRE_PROVISIONING,
-    PRE_PROVISIONING_VIA_NFC,
-    LANDING,
-    PROVISIONING,
-    ADMIN_INTEGRATED_PREPARE,
-    RESET_AND_RETURN_DEVICE,
-    WEB,
-    ENCRYPT,
-    POST_ENCRYPT,
-    FINALIZATION_INSIDE_SUW,
-    TERMS,
-    FINANCED_DEVICE_LANDING,
-    RETRY_LAUNCH,
-    DOWNLOAD_ROLE_HOLDER
+/**
+ * Checker that checks whether a feature flag is enabled.
+ */
+public interface FeatureFlagChecker {
+    /**
+     * Returns {@code true} if the provisioning to role holder feature is enabled.
+     */
+    boolean canDelegateProvisioningToRoleHolder();
 }
