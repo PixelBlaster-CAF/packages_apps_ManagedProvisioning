@@ -18,8 +18,8 @@ package com.android.managedprovisioning.preprovisioning;
 
 import static android.app.admin.DevicePolicyManager.EXTRA_PROVISIONING_TRIGGER;
 import static android.app.admin.DevicePolicyManager.EXTRA_RESULT_LAUNCH_INTENT;
-import static android.app.admin.DevicePolicyManager.PROVISIONING_TRIGGER_UNSPECIFIED;
 import static android.app.admin.DevicePolicyManager.EXTRA_ROLE_HOLDER_UPDATE_RESULT_CODE;
+import static android.app.admin.DevicePolicyManager.PROVISIONING_TRIGGER_UNSPECIFIED;
 import static android.app.admin.DevicePolicyManager.RESULT_UPDATE_DEVICE_POLICY_MANAGEMENT_ROLE_HOLDER_PROVISIONING_DISABLED;
 import static android.app.admin.DevicePolicyManager.RESULT_UPDATE_DEVICE_POLICY_MANAGEMENT_ROLE_HOLDER_RECOVERABLE_ERROR;
 import static android.app.admin.DevicePolicyManager.RESULT_UPDATE_ROLE_HOLDER;
@@ -62,6 +62,7 @@ import com.android.managedprovisioning.analytics.MetricsWriterFactory;
 import com.android.managedprovisioning.analytics.ProvisioningAnalyticsTracker;
 import com.android.managedprovisioning.common.AccessibilityContextMenuMaker;
 import com.android.managedprovisioning.common.DefaultFeatureFlagChecker;
+import com.android.managedprovisioning.common.DefaultIntentResolverChecker;
 import com.android.managedprovisioning.common.DefaultPackageInstallChecker;
 import com.android.managedprovisioning.common.DeviceManagementRoleHolderUpdaterHelper;
 import com.android.managedprovisioning.common.GetProvisioningModeUtils;
@@ -331,7 +332,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                         || mController.getParams().allowOffline) {
                     boolean isProvisioningStarted = mController.startAppropriateProvisioning(
                             getIntent(),
-                            new Bundle(),
+                            createRoleHolderAdditionalExtras(resultCode),
                             getCallingPackage());
                     if (!isProvisioningStarted) {
                         failRoleHolderUpdate();
@@ -345,10 +346,10 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                 }
                 break;
             case START_ROLE_HOLDER_REQUESTED_UPDATE_REQUEST_CODE:
-                Bundle additionalExtras = new Bundle();
-                additionalExtras.putInt(EXTRA_ROLE_HOLDER_UPDATE_RESULT_CODE, resultCode);
                 boolean isProvisioningStarted = mController.startAppropriateProvisioning(
-                        getIntent(), additionalExtras, getCallingPackage());
+                        getIntent(),
+                        createRoleHolderAdditionalExtras(resultCode),
+                        getCallingPackage());
                 if (!isProvisioningStarted) {
                     ProvisionLogger.loge("Provisioning could not be started following "
                             + "role holder-requested update.");
@@ -402,6 +403,12 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                 ProvisionLogger.logw("Unknown result code :" + resultCode);
                 break;
         }
+    }
+
+    private Bundle createRoleHolderAdditionalExtras(int resultCode) {
+        Bundle additionalExtras = new Bundle();
+        additionalExtras.putInt(EXTRA_ROLE_HOLDER_UPDATE_RESULT_CODE, resultCode);
+        return additionalExtras;
     }
 
     private void maybeHandleLaunchIntent(int resultCode, Intent data) {
@@ -584,7 +591,8 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                 new DeviceManagementRoleHolderUpdaterHelper(
                         mRoleHolderUpdaterProvider.getPackageName(this),
                         RoleHolderProvider.DEFAULT.getPackageName(this),
-                        new DefaultPackageInstallChecker(mUtils),
+                        new DefaultPackageInstallChecker(getPackageManager(), mUtils),
+                        new DefaultIntentResolverChecker(getPackageManager()),
                         new DefaultFeatureFlagChecker(getContentResolver()));
         Intent intent = new Intent(this, getActivityForScreen(RETRY_LAUNCH));
         intent.putExtra(
