@@ -94,6 +94,7 @@ import com.android.managedprovisioning.R;
 import com.android.managedprovisioning.analytics.MetricsWriterFactory;
 import com.android.managedprovisioning.analytics.ProvisioningAnalyticsTracker;
 import com.android.managedprovisioning.common.DefaultFeatureFlagChecker;
+import com.android.managedprovisioning.common.DefaultIntentResolverChecker;
 import com.android.managedprovisioning.common.DefaultPackageInstallChecker;
 import com.android.managedprovisioning.common.DeviceManagementRoleHolderHelper;
 import com.android.managedprovisioning.common.DeviceManagementRoleHolderHelper.DefaultResolveIntentChecker;
@@ -165,7 +166,7 @@ public class PreProvisioningActivityController {
                 DisclaimersParserImpl::new,
                 new DeviceManagementRoleHolderHelper(
                         RoleHolderProvider.DEFAULT.getPackageName(activity),
-                        new DefaultPackageInstallChecker(new Utils()),
+                        new DefaultPackageInstallChecker(activity.getPackageManager(), new Utils()),
                         new DefaultResolveIntentChecker(),
                         new DefaultRoleHolderStubChecker(),
                         new DefaultFeatureFlagChecker(activity.getContentResolver())
@@ -173,7 +174,8 @@ public class PreProvisioningActivityController {
                 new DeviceManagementRoleHolderUpdaterHelper(
                         RoleHolderUpdaterProvider.DEFAULT.getPackageName(activity),
                         RoleHolderProvider.DEFAULT.getPackageName(activity),
-                        new DefaultPackageInstallChecker(new Utils()),
+                        new DefaultPackageInstallChecker(activity.getPackageManager(), new Utils()),
+                        new DefaultIntentResolverChecker(activity.getPackageManager()),
                         new DefaultFeatureFlagChecker(activity.getContentResolver())));
     }
     @VisibleForTesting
@@ -360,6 +362,8 @@ public class PreProvisioningActivityController {
         mSharedPreferences.setIsProvisioningFlowDelegatedToRoleHolder(false);
         mProvisioningAnalyticsTracker.logProvisioningSessionStarted(mContext);
 
+        logProvisioningExtras(intent);
+
         if (!tryParseParameters(intent)) {
             return;
         }
@@ -437,6 +441,19 @@ public class PreProvisioningActivityController {
                         "Could not start provisioning.");
             }
         }
+    }
+
+    private void logProvisioningExtras(Intent intent) {
+        Bundle extras = intent.getExtras();
+        if (extras == null) {
+            ProvisionLogger.logi("No extras have been passed.");
+            return;
+        }
+        ProvisionLogger.logi("Start logging provisioning extras");
+        for (String key : extras.keySet()) {
+            ProvisionLogger.logi("Extra key: " + key + ", extra value: " + extras.get(key));
+        }
+        ProvisionLogger.logi("Finish logging provisioning extras");
     }
 
     void performPlatformProvidedProvisioning() {
