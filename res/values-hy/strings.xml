@@ -75,7 +75,7 @@
     <string name="device_owner_cancel_message" msgid="2529288571742712065">"Դադարեցնե՞լ կարգավորումը և ջնջել սարքի տվյալները:"</string>
     <string name="device_owner_cancel_cancel" msgid="1052951540909389275">"Չեղարկել"</string>
     <string name="device_owner_error_ok" msgid="2002250763093787051">"Եղավ"</string>
-    <string name="reset" msgid="6467204151306265796">"Վերակայել"</string>
+    <string name="reset" msgid="6467204151306265796">"Զրոյացնել"</string>
     <string name="cant_set_up_profile" msgid="4341825293970158436">"Հնարավոր չէ կարգավորել պրոֆիլը"</string>
     <string name="cant_set_up_device" msgid="4120090138983350714">"Հնարավոր չէ կարգավորել սարքը"</string>
     <string name="something_went_wrong" msgid="3593223774041784329">"Սխալ առաջացավ"</string>
@@ -194,4 +194,8 @@
     <string name="financed_make_payments_subheader_description" msgid="1222254084091306375">"«<xliff:g id="CREDITOR_NAME_0">%1$s</xliff:g>» ընկերությունը կարող է տեղադրել <xliff:g id="CREDITOR_NAME_1">%2$s</xliff:g> հավելվածը, որպեսզի դուք կարողանաք վճարումներ կատարել։"</string>
     <string name="financed_restrict_device_subheader_title" msgid="2138828664816418195">"Այս սարքի օգտագործումը կարող է սահմանափակվել"</string>
     <string name="financed_restrict_device_subheader_description" msgid="5683975693718163300">"«<xliff:g id="CREDITOR_NAME">%1$s</xliff:g>» ընկերությունը կարող է արգելափակել այս սարքը, եթե վճարումներ չկատարեք։"</string>
+    <string name="error_role_holder_hash_mismatch" msgid="6201584198247885437">"Չհաջողվեց կարգավորել սարքը։ Հայտնեք ձեր ադմինիստրատորին «Անվավեր ստուգիչ գումար» սխալի մասին։"</string>
+    <string name="error_role_holder_download_install_failed" msgid="8151968372180693228">"Փորձեք ավելի ուշ կամ օգնության համար դիմեք ձեր ՏՏ ադմինիստրատորին։"</string>
+    <string name="error_role_holder_package_invalid" msgid="2631207759497988833">"Չհաջողվեց կարգավորել սարքը։ Հայտնեք ձեր ադմինիստրատորին «Բացակայող կամ վնասված բաղադրիչներ» սխալի մասին։"</string>
+    <string name="setting_up" msgid="1478847967385506664">"Կարգավորում…"</string>
 </resources>
