@@ -127,6 +127,8 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
     private final RoleHolderProvider mRoleHolderProvider;
 
     private static final String ERROR_DIALOG_RESET = "ErrorDialogReset";
+    private ProvisioningAnalyticsTracker mAnalyticsTracker;
+    private boolean mAlreadyInitialized;
 
     public PreProvisioningActivity() {
         this(activity ->
@@ -167,9 +169,17 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
         }
 
         super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            mAlreadyInitialized = false;
+        }
         mController = mControllerProvider.getInstance(this);
         mBridge = createBridge();
         mController.getState().observe(this, this::onStateChanged);
+
+        mAnalyticsTracker =
+                new ProvisioningAnalyticsTracker(
+                        MetricsWriterFactory.getMetricsWriter(this, new SettingsFacade()),
+                        new ManagedProvisioningSharedPreferences(this));
         logMetrics();
     }
 
@@ -181,6 +191,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
         } catch (BackgroundServiceStartNotAllowedException e) {
             ProvisionLogger.loge(e);
         }
+        mController.getState().observe(this, this::onStateChanged);
     }
 
     @Override
@@ -220,7 +231,10 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
     private void onStateChanged(Integer state) {
         switch (state) {
             case STATE_PREPROVISIONING_INITIALIZING:
-                mController.initiateProvisioning(getIntent(), getCallingPackage());
+                if (!mAlreadyInitialized) {
+                    mController.initiateProvisioning(getIntent(), getCallingPackage());
+                    mAlreadyInitialized = true;
+                }
                 break;
             case STATE_SHOWING_USER_CONSENT:
                 mController.showUserConsentScreen();
@@ -336,6 +350,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                 break;
             case START_DEVICE_MANAGEMENT_ROLE_HOLDER_PROVISIONING_REQUEST_CODE:
                 ProvisionLogger.logw("Role holder returned result code " + resultCode);
+                mAnalyticsTracker.logRoleHolderProvisioningFinish();
                 if (resultCode == RESULT_UPDATE_ROLE_HOLDER) {
                     if (handleUpdateRequestedWithNoRoleHolderUpdater(resultCode)) {
                         return;
@@ -354,6 +369,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                 }
                 break;
             case DOWNLOAD_DEVICE_MANAGEMENT_ROLE_HOLDER_FROM_PLATFORM_REQUEST_CODE:
+                mAnalyticsTracker.logPlatformRoleHolderUpdateFinished(resultCode);
                 if (resultCode == RESULT_OK
                         || mController.getParams().allowOffline) {
                     boolean isProvisioningStarted = mController.startAppropriateProvisioning(
@@ -361,15 +377,18 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                             new Bundle(),
                             getCallingPackage());
                     if (!isProvisioningStarted) {
+                        mAnalyticsTracker.logPlatformRoleHolderUpdateFailed();
                         ProvisionLogger.loge("Provisioning could not be started following "
                                 + "platform-side role holder download.");
                         showRoleHolderDownloadFailedDialog(new Intent());
                     }
                 } else if (data != null && data.hasExtra(EXTRA_ERROR_MESSAGE_RES_ID)) {
+                    mAnalyticsTracker.logPlatformRoleHolderUpdateFailed();
                     ProvisionLogger.loge("Role holder download failed and offline provisioning is "
                             + "not allowed.");
                     showRoleHolderDownloadFailedDialog(data);
                 } else {
+                    mAnalyticsTracker.logPlatformRoleHolderUpdateFailed();
                     ProvisionLogger.loge("Role holder download failed and offline provisioning is "
                             + "not allowed.");
                     showRoleHolderDownloadFailedDialog(new Intent());
@@ -427,6 +446,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
     }
 
     private void handlePlatformRequestedUpdateResult(int resultCode, @Nullable Intent resultData) {
+        mAnalyticsTracker.logRoleHolderUpdaterUpdateFinish(resultCode);
         if ((resultCode
                 == RESULT_UPDATE_DEVICE_POLICY_MANAGEMENT_ROLE_HOLDER_RECOVERABLE_ERROR
                 || resultCode == RESULT_CANCELED)
@@ -434,6 +454,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
             mController.startRoleHolderUpdaterWithLastState(
                     /* isRoleHolderRequestedUpdate= */ false);
             mController.incrementRoleHolderUpdateRetryCount();
+            mAnalyticsTracker.logRoleHolderUpdaterUpdateRetry();
         } else if (resultCode
                 == RESULT_UPDATE_DEVICE_POLICY_MANAGEMENT_ROLE_HOLDER_PROVISIONING_DISABLED
         ) {
@@ -446,6 +467,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                     createRoleHolderAdditionalExtras(resultCode),
                     getCallingPackage());
             if (!isProvisioningStarted) {
+                mAnalyticsTracker.logRoleHolderUpdaterUpdateFailed();
                 failRoleHolderUpdate();
                 ProvisionLogger.loge("Failed to start provisioning after a "
                         + "platform-requested role holder update. Result is " + resultCode
@@ -456,6 +478,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                 || mController.getParams().allowOffline) {
             mController.performPlatformProvidedProvisioning();
         } else {
+            mAnalyticsTracker.logRoleHolderUpdaterUpdateFailed();
             failRoleHolderUpdate();
             ProvisionLogger.loge("Failed to perform a platform-requested role holder "
                     + "update. Result is " + resultCode + " and allow offline provisioning"
@@ -700,6 +723,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
                         getIntent().getIntExtra(
                                 EXTRA_PROVISIONING_TRIGGER, PROVISIONING_TRIGGER_UNSPECIFIED),
                         isRoleHolderRequestedUpdate));
+        mAnalyticsTracker.logRoleHolderUpdaterUpdateStart();
         getTransitionHelper().startActivityForResultWithTransition(
                  this,
                 intent,
@@ -710,6 +734,7 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
 
     @Override
     public void startRoleHolderProvisioning(Intent intent) {
+        mAnalyticsTracker.logRoleHolderProvisioningStart();
         Intent retryLaunchIntent = new Intent(this, getActivityForScreen(RETRY_LAUNCH));
         retryLaunchIntent.putExtra(RetryLaunchActivity.EXTRA_INTENT_TO_LAUNCH, intent);
         getTransitionHelper().startActivityForResultWithTransition(
@@ -729,7 +754,8 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
     }
 
     @Override
-    public void startRoleHolderDownload() {
+    public void startPlatformDrivenRoleHolderDownload() {
+        mAnalyticsTracker.logPlatformRoleHolderUpdateStart();
         Intent intent = new Intent(this,
                 getActivityForScreen(ManagedProvisioningScreens.DOWNLOAD_ROLE_HOLDER));
         WizardManagerHelper.copyWizardManagerExtras(getIntent(), intent);
@@ -860,12 +886,8 @@ public class PreProvisioningActivity extends SetupGlifLayoutActivity implements
     }
 
     private void logMetrics() {
-        final ProvisioningAnalyticsTracker analyticsTracker =
-                new ProvisioningAnalyticsTracker(
-                        MetricsWriterFactory.getMetricsWriter(this, new SettingsFacade()),
-                        new ManagedProvisioningSharedPreferences(this));
         int nightMode = getResources().getConfiguration().uiMode & UI_MODE_NIGHT_MASK;
-        analyticsTracker.logIsNightMode(nightMode == UI_MODE_NIGHT_YES);
+        mAnalyticsTracker.logIsNightMode(nightMode == UI_MODE_NIGHT_YES);
     }
 
     /**
